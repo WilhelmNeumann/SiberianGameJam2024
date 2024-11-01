@@ -16,18 +16,21 @@ namespace Dialogs
 
         [SerializeField] public float Duration = 1f;
 
-        public void NpcTalk(string text, string npcName)
+        public void NpcTalk(string[] text, string npcName)
         {
             NpcNameText.text = npcName;
             NpcTextArea.gameObject.SetActive(true);
-            TweenText(NpcText, text);
+            TweenText(text[0]);
         }
-
-        public void PlayerTalk(string text) => TweenText(PlayerText, text);
-
-        private void TweenText(TextMeshProUGUI textField, string text)
+        
+        private void TweenText(string text)
         {
             DOVirtual.Int(0, text.Length, Duration, i => NpcText.text = text[..i]).SetEase(Ease.Linear);
+        }
+
+        public void ContinueDialog()
+        {
+            
         }
     }
 }

@@ -1,3 +1,6 @@
+using System.Collections;
+using Dialogs;
+using Npc;
 using UnityEngine;
 
 namespace Utils
@@ -6,9 +9,16 @@ namespace Utils
     {
         [SerializeField] public int Gold = 1000;
 
-        public void Start()
+        public IEnumerator Start()
         {
-            Npc.Npc.Instance.EnterTheTavern();
+            yield return TavernNpc.Instance.EnterTheTavern();
+            var npcData = TavernNpc.Instance.NpcData;
+            DialogWindow.Instance.NpcTalk(npcData.GreetingsText, npcData.NpcName);
+        }
+
+        public void Continue()
+        {
+
         }
     }
 }

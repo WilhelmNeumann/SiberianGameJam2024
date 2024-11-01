@@ -6,21 +6,20 @@ using Utils;
 
 namespace Npc
 {
-    public class Npc : Singleton<Npc>
+    public class TavernNpc : Singleton<TavernNpc>
     {
-        private NpcData _npcData;
+        public NpcData NpcData;
         [SerializeField] public MMF_Player Player;
 
-        public void EnterTheTavern()
+        public IEnumerator EnterTheTavern()
         {
-            StartCoroutine(InteractWithTheInnKeeper());
+            yield return InteractWithTheInnKeeper();
         }
 
         public IEnumerator InteractWithTheInnKeeper()
         {
-            _npcData = NpcFactory.GenerateNpc();
+            NpcData = NpcFactory.GenerateNpc();
             yield return StartCoroutine(WalkIn());
-            DialogWindow.Instance.NpcTalk(_npcData.GreetingsText, _npcData.NpcName);
         }
 
         private IEnumerator WalkIn()

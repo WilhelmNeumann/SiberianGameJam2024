@@ -6,8 +6,8 @@ namespace Npc
     {
         public string NpcName;
         public NpcType NpcType;
-        public string GreetingsText;
-        public string ByeText;
+        public string[] GreetingsText;
+        public string[] ByeText;
         public Quest Quest;
     }
 }
