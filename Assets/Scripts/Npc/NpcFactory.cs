@@ -13,7 +13,7 @@ namespace Npc
                 NpcType = NpcType.Villager,
                 NpcName = npcName,
                 Quest = QuestFactory.GenerateQuest(npcName),
-                GreetingsText = new[] { "Приветствую трактирщик! Какой хороший день" },
+                GreetingsText = new[] { "Приветствую трактирщик! Что наливаешь? У меня тут проблема с крысами в подвале" },
                 ByeText = new[] { "Ну да ладно, пойду а то дел по горло." }
             };
         }

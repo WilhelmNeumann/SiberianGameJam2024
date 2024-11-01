@@ -11,14 +11,17 @@ namespace Utils
 
         public IEnumerator Start()
         {
-            yield return TavernNpc.Instance.EnterTheTavern();
-            var npcData = TavernNpc.Instance.NpcData;
-            DialogWindow.Instance.NpcTalk(npcData.GreetingsText, npcData.NpcName);
+            DialogWindow.Instance.OnContinue += Continue;
+            
+            var npcData = NpcFactory.GenerateNpc();
+            yield return TavernNpc.Instance.WalkIn();
+            DialogWindow.Instance.NpcTalk(npcData.GreetingsText[0], npcData.NpcName);
+            
         }
 
         public void Continue()
         {
-
+            
         }
     }
 }

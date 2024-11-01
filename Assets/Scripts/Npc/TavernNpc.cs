@@ -1,28 +1,20 @@
+using System;
 using System.Collections;
+using System.Linq;
+using DG.Tweening;
 using Dialogs;
 using MoreMountains.Feedbacks;
+using Unity.VisualScripting;
 using UnityEngine;
-using Utils;
 
 namespace Npc
 {
-    public class TavernNpc : Singleton<TavernNpc>
+    public class TavernNpc : Utils.Singleton<TavernNpc>
     {
         public NpcData NpcData;
         [SerializeField] public MMF_Player Player;
-
-        public IEnumerator EnterTheTavern()
-        {
-            yield return InteractWithTheInnKeeper();
-        }
-
-        public IEnumerator InteractWithTheInnKeeper()
-        {
-            NpcData = NpcFactory.GenerateNpc();
-            yield return StartCoroutine(WalkIn());
-        }
-
-        private IEnumerator WalkIn()
+        
+        public IEnumerator WalkIn()
         {
             Player.PlayFeedbacks();
             yield return new WaitForSeconds(Player.TotalDuration);
@@ -32,11 +24,6 @@ namespace Npc
         {
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
             Player.PlayFeedbacksInReverse();
-        }
-
-        public void Next()
-        {
-            var npc = NpcFactory.GenerateNpc();
         }
     }
 }
