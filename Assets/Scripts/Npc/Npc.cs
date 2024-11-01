@@ -16,6 +16,7 @@ namespace Npc
 
         public void WalkOut()
         {
+            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
             Player.PlayFeedbacksInReverse();
         }
     }
