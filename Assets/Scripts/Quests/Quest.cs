@@ -2,9 +2,11 @@ namespace Quests
 {
     public class Quest
     {
-        public string Description;
+        public string ApplicationText;
+        public string ShortDescription;
         public int Xp;
         public int Gold;
         public int Difficulty;
+        public string QuestGiverName;
     }
 }

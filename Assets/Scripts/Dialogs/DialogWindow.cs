@@ -9,22 +9,21 @@ namespace Dialogs
     {
         [SerializeField] public TextMeshProUGUI PlayerText;
         [SerializeField] public TextMeshProUGUI NpcText;
+        [SerializeField] public TextMeshProUGUI NpcNameText;
         
         [SerializeField] public GameObject PlayerTextArea;
         [SerializeField] public GameObject NpcTextArea;
 
         [SerializeField] public float Duration = 1f;
-        
-        public void NpcTalk(string text, string personName) => TweenText(NpcText, text);
+
+        public void NpcTalk(string text, string npcName)
+        {
+            NpcNameText.text = npcName;
+            NpcTextArea.gameObject.SetActive(true);
+            TweenText(NpcText, text);
+        }
 
         public void PlayerTalk(string text) => TweenText(PlayerText, text);
-
-        private void Start()
-        {
-            NpcTalk(
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, quas vel sint commodi repudiandae consequuntur voluptatum",
-                "Npc1");
-        }
 
         private void TweenText(TextMeshProUGUI textField, string text)
         {

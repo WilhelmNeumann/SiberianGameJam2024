@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Utils
@@ -7,17 +6,9 @@ namespace Utils
     {
         [SerializeField] public int Gold = 1000;
 
-        [SerializeField] public Npc.Npc Npc;
-
-        public IEnumerator Start()
+        public void Start()
         {
-            while (true)
-            {
-                Npc.WalkIn();
-                yield return new WaitForSeconds(5f);
-                Npc.WalkOut();
-                yield return new WaitForSeconds(5f);
-            }
+            Npc.Npc.Instance.EnterTheTavern();
         }
     }
 }
