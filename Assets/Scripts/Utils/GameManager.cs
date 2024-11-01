@@ -1,9 +1,11 @@
+using UnityEngine;
+
 namespace Utils
 {
-    public class GameManager: Singleton<GameManager>
+    public class GameManager : Singleton<GameManager>
     {
-        public int Gold;
-    
-    
+        [SerializeField] public int Gold = 1000;
+        
+        
     }
 }
