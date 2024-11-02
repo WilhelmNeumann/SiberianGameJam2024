@@ -7,6 +7,7 @@ using Dialogs;
 using Npc;
 using Quests;
 using TMPro;
+using Ui;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -118,6 +119,7 @@ namespace Utils
                     Action = () =>
                     {
                         QuestJournal.Instance.AddSideQuest(npcData.Quest);
+                        NewQuestPopup.Instance.gameObject.SetActive(true);
                         DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
                         Debug.Log(QuestJournal.Instance.SideQuests);
                     }
