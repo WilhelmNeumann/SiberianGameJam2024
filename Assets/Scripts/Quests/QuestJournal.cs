@@ -5,11 +5,17 @@ namespace Quests
 {
     public class QuestJournal: Singleton<QuestJournal>
     {
-        public List<Quest> QuestPool = new List<Quest>();
+        public List<Quest> SideQuests = new();
+        
 
+        private void Start()
+        {
+            
+        }
+        
         public void AddQuest(Quest quest)
         {
-            QuestPool.Add(quest);
+            SideQuests.Add(quest);
         }
     }
 }

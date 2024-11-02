@@ -1010,6 +1010,50 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 941630308157126337, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
   m_PrefabInstance: {fileID: 2796566730690487744}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &661536216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 661536218}
+  - component: {fileID: 661536217}
+  m_Layer: 0
+  m_Name: QuestJournal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &661536217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661536216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf6c340ef1bb45b2b7ccca23667d8333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &661536218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661536216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 289.00003, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &730708664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,7 +1909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -728.6482, y: 24.8021}
+  m_AnchoredPosition: {x: -838.98, y: 39}
   m_SizeDelta: {x: 242.0488, y: 361.9211}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1932289182
@@ -2270,3 +2314,4 @@ SceneRoots:
   - {fileID: 1610770200}
   - {fileID: 1311811783}
   - {fileID: 1307385168}
+  - {fileID: 661536218}

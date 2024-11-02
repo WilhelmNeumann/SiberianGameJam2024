@@ -15,6 +15,14 @@ namespace Utils
 
         public IEnumerator Start()
         {
+            while (true)
+            {
+                yield return GameplayLoop();
+            }
+        }
+
+        private IEnumerator GameplayLoop()
+        {
             var npcData = NpcFactory.GenerateNpc();
             yield return TavernNpc.Instance.WalkIn();
 
@@ -38,8 +46,8 @@ namespace Utils
             
             yield return TavernNpc.Instance.WalkOut();
         }
-
-
+        
+        
         // Получить сценарий для диалога, со всеми репликами
         private static List<DialogLine> GetDialogScenario(NpcData npcData)
         {

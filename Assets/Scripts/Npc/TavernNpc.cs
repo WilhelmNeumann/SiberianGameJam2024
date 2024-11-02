@@ -22,9 +22,17 @@ namespace Npc
 
         public IEnumerator WalkOut()
         {
-            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-            Player.PlayFeedbacksInReverse();
+            TurnAround();
+            Player.Revert();
+            Player.PlayFeedbacks();
             yield return new WaitForSeconds(Player.TotalDuration);
+            Player.Revert();
+            TurnAround();
+        }
+
+        private void TurnAround()
+        {
+            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
         }
     }
 }
