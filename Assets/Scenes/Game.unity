@@ -1422,7 +1422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1408125017}
   m_Layer: 0
-  m_Name: MainQuests
+  m_Name: WhiteBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1565,8 +1565,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 837, y: -56.214294}
-  m_SizeDelta: {x: 246, y: 622.4286}
+  m_AnchoredPosition: {x: 1075, y: -30}
+  m_SizeDelta: {x: 417.8162, y: 255}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1546692421
 MonoBehaviour:
@@ -1751,7 +1751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1789881465}
   m_Layer: 0
-  m_Name: SideQuests
+  m_Name: BlackBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1909,8 +1909,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -838.98, y: 39}
-  m_SizeDelta: {x: 242.0488, y: 361.9211}
+  m_AnchoredPosition: {x: -1005.82764, y: -401.0485}
+  m_SizeDelta: {x: 432.3935, y: 256.0181}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1932289182
 MonoBehaviour:
