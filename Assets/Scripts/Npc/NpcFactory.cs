@@ -76,7 +76,7 @@ namespace Npc
                 NpcType = npcType,
                 NpcName = npcName,
                 Quest = quest,
-                GreetingsText = new List<string> { "Начало приветственной фразы", "конец приветственной фразы" },
+                GreetingsText = GenerateVillagerGreetingsText(),
                 ByeText = new List<string> { "Ну да ладно, пойду а то дел по горло." }
             };
         }
@@ -166,17 +166,15 @@ namespace Npc
 
             return names[Random.Range(0, names.Count)];
         }
-        
-        private static List<string> GenerateGoodByeText()
-        {
-            return new List<string>()
-            {
-                GoodByePart1[Random.Range(0, Greetings1.Length)],
-                GoodByePart2[Random.Range(0, Greetings2.Length)],
-            };
-        }
 
-        private static string[] GoodByePart1 =
+        private static List<string> GenerateGoodByeText() => new()
+        {
+            GoodByePart1[Random.Range(0, Greetings1.Length)],
+            GoodByePart2[Random.Range(0, Greetings2.Length)],
+        };
+
+
+        private static readonly string[] GoodByePart1 =
         {
             "Ну что ж, трактирщик, пора мне идти.",
             "Время не ждёт, и я отправляюсь в путь.",
@@ -190,7 +188,7 @@ namespace Npc
             "На этом я прощаюсь, трактирщик!",
         };
 
-        private static string[] GoodByePart2 =
+        private static readonly string[] GoodByePart2 =
         {
             "Пусть твоя таверна процветает, пока я спасаю мир.",
             "Запомни моё имя, ибо оно войдёт в легенды… возможно, местные.",
@@ -202,6 +200,40 @@ namespace Npc
             "И пусть твой эль остаётся столь же крепким, как моя решимость спасать мир.",
             "И пусть твоя таверна останется моим убежищем от невзгод и суровых пророчеств.",
             "Когда деревни будут спасены, я непременно вернусь сюда на пир."
+        };
+
+        private static List<string> GenerateVillagerGreetingsText() => new()
+        {
+            GreetingsVillagerPart1[Random.Range(0, Greetings1.Length)],
+            GreetingsVillagerPart2[Random.Range(0, Greetings2.Length)],
+        };
+
+        private static readonly string[] GreetingsVillagerPart1 =
+        {
+            "Доброго дня, хозяин таверны!",
+            "Эй, трактирщик! Рад тебя видеть.",
+            "Приветствую, славный трактирщик!",
+            "Здравствуй, добрый хозяин!",
+            "Мир тебе, трактирщик!",
+            "Славный хозяин, рад видеть тебя!",
+            "Эй, трактирщик! Ты, как всегда, в полном порядке.",
+            "Здрав будь, трактирщик!",
+            "Добрый день, почтенный хозяин!",
+            "Трактирщик, приветствую тебя!",
+        };
+
+        private static readonly string[] GreetingsVillagerPart2 =
+        {
+            "У тебя здесь всегда так уютно.",
+            "Нигде нет такого тепла, как у тебя.",
+            "Вижу, всё у тебя по-прежнему на месте.",
+            "Твоя таверна — как дом родной.",
+            "Ничего не меняется — всё такой же уют и покой.",
+            "Всегда приятно к тебе заглянуть.",
+            "Тут так пахнет, что забываешь обо всех бедах.",
+            "Как всегда многолюдно и весело у тебя.",
+            "Знать, не зря я сюда зашёл.",
+            "Здесь всегда словно праздник начинается.",
         };
     }
 }
