@@ -10,16 +10,17 @@ namespace Quests
         public static Quest GenerateQuest(string questGiverName, NpcType npcType)
         {
             var random = new System.Random();
-
+            // objective and solution has same index
+            var randomIndex = random.Next(0, objectives.Count);
             return new Quest
             {
                 Xp = Random.Range(1, 50),
                 Gold = Random.Range(10, 500),
                 Difficulty = Random.Range(1, 10),
-                Objective = objectives[random.Next(objectives.Count)],
+                Objective = objectives[randomIndex],
                 ApplicationText =
-                    $"{introductionPhrases[random.Next(introductionPhrases.Count)]} {problems[random.Next(problems.Count)]}, {solutions[random.Next(solutions.Count)]}",
-                CompletionText = completions[random.Next(completions.Count)],
+                    $"{introductionPhrases[random.Next(introductionPhrases.Count)]} {problems[randomIndex]}, {solutions[random.Next(solutions.Count)]}",
+                CompletionText = completions[randomIndex],
                 QuestGiverName = questGiverName,
             };
         }
