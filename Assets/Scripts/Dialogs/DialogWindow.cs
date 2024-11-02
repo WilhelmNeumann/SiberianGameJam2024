@@ -16,6 +16,7 @@ namespace Dialogs
         [SerializeField] public GameObject PlayerTextArea;
         [SerializeField] public GameObject NpcTextArea;
         [SerializeField] private DialogOptionButton _serializedPrefab;
+        [SerializeField] private Transform _dialogOptionsLayoutGroup;
         [SerializeField] public float TextAppearDuration = 1f;
         public bool CanContinue { get; private set; } = false;
 
@@ -43,6 +44,8 @@ namespace Dialogs
 
         public void ContinueDialog()
         {
+            PlayerTextArea.gameObject.SetActive(false);
+            NpcTextArea.gameObject.SetActive(true);
             if (_dialogTweener != null)
             {
                 _dialogTweener?.Complete();
@@ -66,7 +69,7 @@ namespace Dialogs
             
             foreach (var option in options)
             {
-                var button = Instantiate(_serializedPrefab, transform, false);
+                var button = Instantiate(_serializedPrefab, _dialogOptionsLayoutGroup, false);
                 button.SetText(option.Text);
                 
             }

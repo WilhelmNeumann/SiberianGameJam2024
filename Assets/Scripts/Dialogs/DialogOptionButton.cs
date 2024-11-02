@@ -15,6 +15,10 @@ namespace Dialogs
             Action.Invoke();
         }
 
-        public void SetText(string optionText) => Text = optionText;
+        public void SetText(string optionText)
+        {
+            Text = optionText;
+            TextMeshProUGUI.text = optionText;
+        }
     }
 }

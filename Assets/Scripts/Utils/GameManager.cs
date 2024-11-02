@@ -37,6 +37,7 @@ namespace Utils
                 if (dialogLine.ResponseOptions != null)
                 {
                     DialogWindow.Instance.ShowPlayerDialogOptions(dialogLine.ResponseOptions);
+                    yield return new WaitUntil(() => DialogWindow.Instance.CanContinue);
                 }
             }
 
