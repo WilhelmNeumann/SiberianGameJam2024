@@ -9,6 +9,13 @@ namespace Ui
     {
         [SerializeField] MMF_Player _player;
 
+        private new void Awake()
+        {
+            base.Awake();
+            gameObject.SetActive(false);
+            GetComponent<Canvas>().enabled = true;
+        }
+        
         private void OnEnable()
         {
             StartCoroutine(ShowAndHidePopup());

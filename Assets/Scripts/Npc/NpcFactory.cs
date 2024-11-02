@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Quests;
 using Random = UnityEngine.Random;
 
@@ -7,17 +8,51 @@ namespace Npc
 {
     public abstract class NpcFactory
     {
+        private static readonly List<NpcType> Npcs = new()
+        {
+            NpcType.Villager,
+            NpcType.TaxCollector,
+            NpcType.Hero,
+            NpcType.Villager
+        };
+
+        // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
         public static NpcData GetNextVisitor()
         {
-            var npcType = NpcType.TaxCollector;
-            // var npcType = GetRandomNpcType();
-            return npcType switch
+            if (Npcs.Count == 0)
             {
-                NpcType.Hero => null,
-                NpcType.TaxCollector => GenerateRandomTaxCollectorNpc(),
-                NpcType.Villager => GenerateRandomVillagerNpc(),
-                NpcType.Cultist => null,
-                _ => throw new ArgumentOutOfRangeException()
+                var npcType = GetRandomNpcType();
+                return GenerateNpcOfType(npcType);
+            }
+
+            var npc = Npcs.Last();
+            Npcs.RemoveAt(Npcs.Count - 1);
+            return GenerateNpcOfType(npc);
+        }
+
+        private static NpcData GenerateNpcOfType(NpcType npcType) => npcType switch
+        {
+            NpcType.Hero => GenerateRandomHeroNpc(),
+            NpcType.TaxCollector => GenerateRandomTaxCollectorNpc(),
+            NpcType.Villager => GenerateRandomVillagerNpc(),
+            NpcType.Cultist => null,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        private static NpcData GenerateRandomHeroNpc()
+        {
+            const NpcType npcType = NpcType.Hero;
+            var npcName = GenerateNpcName(npcType);
+            return new NpcData
+            {
+                NpcType = npcType,
+                NpcName = npcName,
+                GreetingsText = new List<string>
+                {
+                    "Доброго дня трактирщик, недавно я стал избранным",
+                    "я великий воин света и на мне лежит миссия по спасению мира"
+                },
+                ByeText = new List<string> { "Приключения ждут!" }
             };
         }
 
@@ -29,11 +64,11 @@ namespace Npc
             {
                 NpcType = npcType,
                 NpcName = npcName,
-                GreetingsText = new List<string> {"Доброго дня трактирщик, надеюсь, дела идут хорошо?"},
+                GreetingsText = new List<string> { "Доброго дня трактирщик, надеюсь, дела идут хорошо?" },
                 ByeText = new List<string> { "Вот и славненько" }
             };
         }
-        
+
         private static NpcData GenerateRandomVillagerNpc()
         {
             var npcType = NpcType.Villager;
@@ -44,7 +79,7 @@ namespace Npc
                 NpcType = npcType,
                 NpcName = npcName,
                 Quest = quest,
-                GreetingsText = new List<string> {"Начало приветственной фразы", "конец приветственной фразы"},
+                GreetingsText = new List<string> { "Начало приветственной фразы", "конец приветственной фразы" },
                 ByeText = new List<string> { "Ну да ладно, пойду а то дел по горло." }
             };
         }
@@ -69,7 +104,7 @@ namespace Npc
         {
             return npcType switch
             {
-                NpcType.Hero => "Избранный крокодилорожденный",
+                NpcType.Hero => GetRandomHeroName(),
                 NpcType.TaxCollector => "Сборщик налогов",
                 NpcType.Villager => "Деревенский житель",
                 NpcType.Cultist => "Культист ктулху",
@@ -125,5 +160,34 @@ namespace Npc
             "...искал здесь одного путешественника. Не появлялся ли он?",
             "...дружище, расскажи, что нового в наших краях за последнее время."
         };
+
+
+        private static string GetRandomHeroName()
+        {
+            var names = new List<string>
+            {
+                "Драгар Сын Дракона",
+                "Старк Хранитель Света",
+                "Ланс Сверкающий Меч",
+                "Кратарс Гнев Олимпийцев",
+                "Артис Избранный",
+                "Соларий Искатель Света",
+                "Уелл Клинок Фронтира",
+                "Бьёрн Войн Стихий",
+                "Орлан Страж Небес",
+                "Такао Дух Сумрака",
+                "Масон Тёмный Волк",
+                "Пэйт Ловец Теней",
+                "Сильвестр Железная Рука",
+                "Элея Охотница за Правдой",
+                "Фримен Легендарный",
+                "Дэйн Изгнанный Провидец",
+                "Грей Громовой Всадник",
+                "Ивара Волчий Воин",
+                "Магистр-Щит Ульфрик"
+            };
+
+            return names[Random.Range(0, names.Count)];
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace Utils
 
             var npcDialog = npcData.NpcType switch
             {
-                NpcType.Hero => throw new ArgumentOutOfRangeException(),
+                NpcType.Hero => GetDialogWithHero(npcData),
                 NpcType.TaxCollector => GetDialogWithTaxCollector(npcData),
                 NpcType.Villager => GetDialogWithVillager(npcData),
                 NpcType.Cultist => throw new ArgumentOutOfRangeException(),
@@ -78,6 +78,35 @@ namespace Utils
             var goodBye = npcData.ByeText.Select(ToNpcTalkDialogLine).ToList();
             scenario.AddRange(goodBye);
             return scenario;
+        }
+
+        private static DialogLine GetDialogWithHero(NpcData npcData)
+        {
+            var quest = ToNpcTalkDialogLine("Есть для меня работа?");
+            var quests = QuestJournal.Instance.SideQuests;
+
+            var responseOptions = new List<DialogOption>()
+            {
+                new()
+                {
+                    Text = "У меня нет для тебя работы на сегодня",
+                    Action = () =>
+                        DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName)
+                }
+            };
+            
+            var options = quests.Select(q => new DialogOption
+                {
+                    Text = q.Objective,
+                    Action = () =>
+                    {
+                        DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
+                    }
+            }).ToList();
+            
+            responseOptions.AddRange(options);
+            quest.ResponseOptions = options;
+            return quest;
         }
 
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
