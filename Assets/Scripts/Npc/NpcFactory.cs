@@ -7,14 +7,10 @@ namespace Npc
 {
     public abstract class NpcFactory
     {
-        public static NpcData GenerateNpc()
+        public static NpcData GetNextVisitor()
         {
             var npcType = NpcType.TaxCollector;
             // var npcType = GetRandomNpcType();
-            var npcName = GenerateNpcName(npcType);
-            var quest = QuestFactory.GenerateQuest(npcName, npcType);
-            var greetingsText = GenerateGreetingsText(npcType);
-
             return npcType switch
             {
                 NpcType.Hero => null,

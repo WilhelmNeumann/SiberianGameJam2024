@@ -28,7 +28,7 @@ namespace Utils
 
         private static IEnumerator GameplayLoop()
         {
-            var npcData = NpcFactory.GenerateNpc();
+            var npcData = NpcFactory.GetNextVisitor();
             yield return TavernNpc.Instance.WalkIn();
 
             var scenario = GetDialogScenario(npcData);
