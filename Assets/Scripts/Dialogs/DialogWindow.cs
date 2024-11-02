@@ -21,7 +21,7 @@ namespace Dialogs
         public bool CanContinue { get; private set; } = false;
 
         private Tweener _dialogTweener;
-        
+
         public void NpcTalk(string text, string npcName)
         {
             CanContinue = false;
@@ -55,7 +55,7 @@ namespace Dialogs
                 CanContinue = true;
             }
         }
-        
+
         public void Hide()
         {
             NpcTextArea.gameObject.SetActive(false);
@@ -66,14 +66,17 @@ namespace Dialogs
         {
             NpcTextArea.gameObject.SetActive(false);
             PlayerTextArea.gameObject.SetActive(true);
-            
+
+            foreach (Transform button in _dialogOptionsLayoutGroup)
+            {
+                Destroy(button.gameObject);
+            }
+
             foreach (var option in options)
             {
-                var button = Instantiate(_serializedPrefab, _dialogOptionsLayoutGroup, false);
+                var button = Instantiate(_serializedPrefab, _dialogOptionsLayoutGroup, true);
                 button.SetText(option.Text);
-                
             }
-            
         }
     }
 }
