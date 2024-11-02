@@ -94,16 +94,13 @@ namespace Utils
                         DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName)
                 }
             };
-            
+
             var options = quests.Select(q => new DialogOption
-                {
-                    Text = q.Objective,
-                    Action = () =>
-                    {
-                        DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
-                    }
+            {
+                Text = q.Objective,
+                Action = () => { DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName); }
             }).ToList();
-            
+
             responseOptions.AddRange(options);
             quest.ResponseOptions = options;
             return quest;
@@ -148,6 +145,7 @@ namespace Utils
                     Action = () =>
                     {
                         QuestJournal.Instance.AddSideQuest(npcData.Quest);
+                        NewQuestPopup.Instance.Init(npcData.Quest.Objective);
                         NewQuestPopup.Instance.gameObject.SetActive(true);
                         DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
                         Debug.Log(QuestJournal.Instance.SideQuests);

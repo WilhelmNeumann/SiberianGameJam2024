@@ -77,6 +77,7 @@ namespace Dialogs
             foreach (var option in options)
             {
                 var button = Instantiate(_serializedPrefab, _dialogOptionsLayoutGroup, true);
+                button.transform.localScale = Vector3.one;
                 button.Init(option.Text, option.Action);
             }
         }

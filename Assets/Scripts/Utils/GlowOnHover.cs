@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Utils
@@ -23,6 +24,16 @@ namespace Utils
         public void OnMouseExit()
         {
             GetComponent<SpriteRenderer>().material = originalMaterial;
+        }
+
+        public void Blink(int times)
+        {
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+
+            DOVirtual.Int(0, times * 2, 1f, value =>
+            {
+                spriteRenderer.material = value % 2 == 0 ? glowOnHoverMaterial : originalMaterial;
+            }).SetEase(Ease.Linear);
         }
     }
 }

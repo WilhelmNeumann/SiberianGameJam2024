@@ -1,12 +1,12 @@
 using System;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Dialogs
 {
     public class DialogOptionButton : MonoBehaviour
     {
-        [SerializeField] public TextMeshProUGUI TextMeshProUGUI;
+        [SerializeField] public Text UiText;
         public string Text;
         public Action Action;
 
@@ -20,7 +20,7 @@ namespace Dialogs
         {
             Action = action;
             Text = optionText;
-            TextMeshProUGUI.text = optionText;
+            UiText.text = optionText;
         }
     }
 }
