@@ -34,7 +34,7 @@ namespace Ui
         {
             _player.PlayFeedbacks();
             yield return new WaitForSeconds(_player.TotalDuration / 2);
-            _board.Blink(5);
+            _board.Blink(4);
             yield return new WaitForSeconds(_player.TotalDuration / 2);
             gameObject.SetActive(false);
         }
