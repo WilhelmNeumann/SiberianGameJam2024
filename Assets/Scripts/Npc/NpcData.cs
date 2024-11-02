@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Quests;
 
 namespace Npc
@@ -6,8 +7,8 @@ namespace Npc
     {
         public string NpcName;
         public NpcType NpcType;
-        public string[] GreetingsText;
-        public string[] ByeText;
+        public List<string> GreetingsText;
+        public List<string> ByeText;
         public Quest Quest;
     }
 }

@@ -1,3 +1,5 @@
+using System;
+
 namespace Npc
 {
     public enum NpcType

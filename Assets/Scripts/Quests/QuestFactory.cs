@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Npc;
 using UnityEngine;
 
 namespace Quests
@@ -6,7 +7,7 @@ namespace Quests
     public abstract class QuestFactory
     {
         /// Генерация рандомных квестов
-        public static Quest GenerateQuest(string questGiverName)
+        public static Quest GenerateQuest(string questGiverName, NpcType npcType)
         {
             var template = QuestTemplates[Random.Range(0, QuestTemplates.Count)];
             var (applicationText, description) = GenerateFromTemplates();

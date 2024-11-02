@@ -17,9 +17,10 @@ namespace Dialogs
         [SerializeField] public GameObject NpcTextArea;
 
         [SerializeField] public float Duration = 1f;
+        public bool CanContinue { get; private set; } = false;
 
-        public UnityAction OnContinue;
-
+        private Tweener _dialogTweener;
+        
         public void NpcTalk(string text, string npcName)
         {
             NpcNameText.text = npcName;
@@ -27,9 +28,28 @@ namespace Dialogs
             TweenText(text);
         }
 
+        public void PlayerQuestAcceptanceDialogOptions()
+        {
+        }
+
         private void TweenText(string text)
         {
-            DOVirtual.Int(0, text.Length, Duration, i => NpcText.text = text[..i]).SetEase(Ease.Linear);
+            _dialogTweener = DOVirtual.Int(0, text.Length, Duration, i => NpcText.text = text[..i])
+                .SetEase(Ease.Linear)
+                .OnComplete(() => _dialogTweener = null)
+                .SetAutoKill(true);
+        }
+
+        public void ContinueDialog()
+        {
+            if (_dialogTweener != null)
+            {
+                _dialogTweener?.Kill();
+            }
+            else
+            {
+                CanContinue = true;
+            }
         }
     }
 }
