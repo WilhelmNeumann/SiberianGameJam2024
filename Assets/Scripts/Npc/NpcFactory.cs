@@ -9,12 +9,40 @@ namespace Npc
     {
         public static NpcData GenerateNpc()
         {
-            var npcType = NpcType.Villager;
+            var npcType = NpcType.TaxCollector;
             // var npcType = GetRandomNpcType();
             var npcName = GenerateNpcName(npcType);
             var quest = QuestFactory.GenerateQuest(npcName, npcType);
             var greetingsText = GenerateGreetingsText(npcType);
 
+            return npcType switch
+            {
+                NpcType.Hero => null,
+                NpcType.TaxCollector => GenerateRandomTaxCollectorNpc(),
+                NpcType.Villager => GenerateRandomVillagerNpc(),
+                NpcType.Cultist => null,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        private static NpcData GenerateRandomTaxCollectorNpc()
+        {
+            const NpcType npcType = NpcType.TaxCollector;
+            const string npcName = "Налоговый инспектор";
+            return new NpcData
+            {
+                NpcType = npcType,
+                NpcName = npcName,
+                GreetingsText = new List<string> {"Доброго дня трактирщик, надеюсь, дела идут хорошо?"},
+                ByeText = new List<string> { "Вот и славненько" }
+            };
+        }
+        
+        private static NpcData GenerateRandomVillagerNpc()
+        {
+            var npcType = NpcType.Villager;
+            var npcName = GenerateNpcName(npcType);
+            var quest = QuestFactory.GenerateQuest(npcName, npcType);
             return new NpcData
             {
                 NpcType = npcType,

@@ -6,7 +6,6 @@ namespace Dialogs
 {
     public class DialogLine
     {
-        public GameManager.DialogType Type;
         public string Text;
         public List<DialogOption> ResponseOptions;
     }

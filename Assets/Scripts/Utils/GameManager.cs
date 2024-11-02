@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Dialogs;
 using Npc;
 using Quests;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,7 +14,9 @@ namespace Utils
 {
     public class GameManager : Singleton<GameManager>
     {
+        [SerializeField] public TextMeshProUGUI GoldTextMesh;
         [SerializeField] public int Gold = 1000;
+        [SerializeField] public int TaxToPay = 300;
 
         public IEnumerator Start()
         {
@@ -22,7 +26,7 @@ namespace Utils
             }
         }
 
-        private IEnumerator GameplayLoop()
+        private static IEnumerator GameplayLoop()
         {
             var npcData = NpcFactory.GenerateNpc();
             yield return TavernNpc.Instance.WalkIn();
@@ -59,15 +63,48 @@ namespace Utils
 
             scenario.AddRange(greetings);
 
-            if (npcData.NpcType == NpcType.Villager)
+            var npcDialog = npcData.NpcType switch
             {
-                scenario.Add(GetDialogWithVillager(npcData));
-            }
+                NpcType.Hero => throw new ArgumentOutOfRangeException(),
+                NpcType.TaxCollector => GetDialogWithTaxCollector(npcData),
+                NpcType.Villager => GetDialogWithVillager(npcData),
+                NpcType.Cultist => throw new ArgumentOutOfRangeException(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            scenario.Add(npcDialog);
 
             var goodBye = npcData.ByeText.Select(ToNpcTalkDialogLine).ToList();
-
             scenario.AddRange(goodBye);
             return scenario;
+        }
+
+        private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
+        {
+            var line = ToNpcTalkDialogLine($"Я пришел собрать нологи! Плоти {Instance.TaxToPay} золота");
+            line.ResponseOptions = new List<DialogOption>()
+            {
+                new()
+                {
+                    Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золотых",
+                    Action = () =>
+                    {
+                        Instance.Gold -= Instance.TaxToPay;
+                        DOVirtual.Int(Instance.Gold, Instance.Gold - Instance.TaxToPay, 1f,
+                                value => Instance.GoldTextMesh.text = value.ToString())
+                            .SetEase(Ease.InOutSine)
+                            .SetAutoKill(true);
+                        DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
+                    }
+                },
+                new()
+                {
+                    Text = "У меня нет таких денег",
+                    Action = () => { GameOver(); }
+                }
+            };
+
+            return line;
         }
 
         private static DialogLine GetDialogWithVillager(NpcData npcData)
@@ -88,31 +125,17 @@ namespace Utils
                 new()
                 {
                     Text = "Увы дружище, ничем не могу помочь",
-                    Action = () =>
-                    {
-                        DialogWindow.Instance.NpcTalk("Бля пиздец хуево :(", npcData.NpcName);
-                    }
+                    Action = () => { DialogWindow.Instance.NpcTalk("Бля пиздец хуево :(", npcData.NpcName); }
                 }
             };
 
             return quest;
         }
 
-        private List<DialogLine> GetVillagerInteraction()
+        private static void GameOver()
         {
-            return null;
         }
 
-        private static DialogLine ToNpcTalkDialogLine(string text) => new()
-        {
-            Type = DialogType.Npc,
-            Text = text,
-        };
-
-        public enum DialogType
-        {
-            Npc,
-            Player
-        }
+        private static DialogLine ToNpcTalkDialogLine(string text) => new() { Text = text };
     }
 }
