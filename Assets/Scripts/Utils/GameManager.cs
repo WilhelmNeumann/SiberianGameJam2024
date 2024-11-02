@@ -55,13 +55,6 @@ namespace Utils
             var greetings = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
             scenario.AddRange(greetings);
             
-            scenario.Add(new DialogLine()
-            {
-                Type = DialogType.Player,
-                // Actions = ,
-            });
-            
-            
             if (npcData.NpcType == NpcType.Villager)
             {
             }
