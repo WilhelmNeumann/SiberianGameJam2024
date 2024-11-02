@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace Dialogs
@@ -13,8 +15,8 @@ namespace Dialogs
 
         [SerializeField] public GameObject PlayerTextArea;
         [SerializeField] public GameObject NpcTextArea;
-
-        [SerializeField] public float Duration = 1f;
+        [SerializeField] private DialogOptionButton _serializedPrefab;
+        [SerializeField] public float TextAppearDuration = 1f;
         public bool CanContinue { get; private set; } = false;
 
         private Tweener _dialogTweener;
@@ -27,13 +29,9 @@ namespace Dialogs
             TweenText(text);
         }
 
-        public void PlayerQuestAcceptanceDialogOptions()
-        {
-        }
-
         private void TweenText(string text)
         {
-            _dialogTweener = DOVirtual.Int(0, text.Length, Duration, i => NpcText.text = text[..i])
+            _dialogTweener = DOVirtual.Int(0, text.Length, TextAppearDuration, i => NpcText.text = text[..i])
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
@@ -54,11 +52,25 @@ namespace Dialogs
                 CanContinue = true;
             }
         }
-
+        
         public void Hide()
         {
             NpcTextArea.gameObject.SetActive(false);
             PlayerTextArea.gameObject.SetActive(false);
+        }
+
+        public void ShowPlayerDialogOptions(List<DialogOption> options)
+        {
+            NpcTextArea.gameObject.SetActive(false);
+            PlayerTextArea.gameObject.SetActive(true);
+            
+            foreach (var option in options)
+            {
+                var button = Instantiate(_serializedPrefab, transform, false);
+                button.SetText(option.Text);
+                
+            }
+            
         }
     }
 }

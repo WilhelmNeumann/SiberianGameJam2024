@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d481415514cc79fc14fc4374a06a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextMeshProUGUI: {fileID: 0}
+  TextMeshProUGUI: {fileID: 7618988926996713865}
   Text: 
 --- !u!1 &6890399208700806579
 GameObject:

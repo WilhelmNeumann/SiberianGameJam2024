@@ -9,7 +9,8 @@ namespace Npc
     {
         public static NpcData GenerateNpc()
         {
-            var npcType = GetRandomNpcType();
+            var npcType = NpcType.Villager;
+            // var npcType = GetRandomNpcType();
             var npcName = GenerateNpcName(npcType);
             var quest = QuestFactory.GenerateQuest(npcName, npcType);
             var greetingsText = GenerateGreetingsText(npcType);

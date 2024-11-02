@@ -13,7 +13,7 @@ namespace Quests
             
         }
         
-        public void AddQuest(Quest quest)
+        public void AddSideQuest(Quest quest)
         {
             SideQuests.Add(quest);
         }
