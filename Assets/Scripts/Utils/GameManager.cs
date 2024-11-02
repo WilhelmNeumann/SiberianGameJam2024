@@ -51,11 +51,21 @@ namespace Utils
         // Получить сценарий для диалога, со всеми репликами
         private static List<DialogLine> GetDialogScenario(NpcData npcData)
         {
-            var scenario = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
-
+            var scenario = new List<DialogLine>();
+            var greetings = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
+            scenario.AddRange(greetings);
+            
+            scenario.Add(new DialogLine()
+            {
+                Type = DialogType.Player,
+                // Actions = ,
+            });
+            
+            
             if (npcData.NpcType == NpcType.Villager)
             {
             }
+            
 
             var goodBye = npcData.ByeText.Select(ToNpcTalkDialogLine).ToList();
 
@@ -63,19 +73,17 @@ namespace Utils
             return scenario;
         }
 
+        private List<DialogLine> GetVillagerInteraction()
+        {
+            return null;
+        }
+
         private static DialogLine ToNpcTalkDialogLine(string text) => new()
         {
             Type = DialogType.Npc,
             Text = text,
         };
-
-        private struct DialogLine
-        {
-            public DialogType Type;
-            public string Text;
-            public Action Action;
-        }
-
+        
         public enum DialogType
         {
             Npc,
