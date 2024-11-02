@@ -1,8 +1,6 @@
-using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using Utils;
 
 namespace Dialogs
