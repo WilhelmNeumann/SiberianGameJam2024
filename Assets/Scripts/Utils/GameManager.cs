@@ -116,7 +116,7 @@ namespace Utils
             {
                 new()
                 {
-                    Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золотых",
+                    Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золотых]",
                     Action = () =>
                     {
                         Instance.Gold -= Instance.TaxToPay;
