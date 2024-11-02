@@ -52,6 +52,11 @@ namespace Utils
         {
             var scenario = new List<DialogLine>();
             var greetings = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
+            greetings.Last().ResponseOptions = new List<DialogOption>()
+            {
+                new() { Text = "Добро пожаловать в таверну \"Бухлишко и две шишки\", чем могу помочь?" }
+            };
+
             scenario.AddRange(greetings);
 
             if (npcData.NpcType == NpcType.Villager)
@@ -76,14 +81,17 @@ namespace Utils
                     Action = () =>
                     {
                         QuestJournal.Instance.AddSideQuest(npcData.Quest);
+                        DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
                         Debug.Log(QuestJournal.Instance.SideQuests);
-                        
                     }
                 },
                 new()
                 {
                     Text = "Увы дружище, ничем не могу помочь",
-                    Action = () => { }
+                    Action = () =>
+                    {
+                        DialogWindow.Instance.NpcTalk("Бля пиздец хуево :(", npcData.NpcName);
+                    }
                 }
             };
 

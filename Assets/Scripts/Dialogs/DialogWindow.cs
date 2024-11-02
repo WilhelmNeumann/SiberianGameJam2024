@@ -26,6 +26,7 @@ namespace Dialogs
         {
             CanContinue = false;
             NpcNameText.text = npcName;
+            PlayerTextArea.gameObject.SetActive(false);
             NpcTextArea.gameObject.SetActive(true);
             TweenText(text);
         }
@@ -64,6 +65,7 @@ namespace Dialogs
 
         public void ShowPlayerDialogOptions(List<DialogOption> options)
         {
+            CanContinue = false;
             NpcTextArea.gameObject.SetActive(false);
             PlayerTextArea.gameObject.SetActive(true);
 
