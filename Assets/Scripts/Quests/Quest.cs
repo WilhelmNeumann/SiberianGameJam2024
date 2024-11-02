@@ -2,11 +2,12 @@ namespace Quests
 {
     public class Quest
     {
-        public string ApplicationText;
-        public string ShortDescription;
+        public string ApplicationText; // У меня проблема, разбойники украли мое говно и ушли в адскую пещеру
+        public string Objective; // Принести говно из адской пещеры
+        public string CompletionText; // Я принес говно из адской пещеры, как и договаривались
         public int Xp;
         public int Gold;
         public int Difficulty;
-        public string QuestGiverName;
+        public string QuestGiverName; // Продавец говна
     }
 }

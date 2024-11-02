@@ -11,7 +11,7 @@ namespace Quests {
         
         public void SetQuest(Quest quest) {
             _quest = quest;
-            textDescription.text = _quest.ShortDescription;
+            textDescription.text = _quest.Objective;
         }
         
 

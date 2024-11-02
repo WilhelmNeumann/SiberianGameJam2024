@@ -16,7 +16,7 @@ namespace Quests
                 Xp = Random.Range(1, 50),
                 Gold = Random.Range(10, 500),
                 Difficulty = Random.Range(1, 10),
-                ShortDescription = description,
+                Objective = description,
                 ApplicationText = "Бла бла бла, у меня проблема, вот бы кто мне помог",
                 QuestGiverName = questGiverName,
             };
