@@ -9,15 +9,14 @@ namespace Quests
         /// Генерация рандомных квестов
         public static Quest GenerateQuest(string questGiverName, NpcType npcType)
         {
-            var template = QuestTemplates[Random.Range(0, QuestTemplates.Count)];
-            var (applicationText, description) = GenerateFromTemplates();
             return new Quest
             {
                 Xp = Random.Range(1, 50),
                 Gold = Random.Range(10, 500),
                 Difficulty = Random.Range(1, 10),
-                Objective = description,
-                ApplicationText = "Бла бла бла, у меня проблема, вот бы кто мне помог",
+                Objective = "Принести пропавшее говно",
+                ApplicationText = "Бла бла бла, у меня проблема, разбойники украли мое говно, вот бы кто мне помог",
+                CompletionText = "Я принес украденное говно, гони награду",
                 QuestGiverName = questGiverName,
             };
         }
