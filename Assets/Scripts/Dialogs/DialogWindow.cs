@@ -23,6 +23,7 @@ namespace Dialogs
         
         public void NpcTalk(string text, string npcName)
         {
+            CanContinue = false;
             NpcNameText.text = npcName;
             NpcTextArea.gameObject.SetActive(true);
             TweenText(text);
@@ -36,7 +37,11 @@ namespace Dialogs
         {
             _dialogTweener = DOVirtual.Int(0, text.Length, Duration, i => NpcText.text = text[..i])
                 .SetEase(Ease.Linear)
-                .OnComplete(() => _dialogTweener = null)
+                .OnComplete(() =>
+                {
+                    NpcText.text = text;
+                    _dialogTweener = null;
+                })
                 .SetAutoKill(true);
         }
 

@@ -28,25 +28,30 @@ namespace Utils
                     yield return new WaitUntil(() => DialogWindow.Instance.CanContinue);
                 }
             }
+            
+            yield return TavernNpc.Instance.WalkOut();
         }
 
 
         private static List<DialogLine> GetDialogScenario(NpcData npcData)
         {
-            var x = new List<DialogLine>();
-            npcData.GreetingsText.ToList().ForEach(t =>
+            var scenario = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
+
+            if (npcData.NpcType == NpcType.Villager)
             {
-                var line = new DialogLine
-                {
-                    Type = DialogType.Npc,
-                    Text = t,
-                };
-                
-                x.Add(line);
-            });
-            
-            return x;
+            }
+
+            var goodBye = npcData.ByeText.Select(ToNpcTalkDialogLine).ToList();
+
+            scenario.AddRange(goodBye);
+            return scenario;
         }
+
+        private static DialogLine ToNpcTalkDialogLine(string text) => new()
+        {
+            Type = DialogType.Npc,
+            Text = text,
+        };
 
         private struct DialogLine
         {
@@ -54,7 +59,7 @@ namespace Utils
             public string Text;
             public Action Action;
         }
-        
+
         public enum DialogType
         {
             Npc,

@@ -20,10 +20,11 @@ namespace Npc
             yield return new WaitForSeconds(Player.TotalDuration);
         }
 
-        public void WalkOut()
+        public IEnumerator WalkOut()
         {
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
             Player.PlayFeedbacksInReverse();
+            yield return new WaitForSeconds(Player.TotalDuration);
         }
     }
 }
