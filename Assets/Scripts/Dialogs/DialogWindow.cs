@@ -49,12 +49,18 @@ namespace Dialogs
         {
             if (_dialogTweener != null)
             {
-                _dialogTweener?.Kill();
+                _dialogTweener?.Complete();
             }
             else
             {
                 CanContinue = true;
             }
+        }
+
+        public void Hide()
+        {
+            NpcTextArea.gameObject.SetActive(false);
+            PlayerTextArea.gameObject.SetActive(false);
         }
     }
 }

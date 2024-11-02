@@ -27,12 +27,20 @@ namespace Utils
                     DialogWindow.Instance.NpcTalk(dialogLine.Text, npcData.NpcName);
                     yield return new WaitUntil(() => DialogWindow.Instance.CanContinue);
                 }
+
+                if (dialogLine.Type == DialogType.Player)
+                {
+                    
+                }
             }
+
+            DialogWindow.Instance.Hide();
             
             yield return TavernNpc.Instance.WalkOut();
         }
 
 
+        // Получить сценарий для диалога, со всеми репликами
         private static List<DialogLine> GetDialogScenario(NpcData npcData)
         {
             var scenario = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
