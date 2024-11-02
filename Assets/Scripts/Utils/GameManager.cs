@@ -76,13 +76,14 @@ namespace Utils
                     Action = () =>
                     {
                         QuestJournal.Instance.AddSideQuest(npcData.Quest);
-                        DialogWindow.Instance.ContinueDialog();
+                        Debug.Log(QuestJournal.Instance.SideQuests);
+                        
                     }
                 },
                 new()
                 {
                     Text = "Увы дружище, ничем не могу помочь",
-                    Action = () => DialogWindow.Instance.ContinueDialog()
+                    Action = () => { }
                 }
             };
 

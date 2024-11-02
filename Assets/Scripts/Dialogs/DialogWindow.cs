@@ -75,7 +75,7 @@ namespace Dialogs
             foreach (var option in options)
             {
                 var button = Instantiate(_serializedPrefab, _dialogOptionsLayoutGroup, true);
-                button.SetText(option.Text);
+                button.Init(option.Text, option.Action);
             }
         }
     }

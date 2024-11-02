@@ -12,11 +12,13 @@ namespace Dialogs
 
         public void OnClick()
         {
-            Action.Invoke();
+            Action?.Invoke();
+            DialogWindow.Instance.ContinueDialog();
         }
 
-        public void SetText(string optionText)
+        public void Init(string optionText, Action action)
         {
+            Action = action;
             Text = optionText;
             TextMeshProUGUI.text = optionText;
         }

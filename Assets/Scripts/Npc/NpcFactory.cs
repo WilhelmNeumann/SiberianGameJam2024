@@ -20,7 +20,7 @@ namespace Npc
                 NpcType = npcType,
                 NpcName = npcName,
                 Quest = quest,
-                GreetingsText = greetingsText,
+                GreetingsText = new List<string> {"Начало приветственной фразы", "конец приветственной фразы"},
                 ByeText = new List<string> { "Ну да ладно, пойду а то дел по горло." }
             };
         }
