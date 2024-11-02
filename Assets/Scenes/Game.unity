@@ -1349,11 +1349,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 7.68, y: 5.12}
   m_EdgeRadius: 0
---- !u!224 &556519069 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6297562107363182217, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-  m_PrefabInstance: {fileID: 2796566730690487744}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &626488577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2803,7 +2798,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3973,10 +3968,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 1311811783}
     m_Modifications:
     - target: {fileID: 107945633371415053, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 107945633371415053, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_fontSize
       value: 27
       objectReference: {fileID: 0}
@@ -3999,14 +3990,6 @@ PrefabInstance:
     - target: {fileID: 107945633371415053, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_fontSizeBase
       value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 107945633371415053, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 341159873339786912, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 341159873339786912, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4140,14 +4123,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -203.99823
       objectReference: {fileID: 0}
-    - target: {fileID: 3178029651327087955, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: PlayerText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3178029651327087955, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: _dialogOptionsLayoutGroup
-      value: 
-      objectReference: {fileID: 556519069}
     - target: {fileID: 3246696555700118236, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_SizeDelta.x
       value: 132.8816
@@ -4158,15 +4133,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3246696555700118236, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -438.04758
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3246696555700118236, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -202.96442
-      objectReference: {fileID: 0}
-    - target: {fileID: 4231071541268213334, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4414069619602702192, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_CellSize.x
@@ -4196,17 +4167,21 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: -500
       objectReference: {fileID: 0}
-    - target: {fileID: 4716107155320630808, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 33
-      objectReference: {fileID: 0}
     - target: {fileID: 5006241386161006868, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1519244384493322229, guid: 6c3745eb6c77d2e40ba01f82c12dffa1, type: 3}
-    - target: {fileID: 5964413447652535369, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
+    - target: {fileID: 5283857408441946620, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
+      propertyPath: m_Color.b
+      value: 0.46226418
+      objectReference: {fileID: 0}
+    - target: {fileID: 5283857408441946620, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
+      propertyPath: m_Color.g
+      value: 0.46226418
+      objectReference: {fileID: 0}
+    - target: {fileID: 5283857408441946620, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
+      propertyPath: m_Color.r
+      value: 0.46226418
       objectReference: {fileID: 0}
     - target: {fileID: 6297562107363182217, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4251,10 +4226,6 @@ PrefabInstance:
     - target: {fileID: 6484220251290074633, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6862001176250586690, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7475152883185868732, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4324,6 +4295,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 8132022145489711851, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
+      propertyPath: m_ShowMaskGraphic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8235332415764705736, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_fontSize
       value: 27.5
@@ -4339,6 +4314,10 @@ PrefabInstance:
     - target: {fileID: 8513771982010298771, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_fontSizeBase
       value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 8885717613848633619, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
+      propertyPath: m_Name
+      value: NpcAvatar
       objectReference: {fileID: 0}
     - target: {fileID: 9096622937754058198, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
       propertyPath: m_UiScaleMode
