@@ -77,7 +77,6 @@ namespace Quests
                 BadCompletionText = "Маг уничтожил твоего героя.",
                 RewardToGive = 400,
                 RewardToReceive = 700,
-                State = LocationState.Bad
             },
             new Location
             {
