@@ -11,11 +11,14 @@ namespace Npc
         private static int villagerCount = 0;
         private static int heroCount = 0;
 
+        private static int _taxCollectorInterval = 7;
+        private static int _npcCount = 0;
+
         private static readonly List<NpcData> NpcsQueue = new()
         {
-            // GetTaxCollectorFirstInteraction(),
-            // GetVillagerFirstInteraction(),
-            // GetCultistFirstInteraction()
+            GetTaxCollectorFirstInteraction(),
+            GetVillagerFirstInteraction(),
+            GetCultistFirstInteraction()
         };
 
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
@@ -75,10 +78,17 @@ namespace Npc
 
         private static NpcData GenerateRandomNpc()
         {
+            AddTaxCollectorToQueueIfNeeded();
+            
             var npcType = GetRandomNpcType();
             return GenerateNpcOfType(npcType);
         }
 
+        private static void AddTaxCollectorToQueueIfNeeded()
+        {
+            _npcCount += 1;
+            NpcsQueue.Add(GenerateNpcOfType(NpcType.TaxCollector));
+        }
 
         private static NpcData GenerateNpcOfType(NpcType npcType) => npcType switch
         {

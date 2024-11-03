@@ -8,22 +8,6 @@ namespace Quests
     {
         public List<Quest> SideQuests = new();
         
-        // Герои, которые ушли на задание
-        public List<NpcData> HerosOnDuty = new();
-
-        private void Start()
-        {
-            
-        }
-        
-        public void AddSideQuest(Quest quest)
-        {
-            SideQuests.Add(quest);
-        }
-
-        public void GetNextMainStoryQuest()
-        {
-            
-        }
+        public void AddSideQuest(Quest quest) => SideQuests.Add(quest);
     }
 }
