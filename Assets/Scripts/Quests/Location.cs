@@ -76,7 +76,8 @@ namespace Quests
                 GoodCompletionText = "Я победил злого мага, где моя награда?",
                 BadCompletionText = "Маг уничтожил твоего героя. Вот твоя награда.",
                 RewardToGive = 400,
-                RewardToReceive = 700
+                RewardToReceive = 700,
+                State = LocationState.Bad
             },
             new Location
             {
