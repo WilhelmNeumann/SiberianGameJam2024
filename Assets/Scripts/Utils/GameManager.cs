@@ -59,10 +59,6 @@ namespace Utils
         // Получить сценарий для диалога, со всеми репликами
         private static List<DialogLine> GetDialogScenario(NpcData npcData)
         {
-            if (npcData.NpcType == NpcType.Hero)
-            {
-            }
-
             var scenario = new List<DialogLine>();
             var greetings = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
             AddGreetingsResponse(npcData, greetings);
@@ -72,7 +68,7 @@ namespace Utils
             {
                 NpcType.Hero => GetDialogWithHero(npcData),
                 NpcType.TaxCollector => GetDialogWithTaxCollector(npcData),
-                NpcType.Villager => GetDialogWithVillager(npcData),
+                NpcType.Villager => GetDialogWithCultist(npcData),
                 NpcType.Cultist => GetDialogWithVillager(npcData),
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -242,6 +238,7 @@ namespace Utils
 
         private static DialogLine GetDialogWithCultist(NpcData npcData)
         {
+            IncreaseGold(npcData.Quest.Location.RewardToReceive);
             return null;
         }
 

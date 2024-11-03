@@ -35,6 +35,7 @@ namespace Npc
 
         public static void AddNpcToQueue(NpcData npc)
         {
+            npc.GreetingsText = new List<string>() { "Я вернулся с задания, потрепанный, но живой!" };
             NpcsQueue.Add(npc);
         }
 
