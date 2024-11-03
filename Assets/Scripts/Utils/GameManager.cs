@@ -215,19 +215,17 @@ namespace Utils
             }
 
             var line = ToNpcTalkDialogLine($"Я пришел собрать нологи! Плоти {Instance.TaxToPay} золота");
-            line.ResponseOptions = new List<DialogOption>()
-            {
-                new()
-                {
-                    Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золотых]",
-                    Action = () =>
-                    {
-                        ReduceGold(Instance.TaxToPay);
+            line.ResponseOptions = GetTaxCollectorDialogOptions(npcData, Instance.TaxToPay);
+            return line;
+        }
 
-                        DialogWindow.Instance.NpcTalk("Ярл благодарит тебя!", npcData.NpcName);
-                    }
-                },
-                new()
+
+        private static List<DialogOption> GetTaxCollectorDialogOptions(NpcData npcData, int taxToPay)
+        {
+            DialogOption option;
+            if ((Instance.Gold - taxToPay) < 0)
+            {
+                option = new DialogOption
                 {
                     Text = "У меня нет таких денег",
                     Action = () =>
@@ -235,18 +233,33 @@ namespace Utils
                         DialogWindow.Instance.NpcTalk("Тогда твоя таверна закрыта", npcData.NpcName);
                         GameOver();
                     }
-                }
-            };
+                };
+            }
+            else
+            {
+                option = new DialogOption
+                {
+                    Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золотых]",
+                    Action = () =>
+                    {
+                        ReduceGold(Instance.TaxToPay);
+                        DialogWindow.Instance.NpcTalk("Ярл благодарит тебя!", npcData.NpcName);
+                    }
+                };
+            }
 
-            return line;
+            return new List<DialogOption> { option };
+        }
+
+
+        private static DialogLine GetDialogWithCultist(NpcData npcData)
+        {
+            return null;
         }
 
         private static DialogLine GetDialogWithVillager(NpcData npcData)
         {
-            if (npcData.Quest == null)
-            {
-                return null;
-            }
+            if (npcData.Quest == null) return null;
 
             var quest = ToNpcTalkDialogLine(npcData.Quest.ApplicationText);
             quest.ResponseOptions = new List<DialogOption>()
