@@ -22,14 +22,23 @@ namespace Npc
         {
             if (NpcsQueue.Count == 0)
             {
-                var npcType = GetRandomNpcType();
-                return GenerateNpcOfType(npcType);
+                return GenerateRandomNpc();
             }
 
             var npc = NpcsQueue[0];
             NpcsQueue.RemoveAt(0);
+
+            if (NpcsQueue.Count < 3)
+                NpcsQueue.Add(GenerateRandomNpc());
             return npc;
         }
+
+        private static NpcData GenerateRandomNpc()
+        {
+            var npcType = GetRandomNpcType();
+            return GenerateNpcOfType(npcType);
+        }
+
 
         private static NpcData GenerateNpcOfType(NpcType npcType) => npcType switch
         {

@@ -99,7 +99,14 @@ namespace Utils
             var quest = ToNpcTalkDialogLine("Есть для меня работа?");
             var quests = QuestJournal.Instance.SideQuests;
 
-            var responseOptions = new List<DialogOption>()
+            var options = quests.Select(q => new DialogOption
+            {
+                Text = q.Objective,
+                Action = () => { DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName); },
+                DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, q)
+            }).ToList();
+
+            var emptyOption = new List<DialogOption>()
             {
                 new()
                 {
@@ -108,16 +115,10 @@ namespace Utils
                         DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName)
                 }
             };
-
-            var options = quests.Select(q => new DialogOption
-            {
-                Text = q.Objective,
-                Action = () => { DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName); },
-                DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, q)
-            }).ToList();
-
-            responseOptions.AddRange(options);
-            quest.ResponseOptions = responseOptions;
+            
+            
+            options.AddRange(emptyOption);
+            quest.ResponseOptions = options;
             return quest;
         }
 
@@ -176,7 +177,7 @@ namespace Utils
                         QuestJournal.Instance.AddSideQuest(npcData.Quest);
                         NewQuestPopup.Instance.Init(npcData.Quest.Objective);
                         NewQuestPopup.Instance.gameObject.SetActive(true);
-                        DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
+                        DialogWindow.Instance.NpcTalk("Отлично!", npcData.NpcName);
                         Debug.Log(QuestJournal.Instance.SideQuests);
                     },
                     DetailsText = GenerateQuestDescription(npcData.Quest)
@@ -184,7 +185,7 @@ namespace Utils
                 new()
                 {
                     Text = "Увы дружище, ничем не могу помочь",
-                    Action = () => { DialogWindow.Instance.NpcTalk("Бля пиздец хуево :(", npcData.NpcName); }
+                    Action = () => { DialogWindow.Instance.NpcTalk("Эхх, а я так надеялся...", npcData.NpcName); }
                 }
             };
 
