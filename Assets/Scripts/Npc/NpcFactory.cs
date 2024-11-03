@@ -65,7 +65,7 @@ namespace Npc
                 },
                 Quest = deadHeroData.Quest,
             };
-            AddNpcToQueue(demon);
+            NpcsQueue.Add(demon);
         }
 
         private static NpcData GenerateRandomNpc()
