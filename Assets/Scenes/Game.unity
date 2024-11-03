@@ -669,7 +669,15 @@ MonoBehaviour:
   - {fileID: -1818077472068935645, guid: c3a9f23e58b46764b8e5f35de58115da, type: 3}
   _weapons:
   - {fileID: -5703411853449480706, guid: c3a9f23e58b46764b8e5f35de58115da, type: 3}
-  npcPrefabs: []
+  npcPrefabs:
+  - {fileID: 3274393718849751423, guid: e7d372e283b529f44b16435d4c9db10f, type: 3}
+  - {fileID: 3274393718849751423, guid: fda70328c798a5ed6ba5b50ca24e1770, type: 3}
+  - {fileID: 3274393718849751423, guid: 8491602c842abe2519686c500f2f9a15, type: 3}
+  - {fileID: 3274393718849751423, guid: d827fe572a3e4a7949ffcaaa9bcd8f81, type: 3}
+  - {fileID: 3274393718849751423, guid: 7624eb0e87b4a5b06a990e889f74cb82, type: 3}
+  - {fileID: 3274393718849751423, guid: ddfcb7088e1bd159bbe01dd69cad3a18, type: 3}
+  - {fileID: 3274393718849751423, guid: 59f4407bc63ce0fa8807e6a955042fa7, type: 3}
+  - {fileID: 3274393718849751423, guid: 7336bce5e442aef0c9413b59524885bd, type: 3}
   spawnPosition: {x: -15, y: -1}
 --- !u!1 &331180413 stripped
 GameObject:
