@@ -248,6 +248,7 @@ namespace Utils
 
         private static DialogLine GetDialogWithCultist(NpcData npcData)
         {
+            if (npcData.IsIntro) return null;
             IncreaseGold(npcData.Quest.Location.RewardToReceive);
             return null;
         }

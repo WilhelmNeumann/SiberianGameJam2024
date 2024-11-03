@@ -9,7 +9,7 @@ namespace Npc
         public NpcData NpcData;
         [SerializeField] public MMF_Player Player;
         [SerializeField] public Transform LevelText;
-        
+
         public IEnumerator WalkIn()
         {
             Player.PlayFeedbacks();
@@ -30,8 +30,10 @@ namespace Npc
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
 
             var view = GetComponent<NpcView>();
-            if(view == null || NpcData.NpcType != NpcType.Hero) return;
-            view.GetTextTransform().localScale = new Vector2(-LevelText.localScale.x, LevelText.localScale.y);
+            if (view == null) return;
+            var textTransform = view.GetTextTransform();
+            if (textTransform == null) return;
+            textTransform.localScale = new Vector2(textTransform.localScale.x, textTransform.localScale.y);
         }
     }
 }
