@@ -143,7 +143,9 @@ namespace Npc
         private static NpcType GetRandomNpcType()
         {
             var types = new List<NpcType> { NpcType.Villager, NpcType.Hero };
-
+            
+            return types[Random.Range(0, types.Count)];
+            
             // Рассчитаем вероятность для каждого типа
             var total = villagerCount + heroCount + 1; // +1 чтобы избежать деления на ноль в начале
             var villagerProbability =
