@@ -21,6 +21,15 @@ namespace Utils {
         private Vector2 spawnPosition;
         
         public Transform CreateNpc(NpcData npcData) {
+            if (npcData.PrefabIndex == -1) {
+                return CreateNewNpc(npcData);
+            }
+            var npc = Instantiate(npcPrefabs[npcData.PrefabIndex], spawnPosition, Quaternion.identity);
+            npc.GetComponent<NpcView>().SetSprites(npcData.NpcViewData, npcData.Level);
+            return npc;
+        }
+        
+        private Transform CreateNewNpc(NpcData npcData) {
             var npcType = npcData.NpcType;
             //For first 3 types of npc prefab is selected by index
             //For the last type of npc prefab is selected randomly from index 3
