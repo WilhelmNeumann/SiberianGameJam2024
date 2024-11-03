@@ -30,7 +30,7 @@ namespace Utils
         private static IEnumerator GameplayLoop()
         {
             var npcData = NpcFactory.GetNextVisitor();
-            var npc = NpcManager.Instance.CreateNpc(npcData.NpcType);
+            var npc = NpcManager.Instance.CreateNpc(npcData);
             var tavernNpc = npc.GetComponent<TavernNpc>();
             yield return tavernNpc.WalkIn();
 

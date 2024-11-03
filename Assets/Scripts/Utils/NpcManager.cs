@@ -20,10 +20,12 @@ namespace Utils {
         [SerializeField]
         private Vector2 spawnPosition;
         
-        public Transform CreateNpc(NpcType npcType) {
+        public Transform CreateNpc(NpcData npcData) {
+            var npcType = npcData.NpcType;
             //For first 3 types of npc prefab is selected by index
             //For the last type of npc prefab is selected randomly from index 3
-            var npcPrefab = npcPrefabs[npcType == NpcType.Hero ? Random.Range(3, npcPrefabs.Count) : (int) npcType];
+            var prefabIndex = npcType == NpcType.Hero ? Random.Range(3, npcPrefabs.Count) : (int) npcType;
+            var npcPrefab = npcPrefabs[prefabIndex];
             var npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity);
             var npcViewData = new NpcViewData();
             if (npcType == NpcType.Hero) {
@@ -32,6 +34,8 @@ namespace Utils {
                 npcViewData.Weapon = _weapons[Random.Range(0, _weapons.Count)];
                 npc.GetComponent<NpcView>().SetSprites(npcViewData);
             }
+            npcData.NpcViewData = npcViewData;
+            npcData.PrefabIndex = prefabIndex;
             return npc;
         }
 
