@@ -68,8 +68,8 @@ namespace Utils
             {
                 NpcType.Hero => GetDialogWithHero(npcData),
                 NpcType.TaxCollector => GetDialogWithTaxCollector(npcData),
-                NpcType.Villager => GetDialogWithCultist(npcData),
-                NpcType.Cultist => GetDialogWithVillager(npcData),
+                NpcType.Villager => GetDialogWithVillager(npcData),
+                NpcType.Cultist => GetDialogWithCultist(npcData),
                 _ => throw new ArgumentOutOfRangeException()
             };
 
