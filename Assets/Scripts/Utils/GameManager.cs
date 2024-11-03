@@ -8,7 +8,6 @@ using Npc;
 using Quests;
 using TMPro;
 using Ui;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Utils
@@ -18,7 +17,7 @@ namespace Utils
         [SerializeField] public TextMeshProUGUI GoldTextMesh;
         [SerializeField] public int Gold = 1000;
         [SerializeField] public int TaxToPay = 300;
-
+        
         public IEnumerator Start()
         {
             while (true)
@@ -30,7 +29,9 @@ namespace Utils
         private static IEnumerator GameplayLoop()
         {
             var npcData = NpcFactory.GetNextVisitor();
-            yield return TavernNpc.Instance.WalkIn();
+            var npc = NpcManager.Instance.CreateNpc();
+            var tavernNpc = npc.GetComponent<TavernNpc>();
+            yield return tavernNpc.WalkIn();
 
             var scenario = GetDialogScenario(npcData);
 
@@ -48,7 +49,7 @@ namespace Utils
 
             DialogWindow.Instance.Hide();
 
-            yield return TavernNpc.Instance.WalkOut();
+            yield return tavernNpc.WalkOut();
         }
 
 

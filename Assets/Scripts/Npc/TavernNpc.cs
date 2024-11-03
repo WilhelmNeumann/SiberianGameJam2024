@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Npc
 {
-    public class TavernNpc : Utils.Singleton<TavernNpc>
+    public class TavernNpc : MonoBehaviour
     {
         public NpcData NpcData;
         [SerializeField] public MMF_Player Player;
