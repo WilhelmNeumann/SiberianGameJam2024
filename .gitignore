@@ -48,3 +48,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 fmod_editor.log
+/ProjectSettings/ProjectSettings.asset
+/.vsconfig
