@@ -37,6 +37,11 @@ namespace Npc
         {
             NpcsQueue.Add(npc);
         }
+
+        public static void AddDemonToTheQueue()
+        {
+            
+        }
         
         private static NpcData GenerateRandomNpc()
         {

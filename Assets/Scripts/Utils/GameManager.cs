@@ -58,24 +58,13 @@ namespace Utils
         // Получить сценарий для диалога, со всеми репликами
         private static List<DialogLine> GetDialogScenario(NpcData npcData)
         {
+            if (npcData.NpcType == NpcType.Hero)
+            {
+            }
+
             var scenario = new List<DialogLine>();
             var greetings = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
-
-            if (!npcData.IsIntro)
-            {
-                greetings.Last().ResponseOptions = new List<DialogOption>()
-                {
-                    new() { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" }
-                };
-            }
-            else
-            {
-                greetings.Last().ResponseOptions = new List<DialogOption>()
-                {
-                    new() { Text = "Хорошо, я посмотрю что можно сделать" }
-                };
-            }
-
+            AddGreetingsResponse(npcData, greetings);
             scenario.AddRange(greetings);
 
             var npcDialog = npcData.NpcType switch
@@ -95,12 +84,81 @@ namespace Utils
             return scenario;
         }
 
+        private static void AddGreetingsResponse(NpcData npcData, List<DialogLine> greetings)
+        {
+            if (!npcData.IsIntro)
+            {
+                greetings.Last().ResponseOptions = new List<DialogOption>()
+                {
+                    new() { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" }
+                };
+            }
+            else
+            {
+                greetings.Last().ResponseOptions = new List<DialogOption>()
+                {
+                    new() { Text = "Хорошо, я посмотрю что можно сделать" }
+                };
+            }
+        }
+
         private static DialogLine GetDialogWithHero(NpcData npcData)
         {
-            var quest = ToNpcTalkDialogLine("Есть для меня работа?");
-            var quests = QuestJournal.Instance.SideQuests;
+            DialogLine line;
+            // Если герой пришел после выполнения задания
+            if (npcData.Quest != null)
+            {
+                // Задание выполнено, есть еще?
+                line = ToNpcTalkDialogLine(npcData.Quest.CompletionText +
+                                           "\nСпасибо за награду.\nЕсть для меня еще работа?");
+                // Даем золото
+                IncreaseGold(npcData.Quest.Gold);
+                // Если мейн квест, меняем стейт
+                if (npcData.Quest.QuestType == QuestType.MainQuest)
+                {
+                    Location.GetById(npcData.Quest.Location.ID).State = LocationState.Good;
+                }
 
-            var options = quests.Select(q => new DialogOption
+                npcData.Quest = null;
+                npcData.Level += 1;
+            }
+            else
+            {
+                line = ToNpcTalkDialogLine("Есть для меня работа?");
+            }
+
+            var dialogOptionsForQuests = GenerateDialogOptionsForSideQuests(npcData);
+            var mainQuest = QuestFactory.GetNextMainQuest();
+            var dialogOptionForMainQuest = new DialogOption
+            {
+                Text = mainQuest.Objective,
+                Action = () =>
+                {
+                    DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName);
+                },
+                DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
+            };
+
+            var dialogOptionNoQuest = new List<DialogOption>()
+            {
+                new()
+                {
+                    Text = "У меня нет для тебя работы на сегодня",
+                    Action = () =>
+                        DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName)
+                }
+            };
+
+            dialogOptionsForQuests.AddRange(dialogOptionNoQuest);
+            dialogOptionsForQuests.Add(dialogOptionForMainQuest);
+            line.ResponseOptions = dialogOptionsForQuests;
+            return line;
+        }
+
+        private static List<DialogOption> GenerateDialogOptionsForSideQuests(NpcData npcData)
+        {
+            var quests = QuestJournal.Instance.SideQuests;
+            return quests.Select(q => new DialogOption
             {
                 Text = q.Objective,
                 Action = () =>
@@ -113,40 +171,21 @@ namespace Utils
                     {
                         npcData.Quest.QuestState = QuestState.Success;
                         NpcFactory.AddNpcToQueue(npcData);
+                        if (q.QuestType == QuestType.SideQuest)
+                        {
+                            QuestJournal.Instance.SideQuests.Remove(q);
+                        }
                     }
                     else
                     {
                         npcData.Quest.QuestState = QuestState.Failed;
+                        // Получаем почту что герой умер на задании
                     }
                 },
                 DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, q)
             }).ToList();
-
-            var mainQuest = new List<DialogOption>()
-            {
-                new()
-                {
-                    Text = "У меня нет для тебя работы на сегодня",
-                    Action = () =>
-                        DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName)
-                }
-            };
-
-            var emptyOption = new List<DialogOption>()
-            {
-                new()
-                {
-                    Text = "У меня нет для тебя работы на сегодня",
-                    Action = () =>
-                        DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName)
-                }
-            };
-            
-            
-            options.AddRange(emptyOption);
-            quest.ResponseOptions = options;
-            return quest;
         }
+
 
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
         {
@@ -154,7 +193,7 @@ namespace Utils
             {
                 return null;
             }
-            
+
             var line = ToNpcTalkDialogLine($"Я пришел собрать нологи! Плоти {Instance.TaxToPay} золота");
             line.ResponseOptions = new List<DialogOption>()
             {
@@ -163,15 +202,8 @@ namespace Utils
                     Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золотых]",
                     Action = () =>
                     {
-                        DOVirtual.Int(Instance.Gold, Instance.Gold - Instance.TaxToPay, 1f,
-                                value =>
-                                {
-                                    Instance.GoldTextMesh.text = value.ToString();
-                                    Instance.Gold = value;
-                                })
-                            .SetEase(Ease.InOutSine)
-                            .SetAutoKill(true);
-                        
+                        ReduceGold(Instance.TaxToPay);
+
                         DialogWindow.Instance.NpcTalk("Ярл благодарит тебя!", npcData.NpcName);
                     }
                 },
@@ -264,6 +296,30 @@ namespace Utils
 
             // Ограничиваем вероятность успеха в пределах от 0 до 1
             return Math.Clamp(successProbability, 0.0, 1.0) * 100;
+        }
+
+        private static void ReduceGold(int amount)
+        {
+            DOVirtual.Int(Instance.Gold, Instance.Gold - amount, 1f,
+                    value =>
+                    {
+                        Instance.GoldTextMesh.text = value.ToString();
+                        Instance.Gold = value;
+                    })
+                .SetEase(Ease.InOutSine)
+                .SetAutoKill(true);
+        }
+
+        private static void IncreaseGold(int amount)
+        {
+            DOVirtual.Int(Instance.Gold, Instance.Gold + amount, 1f,
+                    value =>
+                    {
+                        Instance.GoldTextMesh.text = value.ToString();
+                        Instance.Gold = value;
+                    })
+                .SetEase(Ease.InOutSine)
+                .SetAutoKill(true);
         }
     }
 }

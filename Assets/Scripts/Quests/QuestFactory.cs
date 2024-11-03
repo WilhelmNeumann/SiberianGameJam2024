@@ -34,6 +34,9 @@ namespace Quests
             {
                 QuestType = QuestType.MainQuest,
                 Location = location,
+                Difficulty = location.Difficulty,
+                Xp = Random.Range(1, 50),
+                Gold = location.RewardToGive,
             };
         }
         
