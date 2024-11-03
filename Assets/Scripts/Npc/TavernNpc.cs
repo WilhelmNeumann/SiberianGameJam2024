@@ -1,10 +1,5 @@
-using System;
 using System.Collections;
-using System.Linq;
-using DG.Tweening;
-using Dialogs;
 using MoreMountains.Feedbacks;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Npc
@@ -26,8 +21,7 @@ namespace Npc
             Player.Revert();
             Player.PlayFeedbacks();
             yield return new WaitForSeconds(Player.TotalDuration);
-            Player.Revert();
-            TurnAround();
+            Destroy(gameObject);
         }
 
         private void TurnAround()
