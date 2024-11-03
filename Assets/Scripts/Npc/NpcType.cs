@@ -2,9 +2,9 @@ namespace Npc
 {
     public enum NpcType
     {
-        Hero,
         TaxCollector,
+        Cultist,
         Villager,
-        Cultist
+        Hero
     }
 }
