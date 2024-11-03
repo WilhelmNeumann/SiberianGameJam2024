@@ -18,7 +18,7 @@ namespace Utils
     {
         [SerializeField] public TextMeshProUGUI GoldTextMesh;
         [SerializeField] public int Gold = 1000;
-        [SerializeField] public int TaxToPay = 300;
+        [SerializeField] public int TaxToPay = 1000;
 
         public IEnumerator Start()
         {
@@ -84,13 +84,24 @@ namespace Utils
         private static void AddGreetingsResponse(NpcData npcData, List<DialogLine> greetings)
         {
             DialogOption option;
-            if (npcData.Quest is { QuestState: QuestState.Success })
+            if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.SideQuest })
             {
                 var reward = npcData.Quest.Gold;
                 option = new DialogOption
                 {
+                    // Если герой выполнил побочку квест, нам платит заказчик, а мы берем процент
                     Text = "Вот твоя награда, но я заберу себе скромный процент",
                     Action = () => { IncreaseGold(reward); }
+                };
+            }
+            else  if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.MainQuest })
+            {
+                var reward = npcData.Quest.Gold;
+                option = new DialogOption
+                {
+                    // Если герой выполнил основной квест, мы платим из своего кармана
+                    Text = $"Вот твоя награда, {npcData.Quest.Location.Name} может спать спокойно.",
+                    Action = () => { ReduceGold(reward); }
                 };
             }
             else
@@ -110,7 +121,7 @@ namespace Utils
             if (npcData.Quest != null)
             {
                 // Задание выполнено, есть еще?
-                line = ToNpcTalkDialogLine("\nСпасибо за награду.\nЕсть для меня еще работа?");
+                line = ToNpcTalkDialogLine("Благодарю.\nЕсть для меня еще работа?");
                 // Если мейн квест, меняем стейт
                 if (npcData.Quest.QuestType == QuestType.MainQuest)
                 {
