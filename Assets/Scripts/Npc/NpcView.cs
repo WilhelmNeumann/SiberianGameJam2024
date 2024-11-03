@@ -16,9 +16,7 @@ namespace Npc {
             head.sprite = data.Head;
             lvlText.text = lvl.ToString();
         }
-        
-        public void SetTextLocalScale(Vector2 scale) {
-            lvlText.transform.localScale = scale;
-        }
+
+        public Transform GetTextTransform() => lvlText.transform;
     }
 }

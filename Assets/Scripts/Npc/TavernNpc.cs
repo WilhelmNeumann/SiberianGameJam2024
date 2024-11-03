@@ -8,6 +8,7 @@ namespace Npc
     {
         public NpcData NpcData;
         [SerializeField] public MMF_Player Player;
+        [SerializeField] public Transform LevelText;
         
         public IEnumerator WalkIn()
         {
@@ -27,6 +28,10 @@ namespace Npc
         private void TurnAround()
         {
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+
+            var view = GetComponent<NpcView>();
+            if(view == null) return;
+            view.GetTextTransform().localScale = new Vector2(-LevelText.localScale.x, LevelText.localScale.y);
         }
     }
 }

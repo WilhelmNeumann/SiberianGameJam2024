@@ -529,6 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 3516992281454472624}
+  LevelText: {fileID: 0}
 --- !u!114 &4893082685456221557
 MonoBehaviour:
   m_ObjectHideFlags: 0
