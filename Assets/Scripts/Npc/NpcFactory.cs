@@ -11,8 +11,6 @@ namespace Npc
         {
             GetVillagerFirstInteraction(),
             GetCultistFirstInteraction(),
-            // GenerateNpcOfType(NpcType.Villager),
-            // GenerateNpcOfType(NpcType.Hero),
         };
 
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
@@ -82,9 +80,11 @@ namespace Npc
 
         private static NpcType GetRandomNpcType()
         {
+            var types = new List<NpcType> { NpcType.Villager, NpcType.Hero };
+            
             var values = Enum.GetValues(typeof(NpcType));
             var random = Random.Range(0, values.Length);
-            return (NpcType)values.GetValue(random);
+            return types[Random.Range(0, types.Count - 1)];
         }
 
         private static List<string> GenerateGreetingsText()
