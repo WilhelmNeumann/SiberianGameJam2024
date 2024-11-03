@@ -40,6 +40,12 @@ namespace Npc
 
         public static void AddDemonToTheQueue(NpcData deadHeroData)
         {
+            var nextLocation = deadHeroData.Quest.Location.ID + 1;
+            if (nextLocation > Location.Locations.Count)
+            {
+                //#TODO: локации закончились
+            }
+            
             var demon = new NpcData
             {
                 NpcType = NpcType.Cultist,
@@ -48,11 +54,12 @@ namespace Npc
                 GreetingsText = new List<string>
                 {
                     $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и был принесен в жертву.",
-                    "Вот плата, как и договаривались"
+                    deadHeroData.Quest.Location.BadCompletionText,
+                    "Вот твоя награда, как и договаривались!"
                 },
                 ByeText = new List<string>
                 {
-                    "Присылай нам еще жертв, и мы в долгу не останемся"
+                    $"Следующую жертву приведи в {Location.GetById(nextLocation).Name}"
                 }
             };
             AddNpcToQueue(demon);
