@@ -9,37 +9,29 @@ namespace Utils {
         private List<Sprite> _hats;
         
         [SerializeField]
-        private List<Sprite> _bodies;
-        
-        [SerializeField]
         private List<Sprite> _heads;
-        
-        [SerializeField]
-        private List<Sprite> _leftHands;
-        
-        [SerializeField]
-        private List<Sprite> _rightHands;
         
         [SerializeField]
         private List<Sprite> _weapons;
         
         [SerializeField]
-        private Transform npcPrefab;
+        private List<Transform> npcPrefabs;
         
         [SerializeField]
         private Vector2 spawnPosition;
         
         public Transform CreateNpc(NpcType npcType) {
-            var npc = GameObject.Instantiate(npcPrefab, spawnPosition, Quaternion.identity);
+            //For first 3 types of npc prefab is selected by index
+            //For the last type of npc prefab is selected randomly from index 3
+            var npcPrefab = npcPrefabs[npcType == NpcType.Hero ? Random.Range(3, npcPrefabs.Count) : (int) npcType];
+            var npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity);
             var npcViewData = new NpcViewData();
-            npcViewData.Hat = _hats[Random.Range(0, _hats.Count)];
-            npcViewData.Body = _bodies[Random.Range(0, _bodies.Count)];
-            npcViewData.Head = _heads[Random.Range(0, _heads.Count)];
-            npcViewData.LeftHand = _leftHands[Random.Range(0, _leftHands.Count)];
-            npcViewData.RightHand = _rightHands[Random.Range(0, _rightHands.Count)];
-            
-            npcViewData.Weapon = npcType is NpcType.Villager ? null : _weapons[Random.Range(0, _weapons.Count)];
-            npc.GetComponent<NpcView>().SetSprites(npcViewData);
+            if (npcType == NpcType.Hero) {
+                npcViewData.Hat = _hats[Random.Range(0, _hats.Count)];
+                npcViewData.Head = _heads[Random.Range(0, _heads.Count)];
+                npcViewData.Weapon = _weapons[Random.Range(0, _weapons.Count)];
+                npc.GetComponent<NpcView>().SetSprites(npcViewData);
+            }
             return npc;
         }
 
