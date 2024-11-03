@@ -20,6 +20,10 @@ namespace Map {
                 }
             }
         }
+        
+        public void CloseMapPanel() {
+            UIManager.Instance.ClosePanel(transform.parent as RectTransform);
+        }
 
     }
 }

@@ -11,7 +11,7 @@ namespace Ui
     {
         [SerializeField] private MMF_Player _player;
         [SerializeField] private Text _text;
-        [SerializeField] private GlowOnHover _board;
+        [SerializeField] private ClickableObject _board;
 
         private new void Awake()
         {

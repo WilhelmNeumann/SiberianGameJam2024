@@ -546,6 +546,7 @@ GameObject:
   - component: {fileID: 319067208}
   - component: {fileID: 319067211}
   - component: {fileID: 319067212}
+  - component: {fileID: 319067213}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -679,6 +680,18 @@ MonoBehaviour:
   - {fileID: 3274393718849751423, guid: 59f4407bc63ce0fa8807e6a955042fa7, type: 3}
   - {fileID: 3274393718849751423, guid: 7336bce5e442aef0c9413b59524885bd, type: 3}
   spawnPosition: {x: -15, y: -1}
+--- !u!114 &319067213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319067207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d61f2eb64c849f9878d7aa2251b54da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &331180413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8240575626549041544, guid: bde9247aa1b9d864b96282800348e4fb, type: 3}
@@ -820,6 +833,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowOnHoverMaterial: {fileID: 2100000, guid: 17a5faa48d6f93041b200c0f2de87bce, type: 2}
+  onMouseDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &455088779
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1539,6 +1555,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowOnHoverMaterial: {fileID: 2100000, guid: 17a5faa48d6f93041b200c0f2de87bce, type: 2}
+  onMouseDownEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 319067213}
+        m_TargetAssemblyTypeName: Utils.UIManager, Assembly-CSharp
+        m_MethodName: OpenPanel
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1783955546}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!61 &640148243
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1685,6 +1716,14 @@ PrefabInstance:
     - target: {fileID: 7519036907816211254, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_Name
       value: Ui
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199919940026713384, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860179719947408945, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 25.921875
       objectReference: {fileID: 0}
     - target: {fileID: 9070859251416972003, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3019,6 +3058,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1783955546 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8860179719947408945, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+  m_PrefabInstance: {fileID: 653704314}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1789881464
 GameObject:
   m_ObjectHideFlags: 0
@@ -3477,6 +3521,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowOnHoverMaterial: {fileID: 2100000, guid: 17a5faa48d6f93041b200c0f2de87bce, type: 2}
+  onMouseDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2050266659
 PrefabInstance:
   m_ObjectHideFlags: 0
