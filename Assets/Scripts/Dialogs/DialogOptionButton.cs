@@ -12,7 +12,7 @@ namespace Dialogs
         [SerializeField] public Material Glow;
         [SerializeField] public GameObject Details;
         [SerializeField] public Text DetailsText;
-        
+
         public Action Action;
 
         public void OnClick()
@@ -25,7 +25,8 @@ namespace Dialogs
         {
             Action = action;
             UiText.text = optionText;
-            DetailsText.text = detailsText;
+            if (detailsText != null)
+                DetailsText.text = detailsText;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
