@@ -86,10 +86,11 @@ namespace Utils
             DialogOption option;
             if (npcData.Quest is { QuestState: QuestState.Success })
             {
+                var reward = npcData.Quest.Gold;
                 option = new DialogOption
                 {
                     Text = "Вот твоя награда, но я заберу себе скромный процент",
-                    Action = () => { IncreaseGold(npcData.Quest.Gold); }
+                    Action = () => { IncreaseGold(reward); }
                 };
             }
             else

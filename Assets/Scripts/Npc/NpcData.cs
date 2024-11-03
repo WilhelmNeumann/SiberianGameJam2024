@@ -12,7 +12,7 @@ namespace Npc
         public List<string> ByeText;
         public Quest Quest;
         public bool IsIntro;
-        public int PrefabIndex;
+        public int PrefabIndex = - 1;
         public NpcViewData NpcViewData;
     }
 }
