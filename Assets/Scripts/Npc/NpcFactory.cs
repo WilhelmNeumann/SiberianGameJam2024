@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Quests;
-using Utils;
 using Random = UnityEngine.Random;
 
 namespace Npc
 {
     public static class NpcFactory
     {
-        private static List<NpcData> _npcsQueue = new List<NpcData>
+        private static readonly List<NpcData> NpcsQueue = new()
         {
             GetVillagerFirstInteraction(),
-            // GenerateNpcOfType(NpcType.TaxCollector),
+            GetCultistFirstInteraction(),
             // GenerateNpcOfType(NpcType.Villager),
             // GenerateNpcOfType(NpcType.Hero),
         };
@@ -19,14 +18,14 @@ namespace Npc
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
         public static NpcData GetNextVisitor()
         {
-            if (_npcsQueue.Count == 0)
+            if (NpcsQueue.Count == 0)
             {
                 var npcType = GetRandomNpcType();
                 return GenerateNpcOfType(npcType);
             }
 
-            var npc = _npcsQueue[0];
-            _npcsQueue.RemoveAt(0);
+            var npc = NpcsQueue[0];
+            NpcsQueue.RemoveAt(0);
             return npc;
         }
 
@@ -120,6 +119,20 @@ namespace Npc
                 "Его культисты рыщут повсюду и захватывают аванпосты по всему королевству",
                 "Так еще и других проблем у нас в округе хватает, повсюду бардак",
                 "К тебе тут иногда захаживают Герои, можешь направлять их к нам на помощь?"
+            },
+            ByeText = new List<string> { "Спасибо тебе, бывай!" }
+        };
+        
+        private static NpcData GetCultistFirstInteraction() => new()
+        {
+            NpcType = NpcType.Cultist,
+            NpcName = "Сектант культа демонов",
+            IsIntro = true,
+            GreetingsText = new List<string>
+            {
+                "Здравствуй трактирщик! Наш культ пытается возродить Короля Демонов",
+                "Для его воскрешения нам нужны души героев",
+                "Если к тебе зайдет парочка, отправь их к нам, мы в долгу не останемся",
             },
             ByeText = new List<string> { "Спасибо тебе, бывай!" }
         };
