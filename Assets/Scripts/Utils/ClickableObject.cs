@@ -40,16 +40,28 @@ namespace Utils
 
         public void OnMouseEnter()
         {
+            if (UIManager.Instance.IsPanelOpen)
+            {
+                return;
+            }
             SetMaterial(glowOnHoverMaterial);
         }
 
         public void OnMouseExit()
         {
+            if (UIManager.Instance.IsPanelOpen)
+            {
+                return;
+            }
             SetMaterial(originalMaterial);
         }
 
         public void OnMouseDown()
         {
+            if (UIManager.Instance.IsPanelOpen)
+            {
+                return;
+            }
             onMouseDownEvent?.Invoke();
         }
 

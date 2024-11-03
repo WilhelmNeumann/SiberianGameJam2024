@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace Npc {
@@ -7,10 +8,13 @@ namespace Npc {
         private SpriteRenderer hat;
         [SerializeField]
         private SpriteRenderer head;
+        [SerializeField]
+        private TMP_Text lvlText;
         
-        public void SetSprites(NpcViewData data) {
+        public void SetSprites(NpcViewData data, int lvl) {
             hat.sprite = data.Hat;
             head.sprite = data.Head;
+            lvlText.text = lvl.ToString();
         }
 
 
