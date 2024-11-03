@@ -24,6 +24,13 @@ namespace Npc
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
         public static NpcData GetNextVisitor()
         {
+            _npcCount += 1;
+            if (_npcCount >= _taxCollectorInterval)
+            {
+                _npcCount = 0;
+                NpcsQueue.Add(GenerateNpcOfType(NpcType.TaxCollector));
+            }
+
             if (NpcsQueue.Count == 0)
             {
                 return GenerateRandomNpc();
@@ -78,16 +85,8 @@ namespace Npc
 
         private static NpcData GenerateRandomNpc()
         {
-            AddTaxCollectorToQueueIfNeeded();
-            
             var npcType = GetRandomNpcType();
             return GenerateNpcOfType(npcType);
-        }
-
-        private static void AddTaxCollectorToQueueIfNeeded()
-        {
-            _npcCount += 1;
-            NpcsQueue.Add(GenerateNpcOfType(NpcType.TaxCollector));
         }
 
         private static NpcData GenerateNpcOfType(NpcType npcType) => npcType switch
