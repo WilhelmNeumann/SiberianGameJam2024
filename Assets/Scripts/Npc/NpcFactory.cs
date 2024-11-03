@@ -7,11 +7,14 @@ namespace Npc
 {
     public static class NpcFactory
     {
+        private static int villagerCount = 0;
+        private static int heroCount = 0;
+
         private static readonly List<NpcData> NpcsQueue = new()
         {
-            GetTaxCollectorFirstInteraction(),
-            GetVillagerFirstInteraction(),
-            GetCultistFirstInteraction()
+            // GetTaxCollectorFirstInteraction(),
+            // GetVillagerFirstInteraction(),
+            // GetCultistFirstInteraction()
         };
 
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
@@ -82,10 +85,24 @@ namespace Npc
         private static NpcType GetRandomNpcType()
         {
             var types = new List<NpcType> { NpcType.Villager, NpcType.Hero };
-            
-            var values = Enum.GetValues(typeof(NpcType));
-            var random = Random.Range(0, values.Length);
-            return types[Random.Range(0, types.Count - 1)];
+
+            // Рассчитаем вероятность для каждого типа
+            var total = villagerCount + heroCount + 1; // +1 чтобы избежать деления на ноль в начале
+            var villagerProbability =
+                (heroCount + 1) / total; // Чем больше героев, тем выше вероятность деревенского жителя
+
+            var roll = new System.Random().NextDouble();
+
+            if (roll < villagerProbability)
+            {
+                villagerCount++;
+                return NpcType.Villager;
+            }
+            else
+            {
+                heroCount++;
+                return NpcType.Hero;
+            }
         }
 
         private static List<string> GenerateGreetingsText()
@@ -122,7 +139,7 @@ namespace Npc
             },
             ByeText = new List<string> { "Спасибо тебе, бывай!" }
         };
-        
+
         private static NpcData GetCultistFirstInteraction() => new()
         {
             NpcType = NpcType.Cultist,
