@@ -9,7 +9,6 @@ using Quests;
 using TMPro;
 using Ui;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Utils
 {
@@ -60,10 +59,21 @@ namespace Utils
         {
             var scenario = new List<DialogLine>();
             var greetings = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
-            greetings.Last().ResponseOptions = new List<DialogOption>()
+
+            if (!npcData.IsIntro)
             {
-                new() { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" }
-            };
+                greetings.Last().ResponseOptions = new List<DialogOption>()
+                {
+                    new() { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" }
+                };
+            }
+            else
+            {
+                greetings.Last().ResponseOptions = new List<DialogOption>()
+                {
+                    new() { Text = "Хорошо, я посмотрю что можно сделать" }
+                };
+            }
 
             scenario.AddRange(greetings);
 
@@ -76,7 +86,8 @@ namespace Utils
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            scenario.Add(npcDialog);
+            if (npcDialog != null)
+                scenario.Add(npcDialog);
 
             var goodBye = npcData.ByeText.Select(ToNpcTalkDialogLine).ToList();
             scenario.AddRange(goodBye);
@@ -144,6 +155,11 @@ namespace Utils
 
         private static DialogLine GetDialogWithVillager(NpcData npcData)
         {
+            if (npcData.Quest == null)
+            {
+                return null;
+            }
+
             var quest = ToNpcTalkDialogLine(npcData.Quest.ApplicationText);
             quest.ResponseOptions = new List<DialogOption>()
             {

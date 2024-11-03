@@ -10,9 +10,9 @@ namespace Quests
         public LocationState State;
 
         public void SetState(LocationState state) => State = state;
-        
+
         public static Location GetById(int id) => Location.Locations.First(x => x.ID == id);
-        
+
         public static readonly List<Location> Locations = new()
         {
             new Location { ID = 1, Name = "Болото", State = LocationState.Neutral },

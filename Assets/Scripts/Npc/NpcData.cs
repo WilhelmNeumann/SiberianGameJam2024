@@ -11,5 +11,6 @@ namespace Npc
         public List<string> GreetingsText;
         public List<string> ByeText;
         public Quest Quest;
+        public bool IsIntro;
     }
 }

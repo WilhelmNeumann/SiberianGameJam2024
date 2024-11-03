@@ -1,33 +1,33 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Quests;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace Npc
 {
-    public abstract class NpcFactory
+    public class NpcFactory
     {
-        private static readonly List<NpcType> Npcs = new()
+        private static List<NpcData> _npcsQueue = new List<NpcData>
         {
-            NpcType.Villager,
-            NpcType.TaxCollector,
-            NpcType.Hero,
-            NpcType.Villager
+            GetVillagerFirstInteraction(),
+            // GenerateNpcOfType(NpcType.TaxCollector),
+            // GenerateNpcOfType(NpcType.Villager),
+            // GenerateNpcOfType(NpcType.Hero),
         };
 
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
         public static NpcData GetNextVisitor()
         {
-            if (Npcs.Count == 0)
+            if (_npcsQueue.Count == 0)
             {
                 var npcType = GetRandomNpcType();
                 return GenerateNpcOfType(npcType);
             }
 
-            var npc = Npcs.Last();
-            Npcs.RemoveAt(Npcs.Count - 1);
-            return GenerateNpcOfType(npc);
+            var npc = _npcsQueue[0];
+            _npcsQueue.RemoveAt(0);
+            return npc;
         }
 
         private static NpcData GenerateNpcOfType(NpcType npcType) => npcType switch
@@ -109,6 +109,20 @@ namespace Npc
             };
         }
 
+        private static NpcData GetVillagerFirstInteraction() => new()
+        {
+            NpcType = NpcType.Villager,
+            NpcName = "Староста деревни",
+            IsIntro = true,
+            GreetingsText = new List<string>
+            {
+                "Привет Трактирщик! Как ты знаешь, на наших землях пробуждается культ Короля демонов",
+                "Его культисты рыщут повсюду и захватывают аванпосты по всему королевству",
+                "Так еще и других проблем у нас в округе хватает, повсюду бардак",
+                "К тебе тут иногда захаживают Герои, можешь направлять их к нам на помощь?"
+            },
+            ByeText = new List<string> { "Спасибо тебе, бывай!" }
+        };
 
         private static readonly string[] Greetings1 =
         {
