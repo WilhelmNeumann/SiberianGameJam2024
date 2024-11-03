@@ -8,6 +8,7 @@ using Npc;
 using Quests;
 using TMPro;
 using Ui;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -86,20 +87,11 @@ namespace Utils
 
         private static void AddGreetingsResponse(NpcData npcData, List<DialogLine> greetings)
         {
-            if (!npcData.IsIntro)
-            {
-                greetings.Last().ResponseOptions = new List<DialogOption>()
-                {
-                    new() { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" }
-                };
-            }
-            else
-            {
-                greetings.Last().ResponseOptions = new List<DialogOption>()
-                {
-                    new() { Text = "Хорошо, я посмотрю что можно сделать" }
-                };
-            }
+            var option = npcData.IsIntro
+                ? new DialogOption { Text = "Хорошо, я посмотрю что можно сделать" }
+                : new DialogOption { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" };
+
+            greetings.Last().ResponseOptions = new List<DialogOption> { option };
         }
 
         private static DialogLine GetDialogWithHero(NpcData npcData)
@@ -209,11 +201,7 @@ namespace Utils
 
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
         {
-            if (npcData.IsIntro)
-            {
-                return null;
-            }
-
+            if (npcData.IsIntro) return null;
             var line = ToNpcTalkDialogLine($"Я пришел собрать нологи! Плоти {Instance.TaxToPay} золота");
             line.ResponseOptions = GetTaxCollectorDialogOptions(npcData, Instance.TaxToPay);
             return line;
@@ -308,26 +296,24 @@ namespace Utils
         }
 
 
-        public static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
+        private static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
         {
             var details = GenerateQuestDescription(quest);
             details += $"\nШанс успеха: {CalculateSuccessChance(npcData, quest)}%";
             return details;
         }
 
-        public static double CalculateSuccessChance(NpcData npcData, Quest quest)
+        private static double CalculateSuccessChance(NpcData npcData, Quest quest)
         {
             var heroLevel = npcData.Level;
             var questDifficulty = quest.Difficulty;
             // Рассчитываем вероятность успеха
             var successProbability = 0.5 + 0.1 * (heroLevel - questDifficulty);
-
             // Ограничиваем вероятность успеха в пределах от 0 до 1
             return Math.Clamp(successProbability, 0.0, 1.0) * 100;
         }
 
-        private static void ReduceGold(int amount)
-        {
+        private static void ReduceGold(int amount) =>
             DOVirtual.Int(Instance.Gold, Instance.Gold - amount, 1f,
                     value =>
                     {
@@ -336,10 +322,9 @@ namespace Utils
                     })
                 .SetEase(Ease.InOutSine)
                 .SetAutoKill(true);
-        }
 
-        private static void IncreaseGold(int amount)
-        {
+
+        private static void IncreaseGold(int amount) =>
             DOVirtual.Int(Instance.Gold, Instance.Gold + amount, 1f,
                     value =>
                     {
@@ -348,6 +333,5 @@ namespace Utils
                     })
                 .SetEase(Ease.InOutSine)
                 .SetAutoKill(true);
-        }
     }
 }

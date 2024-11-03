@@ -50,6 +50,7 @@ namespace Npc
             {
                 NpcType = NpcType.Cultist,
                 Level = 0,
+                IsIntro = true,
                 NpcName = "Культист Короля Демонов",
                 GreetingsText = new List<string>
                 {
