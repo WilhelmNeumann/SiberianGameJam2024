@@ -18,7 +18,7 @@ namespace Utils
         [SerializeField] public TextMeshProUGUI GoldTextMesh;
         [SerializeField] public int Gold = 1000;
         [SerializeField] public int TaxToPay = 300;
-        
+
         public IEnumerator Start()
         {
             while (true)
@@ -101,11 +101,12 @@ namespace Utils
             var options = quests.Select(q => new DialogOption
             {
                 Text = q.Objective,
-                Action = () => { DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName); }
+                Action = () => { DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName); },
+                DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, q)
             }).ToList();
 
             responseOptions.AddRange(options);
-            quest.ResponseOptions = options;
+            quest.ResponseOptions = responseOptions;
             return quest;
         }
 
@@ -157,7 +158,7 @@ namespace Utils
                         DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
                         Debug.Log(QuestJournal.Instance.SideQuests);
                     },
-                    DetailsText = GenerateDetailsTextForVillager(npcData)
+                    DetailsText = GenerateQuestDescription(npcData.Quest)
                 },
                 new()
                 {
@@ -175,11 +176,28 @@ namespace Utils
 
         private static DialogLine ToNpcTalkDialogLine(string text) => new() { Text = text };
 
-        private static string GenerateDetailsTextForVillager(NpcData npcData) => "" +
+        private static string GenerateQuestDescription(Quest quest) => "" +
             "Задание\n" +
-            $"Цель: {npcData.Quest.Objective}\n" +
-          
-            $"Награда: {npcData.Quest.Gold}\n" +
-            $"Сложность: {npcData.Quest.Difficulty}/10\n";
+            $"Цель: {quest.Objective}\n" +
+            $"Награда: {quest.Gold}\n" +
+            $"Сложность: {quest.Difficulty}/10\n";
+
+        public static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest) =>
+            "Задание\n" +
+            $"Цель: {quest.Objective}\n" +
+            $"Награда: {quest.Gold}\n" +
+            $"Сложность: {quest.Difficulty}/10\n" +
+            $"Шанс успеха: {CalculateSuccessChance(npcData, quest)}";
+
+        public static double CalculateSuccessChance(NpcData npcData, Quest quest)
+        {
+            var heroLevel = npcData.Level;
+            var questDifficulty = quest.Difficulty;
+            // Рассчитываем вероятность успеха
+            var successProbability = 0.5 + 0.1 * (heroLevel - questDifficulty);
+
+            // Ограничиваем вероятность успеха в пределах от 0 до 1
+            return Math.Clamp(successProbability, 0.0, 1.0) * 100;
+        }
     }
 }
