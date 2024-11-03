@@ -111,8 +111,6 @@ namespace Utils
             {
                 // Задание выполнено, есть еще?
                 line = ToNpcTalkDialogLine("\nСпасибо за награду.\nЕсть для меня еще работа?");
-                // Даем золото
-                IncreaseGold(npcData.Quest.Gold);
                 // Если мейн квест, меняем стейт
                 if (npcData.Quest.QuestType == QuestType.MainQuest)
                 {
@@ -177,7 +175,7 @@ namespace Utils
                 Text = q.Objective,
                 Action = () =>
                 {
-                    DialogWindow.Instance.NpcTalk("Я вернусь за наградой позже!", npcData.NpcName);
+                    DialogWindow.Instance.NpcTalk("Я вернусь как выполню задание!", npcData.NpcName);
                     npcData.Quest = q;
                     var chance = CalculateSuccessChance(npcData, q);
                     var roll = new Random().Next(0, 100);
