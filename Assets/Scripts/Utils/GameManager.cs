@@ -123,6 +123,11 @@ namespace Utils
 
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
         {
+            if (npcData.IsIntro)
+            {
+                return null;
+            }
+            
             var line = ToNpcTalkDialogLine($"Я пришел собрать нологи! Плоти {Instance.TaxToPay} золота");
             line.ResponseOptions = new List<DialogOption>()
             {

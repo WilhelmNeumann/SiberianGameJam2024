@@ -9,8 +9,9 @@ namespace Npc
     {
         private static readonly List<NpcData> NpcsQueue = new()
         {
+            GetTaxCollectorFirstInteraction(),
             GetVillagerFirstInteraction(),
-            GetCultistFirstInteraction(),
+            GetCultistFirstInteraction()
         };
 
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
@@ -103,7 +104,7 @@ namespace Npc
                 NpcType.Hero => GetRandomHeroName(),
                 NpcType.TaxCollector => "Сборщик налогов",
                 NpcType.Villager => "Деревенский житель",
-                NpcType.Cultist => "Культист ктулху",
+                NpcType.Cultist => "Культист Короля Демонов",
                 _ => throw new ArgumentOutOfRangeException(nameof(npcType), npcType, null)
             };
         }
@@ -116,7 +117,6 @@ namespace Npc
             GreetingsText = new List<string>
             {
                 "Привет Трактирщик! Как ты знаешь, на наших землях пробуждается культ Короля демонов",
-                "Его культисты рыщут повсюду и захватывают аванпосты по всему королевству",
                 "Так еще и других проблем у нас в округе хватает, повсюду бардак",
                 "К тебе тут иногда захаживают Герои, можешь направлять их к нам на помощь?"
             },
@@ -126,7 +126,7 @@ namespace Npc
         private static NpcData GetCultistFirstInteraction() => new()
         {
             NpcType = NpcType.Cultist,
-            NpcName = "Сектант культа демонов",
+            NpcName = "Демон Рафаэль",
             IsIntro = true,
             GreetingsText = new List<string>
             {
@@ -135,6 +135,20 @@ namespace Npc
                 "Если к тебе зайдет парочка, отправь их к нам, мы в долгу не останемся",
             },
             ByeText = new List<string> { "Спасибо тебе, бывай!" }
+        };
+
+        private static NpcData GetTaxCollectorFirstInteraction() => new()
+        {
+            NpcType = NpcType.TaxCollector,
+            NpcName = "Налоговый инспектор",
+            IsIntro = true,
+            GreetingsText = new List<string>
+            {
+                "Приветствую!\n Эх, после вчерашней попойки до сих пор болит голова, так еще и новости плохие",
+                "Культ Короля Демонов вновь набирает силу. Они захватывают наши земли и аванпосты.",
+                "Поэтому Ярл поднимает налоги на нужны армии. Я буду приходить раз в неделю, так что готовь золотишко.",
+            },
+            ByeText = new List<string> { "Теперь пора идти к Кузнецу, бывай" }
         };
 
         private static readonly string[] Greetings1 =
