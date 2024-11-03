@@ -134,7 +134,21 @@ namespace Utils
                 Text = mainQuest.Objective,
                 Action = () =>
                 {
-                    DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName);
+                    DialogWindow.Instance.NpcTalk("Зло будет уничтожено!", npcData.NpcName);
+                    npcData.Quest = mainQuest;
+                    var success = IsQuestSuccessfullyCompleted(npcData, mainQuest);
+                    if (success)
+                    {
+                        npcData.Quest.QuestState = QuestState.Success;
+                        npcData.Quest.Location.State = LocationState.Good;
+                        NpcFactory.AddNpcToQueue(npcData);
+                    }
+                    else
+                    {
+                        npcData.Quest.QuestState = QuestState.Failed;
+                        npcData.Quest.Location.State = LocationState.Bad;
+                        NpcFactory.AddDemonToTheQueue(npcData);
+                    }
                 },
                 DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
             };
@@ -186,6 +200,12 @@ namespace Utils
             }).ToList();
         }
 
+        private static bool IsQuestSuccessfullyCompleted(NpcData npcData, Quest quest)
+        {
+            var chance = CalculateSuccessChance(npcData, quest);
+            var roll = new Random().Next(0, 100);
+            return roll > chance;
+        }
 
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
         {
@@ -262,15 +282,10 @@ namespace Utils
         private static string GenerateQuestDescription(Quest quest)
         {
             var details = "Задание\n\n";
-
             if (quest.QuestType == QuestType.MainQuest)
-            {
                 details += "Тип: Сюжетный квест\n";
-            }
             else
-            {
                 details += "Тип: Побочный квест\n";
-            }
 
             return details +
                    $"Цель: {quest.Objective}\n" +
@@ -280,12 +295,12 @@ namespace Utils
         }
 
 
-        public static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest) =>
-            "Задание\n" +
-            $"Цель: {quest.Objective}\n" +
-            $"Награда: {quest.Gold}\n" +
-            $"Сложность: {quest.Difficulty}/10\n" +
-            $"Шанс успеха: {CalculateSuccessChance(npcData, quest)}%";
+        public static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
+        {
+            var details = GenerateQuestDescription(quest);
+            details += $"\nШанс успеха: {CalculateSuccessChance(npcData, quest)}%";
+            return details;
+        }
 
         public static double CalculateSuccessChance(NpcData npcData, Quest quest)
         {

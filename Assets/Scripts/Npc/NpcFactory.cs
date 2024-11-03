@@ -38,11 +38,26 @@ namespace Npc
             NpcsQueue.Add(npc);
         }
 
-        public static void AddDemonToTheQueue()
+        public static void AddDemonToTheQueue(NpcData deadHeroData)
         {
-            
+            var demon = new NpcData
+            {
+                NpcType = NpcType.Cultist,
+                Level = 0,
+                NpcName = "Культист Короля Демонов",
+                GreetingsText = new List<string>
+                {
+                    $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и был принесен в жертву.",
+                    "Вот плата, как и договаривались"
+                },
+                ByeText = new List<string>
+                {
+                    "Присылай нам еще жертв, и мы в долгу не останемся"
+                }
+            };
+            AddNpcToQueue(demon);
         }
-        
+
         private static NpcData GenerateRandomNpc()
         {
             var npcType = GetRandomNpcType();

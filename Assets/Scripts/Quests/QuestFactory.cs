@@ -37,6 +37,7 @@ namespace Quests
                 Difficulty = location.Difficulty,
                 Xp = Random.Range(1, 50),
                 Gold = location.RewardToGive,
+                Objective = location.QuestObjective
             };
         }
         
