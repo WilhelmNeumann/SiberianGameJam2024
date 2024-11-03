@@ -643,6 +643,7 @@ MonoBehaviour:
   _weapons:
   - {fileID: -5703411853449480706, guid: c3a9f23e58b46764b8e5f35de58115da, type: 3}
   npcPrefab: {fileID: 3274393718849751423, guid: d827fe572a3e4a7949ffcaaa9bcd8f81, type: 3}
+  spawnPosition: {x: -15, y: -1}
 --- !u!1 &455088775
 GameObject:
   m_ObjectHideFlags: 0

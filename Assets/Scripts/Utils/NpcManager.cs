@@ -26,15 +26,19 @@ namespace Utils {
         [SerializeField]
         private Transform npcPrefab;
         
-        public Transform CreateNpc() {
-            var npc = GameObject.Instantiate(npcPrefab);
+        [SerializeField]
+        private Vector2 spawnPosition;
+        
+        public Transform CreateNpc(NpcType npcType) {
+            var npc = GameObject.Instantiate(npcPrefab, spawnPosition, Quaternion.identity);
             var npcViewData = new NpcViewData();
             npcViewData.Hat = _hats[Random.Range(0, _hats.Count)];
             npcViewData.Body = _bodies[Random.Range(0, _bodies.Count)];
             npcViewData.Head = _heads[Random.Range(0, _heads.Count)];
             npcViewData.LeftHand = _leftHands[Random.Range(0, _leftHands.Count)];
             npcViewData.RightHand = _rightHands[Random.Range(0, _rightHands.Count)];
-            npcViewData.Weapon = _weapons[Random.Range(0, _weapons.Count)];
+            
+            npcViewData.Weapon = npcType is NpcType.Villager ? null : _weapons[Random.Range(0, _weapons.Count)];
             npc.GetComponent<NpcView>().SetSprites(npcViewData);
             return npc;
         }
