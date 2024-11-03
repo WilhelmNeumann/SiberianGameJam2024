@@ -72,7 +72,7 @@ namespace Npc
                 {
                     $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и был принесен в жертву.",
                     deadHeroData.Quest.Location.BadCompletionText,
-                    "Вот твоя награда, как и договаривались!"
+                    "Отправляй к нам больше душ и Король Демонов Тебя вознаградит"
                 },
                 ByeText = new List<string>
                 {
