@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Npc;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Quests
             {
                 Xp = Random.Range(1, 50),
                 Gold = Random.Range(10, 500),
-                Difficulty = Random.Range(1, 10),
+                Difficulty = Random.Range(1, 5),
                 Objective = objectives[randomIndex],
                 ApplicationText =
                     $"{introductionPhrases[random.Next(introductionPhrases.Count)]} {problems[randomIndex]}, {solutions[random.Next(solutions.Count)]}",
@@ -26,6 +27,17 @@ namespace Quests
             };
         }
 
+        public static Quest GetNextMainQuest()
+        {
+            var location = Location.Locations.First(x => x.State == LocationState.Neutral);
+            return new Quest
+            {
+                QuestType = QuestType.MainQuest,
+                Location = location,
+            };
+        }
+        
+        
         // Абсурдные шаблоны квестов
         private static List<string> introductionPhrases = new List<string>
         {

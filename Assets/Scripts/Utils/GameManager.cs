@@ -9,6 +9,7 @@ using Quests;
 using TMPro;
 using Ui;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Utils
 {
@@ -102,9 +103,34 @@ namespace Utils
             var options = quests.Select(q => new DialogOption
             {
                 Text = q.Objective,
-                Action = () => { DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName); },
+                Action = () =>
+                {
+                    DialogWindow.Instance.NpcTalk("Я вернусь за наградой позже!", npcData.NpcName);
+                    npcData.Quest = q;
+                    var chance = CalculateSuccessChance(npcData, q);
+                    var roll = new Random().Next(0, 100);
+                    if (roll > chance)
+                    {
+                        npcData.Quest.QuestState = QuestState.Success;
+                        NpcFactory.AddNpcToQueue(npcData);
+                    }
+                    else
+                    {
+                        npcData.Quest.QuestState = QuestState.Failed;
+                    }
+                },
                 DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, q)
             }).ToList();
+
+            var mainQuest = new List<DialogOption>()
+            {
+                new()
+                {
+                    Text = "У меня нет для тебя работы на сегодня",
+                    Action = () =>
+                        DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName)
+                }
+            };
 
             var emptyOption = new List<DialogOption>()
             {
@@ -182,7 +208,6 @@ namespace Utils
                         NewQuestPopup.Instance.Init(npcData.Quest.Objective);
                         NewQuestPopup.Instance.gameObject.SetActive(true);
                         DialogWindow.Instance.NpcTalk("Отлично!", npcData.NpcName);
-                        Debug.Log(QuestJournal.Instance.SideQuests);
                     },
                     DetailsText = GenerateQuestDescription(npcData.Quest)
                 },

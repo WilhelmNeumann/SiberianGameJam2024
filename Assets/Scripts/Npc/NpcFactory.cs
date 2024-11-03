@@ -33,6 +33,11 @@ namespace Npc
             return npc;
         }
 
+        public static void AddNpcToQueue(NpcData npc)
+        {
+            NpcsQueue.Add(npc);
+        }
+        
         private static NpcData GenerateRandomNpc()
         {
             var npcType = GetRandomNpcType();

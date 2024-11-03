@@ -9,10 +9,18 @@ namespace Quests
         public int Gold;
         public int Difficulty;
         public string QuestGiverName; // Продавец говна
-        public int LocationId;
+        public Location Location;
         public QuestType QuestType;
+        public QuestState QuestState;
     }
 
+    public enum QuestState
+    {
+        InProgress,
+        Success,
+        Failed
+    }
+    
     public enum QuestType
     {
         MainQuest,
