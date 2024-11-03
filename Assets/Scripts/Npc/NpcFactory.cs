@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Npc
 {
-    public class NpcFactory
+    public static class NpcFactory
     {
         private static List<NpcData> _npcsQueue = new List<NpcData>
         {
