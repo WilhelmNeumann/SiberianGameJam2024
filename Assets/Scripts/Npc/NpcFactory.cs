@@ -62,7 +62,8 @@ namespace Npc
                 ByeText = new List<string>
                 {
                     $"Следующую жертву приведи в {Location.GetById(nextLocation).Name}"
-                }
+                },
+                Quest = deadHeroData.Quest,
             };
             AddNpcToQueue(demon);
         }
