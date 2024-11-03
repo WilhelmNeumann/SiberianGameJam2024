@@ -83,9 +83,21 @@ namespace Utils
 
         private static void AddGreetingsResponse(NpcData npcData, List<DialogLine> greetings)
         {
-            var option = npcData.IsIntro
-                ? new DialogOption { Text = "Хорошо, я посмотрю что можно сделать" }
-                : new DialogOption { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" };
+            DialogOption option;
+            if (npcData.Quest is { QuestState: QuestState.Success })
+            {
+                option = new DialogOption
+                {
+                    Text = "Вот твоя награда, но я заберу себе скромный процент",
+                    Action = () => { IncreaseGold(npcData.Quest.Gold); }
+                };
+            }
+            else
+            {
+                option = npcData.IsIntro
+                    ? new DialogOption { Text = "Хорошо, я посмотрю что можно сделать" }
+                    : new DialogOption { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" };
+            }
 
             greetings.Last().ResponseOptions = new List<DialogOption> { option };
         }
@@ -97,8 +109,7 @@ namespace Utils
             if (npcData.Quest != null)
             {
                 // Задание выполнено, есть еще?
-                line = ToNpcTalkDialogLine(npcData.Quest.CompletionText +
-                                           "\nСпасибо за награду.\nЕсть для меня еще работа?");
+                line = ToNpcTalkDialogLine("\nСпасибо за награду.\nЕсть для меня еще работа?");
                 // Даем золото
                 IncreaseGold(npcData.Quest.Gold);
                 // Если мейн квест, меняем стейт

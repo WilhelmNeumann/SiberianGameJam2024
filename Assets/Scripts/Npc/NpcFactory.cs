@@ -35,7 +35,11 @@ namespace Npc
 
         public static void AddNpcToQueue(NpcData npc)
         {
-            npc.GreetingsText = new List<string>() { "Я вернулся с задания, потрепанный, но живой!" };
+            npc.GreetingsText = new List<string>()
+            {
+                "Я вернулся с задания, потрепанный, но живой!\n",
+                npc.Quest.CompletionText
+            };
             NpcsQueue.Add(npc);
         }
 
@@ -46,7 +50,7 @@ namespace Npc
             {
                 //#TODO: локации закончились
             }
-            
+
             var demon = new NpcData
             {
                 NpcType = NpcType.Cultist,
