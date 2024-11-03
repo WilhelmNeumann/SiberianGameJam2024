@@ -202,7 +202,7 @@ namespace Utils
             $"Цель: {quest.Objective}\n" +
             $"Награда: {quest.Gold}\n" +
             $"Сложность: {quest.Difficulty}/10\n" +
-            $"Шанс успеха: {CalculateSuccessChance(npcData, quest)}";
+            $"Шанс успеха: {CalculateSuccessChance(npcData, quest)}%";
 
         public static double CalculateSuccessChance(NpcData npcData, Quest quest)
         {
