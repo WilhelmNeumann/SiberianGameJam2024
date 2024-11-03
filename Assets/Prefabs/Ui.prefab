@@ -232,13 +232,14 @@ GameObject:
   - component: {fileID: 5035776689443699143}
   - component: {fileID: 4794911539750241612}
   - component: {fileID: 2113245220003700030}
+  - component: {fileID: 6755034525728003669}
   m_Layer: 5
   m_Name: FieldRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5035776689443699143
 RectTransform:
   m_ObjectHideFlags: 0
@@ -293,6 +294,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &6755034525728003669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2606303815364085073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 7
 --- !u!1 &3166341442068538161
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,13 +454,14 @@ GameObject:
   - component: {fileID: 809611747602260399}
   - component: {fileID: 4882070287384991396}
   - component: {fileID: 8168659536547691263}
+  - component: {fileID: 8795750659804675139}
   m_Layer: 5
   m_Name: MagesRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &809611747602260399
 RectTransform:
   m_ObjectHideFlags: 0
@@ -501,6 +516,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &8795750659804675139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3322973383355637366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 4
 --- !u!1 &3854407205811078375
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,13 +541,14 @@ GameObject:
   - component: {fileID: 1939006793738938259}
   - component: {fileID: 8915710673924366817}
   - component: {fileID: 4528199882389009284}
+  - component: {fileID: 2378794098307604839}
   m_Layer: 5
   m_Name: ForestRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5314219595075444905
 RectTransform:
   m_ObjectHideFlags: 0
@@ -587,6 +616,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowOnHoverMaterial: {fileID: 2100000, guid: 17a5faa48d6f93041b200c0f2de87bce, type: 2}
+--- !u!114 &2378794098307604839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3854407205811078375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 3
 --- !u!1 &3897799159036258484
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,6 +783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6053101475833328713}
   - component: {fileID: 5090717692790287194}
+  - component: {fileID: 7622376310512121934}
   m_Layer: 5
   m_Name: Map
   m_TagString: Untagged
@@ -778,6 +821,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4218762938095106777}
   m_CullTransparentMesh: 1
+--- !u!114 &7622376310512121934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4218762938095106777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582adecc2b924a03b2fb9a41b7d583bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regions:
+  - {fileID: 2378794098307604839}
+  - {fileID: 2377941377077017141}
+  - {fileID: 6755034525728003669}
+  - {fileID: 2813873719504471227}
+  - {fileID: 7919938698122789726}
+  - {fileID: 589835655021376261}
+  - {fileID: 1338810326537763225}
+  - {fileID: 8795750659804675139}
+  - {fileID: 4319557527652775161}
+  - {fileID: 771204624119892276}
 --- !u!1 &4319243956216199910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,13 +1116,14 @@ GameObject:
   - component: {fileID: 1496267980990230263}
   - component: {fileID: 3708360809674413766}
   - component: {fileID: 761868409129232015}
+  - component: {fileID: 1338810326537763225}
   m_Layer: 5
   m_Name: TownRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1496267980990230263
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1111,6 +1178,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1338810326537763225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4989360989168212295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 5
 --- !u!1 &5431208871166899533
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,13 +1274,14 @@ GameObject:
   - component: {fileID: 6196420243911611711}
   - component: {fileID: 6487075243246310428}
   - component: {fileID: 6750967850269338639}
+  - component: {fileID: 2813873719504471227}
   m_Layer: 5
   m_Name: SwampRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6196420243911611711
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1255,6 +1336,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &2813873719504471227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059445107797932127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 0
 --- !u!1 &6164654706127886557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,13 +1360,14 @@ GameObject:
   - component: {fileID: 3268820219576923261}
   - component: {fileID: 7802601753798844913}
   - component: {fileID: 7991381813772388836}
+  - component: {fileID: 2377941377077017141}
   m_Layer: 5
   m_Name: MillRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3268820219576923261
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1327,6 +1422,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &2377941377077017141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6164654706127886557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 1
 --- !u!1 &6360201743490282308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,13 +1446,14 @@ GameObject:
   - component: {fileID: 514047550508155434}
   - component: {fileID: 8067998434036693993}
   - component: {fileID: 2565955202272281204}
+  - component: {fileID: 589835655021376261}
   m_Layer: 5
   m_Name: VillageRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &514047550508155434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1399,6 +1508,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &589835655021376261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6360201743490282308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 6
 --- !u!1 &6409716144783778929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1527,13 +1649,14 @@ GameObject:
   - component: {fileID: 3641831390018522669}
   - component: {fileID: 47096912496945101}
   - component: {fileID: 6879083720933700178}
+  - component: {fileID: 771204624119892276}
   m_Layer: 5
   m_Name: Berg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3641831390018522669
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1588,6 +1711,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &771204624119892276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6737334936737781698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 9
 --- !u!1 &7404505636086688932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,13 +1735,14 @@ GameObject:
   - component: {fileID: 6960236685306615443}
   - component: {fileID: 6649590941465917277}
   - component: {fileID: 1439985974370994884}
+  - component: {fileID: 4319557527652775161}
   m_Layer: 5
   m_Name: DwarfsRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6960236685306615443
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1660,6 +1797,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &4319557527652775161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7404505636086688932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 2
 --- !u!1 &7519036907816211254
 GameObject:
   m_ObjectHideFlags: 0
@@ -2066,13 +2216,14 @@ GameObject:
   - component: {fileID: 1011237443437544810}
   - component: {fileID: 5886116378242123679}
   - component: {fileID: 5312510893935813367}
+  - component: {fileID: 7919938698122789726}
   m_Layer: 5
   m_Name: LakeRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1011237443437544810
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2127,6 +2278,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &7919938698122789726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8864287614555184814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d0c3849fda44449da4e1a554150811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 8
 --- !u!1 &9218084276089793059
 GameObject:
   m_ObjectHideFlags: 0
