@@ -60,7 +60,7 @@ namespace Utils
             var greetings = npcData.GreetingsText.Select(ToNpcTalkDialogLine).ToList();
             greetings.Last().ResponseOptions = new List<DialogOption>()
             {
-                new() { Text = "Добро пожаловать в таверну \"Бухлишко и две шишки\", чем могу помочь?" }
+                new() { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" }
             };
 
             scenario.AddRange(greetings);

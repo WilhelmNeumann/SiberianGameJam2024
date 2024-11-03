@@ -3,15 +3,15 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Utils;
 
 namespace Dialogs
 {
     public class DialogWindow : Singleton<DialogWindow>
     {
-        [SerializeField] public TextMeshProUGUI PlayerText;
-        [SerializeField] public TextMeshProUGUI NpcText;
-        [SerializeField] public TextMeshProUGUI NpcNameText;
+        [SerializeField] public Text NpcText;
+        [SerializeField] public Text NpcNameText;
 
         [SerializeField] public GameObject PlayerTextArea;
         [SerializeField] public GameObject NpcTextArea;
