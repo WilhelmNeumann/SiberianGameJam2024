@@ -84,7 +84,17 @@ namespace Utils
         private static void AddGreetingsResponse(NpcData npcData, List<DialogLine> greetings)
         {
             DialogOption option;
-            if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.SideQuest })
+            // Пришел культист после того как герой сдох
+            if (npcData.NpcType == NpcType.Cultist && npcData.Quest != null)
+            {
+                option = new()
+                {
+                    Text = "Ничего не обещаю",
+                    Action = () => { IncreaseGold(npcData.Quest.Location.RewardToReceive); }
+                };
+            }
+            // Пришел герой который выполнил побочку
+            else if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.SideQuest })
             {
                 var reward = npcData.Quest.Gold;
                 option = new DialogOption
@@ -94,7 +104,8 @@ namespace Utils
                     Action = () => { IncreaseGold(reward); }
                 };
             }
-            else  if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.MainQuest })
+            // Прише герой который выполнил основной квест
+            else if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.MainQuest })
             {
                 var reward = npcData.Quest.Gold;
                 option = new DialogOption
@@ -106,6 +117,7 @@ namespace Utils
             }
             else
             {
+                // Пришли все остальные, приветствуем, а если это начальные персы, то нет
                 option = npcData.IsIntro
                     ? new DialogOption { Text = "Хорошо, я посмотрю что можно сделать" }
                     : new DialogOption { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" };

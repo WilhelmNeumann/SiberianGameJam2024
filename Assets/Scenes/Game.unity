@@ -1386,7 +1386,7 @@ MonoBehaviour:
         SquashAndStretchTarget: {fileID: 175749815}
         Mode: 0
         Axis: 3
-        AnimateScaleDuration: 2
+        AnimateScaleDuration: 3
         RemapCurveZero: 1
         RemapCurveOne: 2
         Offset: 0
