@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tab_gorodok_0: -5010903773760294074
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

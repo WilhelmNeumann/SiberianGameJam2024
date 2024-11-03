@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      map_0019_pashnya_0: -3347241524099751652
+      map_0019_pashnya_1: -8363088614987789498
+      map_0019_pashnya_2: 5777383899383788937
+      map_0019_pashnya_3: 6314707027892128857
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      map_0018_melnica_0: 410295096599965435
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
