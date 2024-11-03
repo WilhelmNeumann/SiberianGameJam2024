@@ -32,7 +32,7 @@ namespace Utils {
                 npcViewData.Hat = _hats[Random.Range(0, _hats.Count)];
                 npcViewData.Head = _heads[Random.Range(0, _heads.Count)];
                 npcViewData.Weapon = _weapons[Random.Range(0, _weapons.Count)];
-                npc.GetComponent<NpcView>().SetSprites(npcViewData);
+                npc.GetComponent<NpcView>().SetSprites(npcViewData, npcData.Level);
             }
             npcData.NpcViewData = npcViewData;
             npcData.PrefabIndex = prefabIndex;
