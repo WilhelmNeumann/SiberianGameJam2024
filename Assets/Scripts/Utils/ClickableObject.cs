@@ -1,13 +1,14 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Utils
 {
-    public class GlowOnHover : MonoBehaviour
+    public class ClickableObject : MonoBehaviour
     {
         [SerializeField] private Material glowOnHoverMaterial;
+        [SerializeField] private UnityEvent onMouseDownEvent;
 
         private Material originalMaterial;
 
@@ -19,7 +20,7 @@ namespace Utils
                 spriteRenderer.material = mat;
                 return;
             }
-            
+
             var image = GetComponent<Image>();
             image.material = mat;
         }
@@ -45,6 +46,11 @@ namespace Utils
         public void OnMouseExit()
         {
             SetMaterial(originalMaterial);
+        }
+
+        public void OnMouseDown()
+        {
+            onMouseDownEvent?.Invoke();
         }
 
         public void Blink(int times)
