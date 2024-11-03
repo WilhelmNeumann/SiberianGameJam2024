@@ -9,5 +9,6 @@ namespace Quests
         public int Gold;
         public int Difficulty;
         public string QuestGiverName; // Продавец говна
+        public int LocationId;
     }
 }

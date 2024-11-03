@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utils;
 
@@ -78,7 +76,7 @@ namespace Dialogs
             {
                 var button = Instantiate(_serializedPrefab, _dialogOptionsLayoutGroup, true);
                 button.transform.localScale = Vector3.one;
-                button.Init(option.Text, option.Action);
+                button.Init(option.Text, option.Action, option.DetailsText);
             }
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Utils
 {
@@ -10,30 +11,51 @@ namespace Utils
 
         private Material originalMaterial;
 
+        private void SetMaterial(Material mat)
+        {
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.material = mat;
+                return;
+            }
+            
+            var image = GetComponent<Image>();
+            image.material = mat;
+        }
+
+        private Material GetMaterial()
+        {
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            return spriteRenderer != null
+                ? spriteRenderer.material
+                : GetComponent<Image>().material;
+        }
+
         private void Start()
         {
-            originalMaterial = GetComponent<SpriteRenderer>().material;
+            originalMaterial = GetMaterial();
         }
 
         public void OnMouseEnter()
         {
-            var spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.material = glowOnHoverMaterial;
+            SetMaterial(glowOnHoverMaterial);
         }
 
         public void OnMouseExit()
         {
-            GetComponent<SpriteRenderer>().material = originalMaterial;
+            SetMaterial(originalMaterial);
         }
 
         public void Blink(int times)
         {
-            var spriteRenderer = GetComponent<SpriteRenderer>();
-
             DOVirtual.Int(0, times * 2, 1f,
-                    value => { spriteRenderer.material = value % 2 == 0 ? glowOnHoverMaterial : originalMaterial; })
+                    value =>
+                    {
+                        SetMaterial(value % 2 == 0 ? glowOnHoverMaterial : originalMaterial);
+                    })
                 .SetEase(Ease.Linear)
-                .OnComplete(() => spriteRenderer.material = originalMaterial);
+                .OnComplete(() => SetMaterial(originalMaterial));
         }
     }
 }

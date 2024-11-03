@@ -6,5 +6,6 @@ namespace Dialogs
     {
         public string Text;
         public Action Action;
+        public string DetailsText;
     }
 }

@@ -9,6 +9,7 @@ using Quests;
 using TMPro;
 using Ui;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Utils
 {
@@ -48,8 +49,9 @@ namespace Utils
             }
 
             DialogWindow.Instance.Hide();
-
             yield return tavernNpc.WalkOut();
+            // Если захотим добавтить паузу между посетителями
+            // yield return new WaitForSeconds(Random.Range(0.8f, 3.2f));
         }
 
 
@@ -128,7 +130,11 @@ namespace Utils
                 new()
                 {
                     Text = "У меня нет таких денег",
-                    Action = () => { GameOver(); }
+                    Action = () =>
+                    {
+                        DialogWindow.Instance.NpcTalk("Тогда твоя таверна закрыта", npcData.NpcName);
+                        GameOver();
+                    }
                 }
             };
 
@@ -150,7 +156,8 @@ namespace Utils
                         NewQuestPopup.Instance.gameObject.SetActive(true);
                         DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
                         Debug.Log(QuestJournal.Instance.SideQuests);
-                    }
+                    },
+                    DetailsText = GenerateDetailsTextForVillager(npcData)
                 },
                 new()
                 {
@@ -167,5 +174,12 @@ namespace Utils
         }
 
         private static DialogLine ToNpcTalkDialogLine(string text) => new() { Text = text };
+
+        private static string GenerateDetailsTextForVillager(NpcData npcData) => "" +
+            "Задание\n" +
+            $"Цель: {npcData.Quest.Objective}\n" +
+          
+            $"Награда: {npcData.Quest.Gold}\n" +
+            $"Сложность: {npcData.Quest.Difficulty}/10\n";
     }
 }
