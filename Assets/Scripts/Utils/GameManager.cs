@@ -137,12 +137,16 @@ namespace Utils
                     Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золотых]",
                     Action = () =>
                     {
-                        Instance.Gold -= Instance.TaxToPay;
                         DOVirtual.Int(Instance.Gold, Instance.Gold - Instance.TaxToPay, 1f,
-                                value => Instance.GoldTextMesh.text = value.ToString())
+                                value =>
+                                {
+                                    Instance.GoldTextMesh.text = value.ToString();
+                                    Instance.Gold = value;
+                                })
                             .SetEase(Ease.InOutSine)
                             .SetAutoKill(true);
-                        DialogWindow.Instance.NpcTalk("Охуенчик!", npcData.NpcName);
+                        
+                        DialogWindow.Instance.NpcTalk("Ярл благодарит тебя!", npcData.NpcName);
                     }
                 },
                 new()
