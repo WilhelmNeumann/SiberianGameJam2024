@@ -232,7 +232,8 @@ MonoBehaviour:
   UiText: {fileID: 6294213956517117636}
   Image: {fileID: 3809121979141580318}
   Glow: {fileID: 2100000, guid: 17a5faa48d6f93041b200c0f2de87bce, type: 2}
-  Text: 
+  Details: {fileID: 9093772518112488656}
+  DetailsText: {fileID: 8901612926090048051}
 --- !u!1 &6890399208700806579
 GameObject:
   m_ObjectHideFlags: 0
