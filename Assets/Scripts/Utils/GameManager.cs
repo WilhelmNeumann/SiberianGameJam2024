@@ -176,11 +176,26 @@ namespace Utils
 
         private static DialogLine ToNpcTalkDialogLine(string text) => new() { Text = text };
 
-        private static string GenerateQuestDescription(Quest quest) => "" +
-            "Задание\n" +
-            $"Цель: {quest.Objective}\n" +
-            $"Награда: {quest.Gold}\n" +
-            $"Сложность: {quest.Difficulty}/10\n";
+        private static string GenerateQuestDescription(Quest quest)
+        {
+            var details = "Задание\n\n";
+
+            if (quest.QuestType == QuestType.MainQuest)
+            {
+                details += "Тип: Сюжетный квест\n";
+            }
+            else
+            {
+                details += "Тип: Побочный квест\n";
+            }
+
+            return details +
+                   $"Цель: {quest.Objective}\n" +
+                   $"Опыт: +{quest.Xp} Xp\n" +
+                   $"Награда: {quest.Gold} золота\n" +
+                   $"Сложность: {quest.Difficulty}/10\n";
+        }
+
 
         public static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest) =>
             "Задание\n" +

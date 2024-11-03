@@ -10,5 +10,12 @@ namespace Quests
         public int Difficulty;
         public string QuestGiverName; // Продавец говна
         public int LocationId;
+        public QuestType QuestType;
+    }
+
+    public enum QuestType
+    {
+        MainQuest,
+        SideQuest,
     }
 }
