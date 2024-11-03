@@ -34,11 +34,19 @@ namespace Utils
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (UIManager.Instance.IsPanelOpen)
+            {
+                return;
+            }
             SetMaterial(glowOnHoverMaterial);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (UIManager.Instance.IsPanelOpen)
+            {
+                return;
+            }
             SetMaterial(originalMaterial);
         }
 
