@@ -30,7 +30,7 @@ namespace Npc
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
 
             var view = GetComponent<NpcView>();
-            if(view == null) return;
+            if(view == null || NpcData.NpcType != NpcType.Hero) return;
             view.GetTextTransform().localScale = new Vector2(-LevelText.localScale.x, LevelText.localScale.y);
         }
     }
