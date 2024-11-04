@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Utils
 {
-    public class UIManager : Singleton<UIManager>
-    {
+    public class UIManager : Singleton<UIManager> {
+        
         public bool IsPanelOpen { get; private set; }
 
         public void OpenPanel(RectTransform panel)
