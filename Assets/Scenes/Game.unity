@@ -847,7 +847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GoldTextMesh: {fileID: 1424261874}
   Gold: 1000
-  TaxToPay: 1000
+  TaxToPay: 499
   gameOverPanel: {fileID: 880289995}
   strengthPotionsText: {fileID: 1961839498}
   charismaPotionsText: {fileID: 445980067}

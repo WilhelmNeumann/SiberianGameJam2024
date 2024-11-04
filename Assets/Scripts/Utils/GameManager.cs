@@ -129,7 +129,7 @@ namespace Utils
                 {
                     // Если герой выполнил побочку квест, нам платит заказчик, а мы берем процент
                     Text = "Вот твоя награда, но я заберу себе скромный процент",
-                    Action = () => { IncreaseGold(reward); }
+                    Action = () => { IncreaseGold(reward * 2); }
                 };
             }
             // Прише герой который выполнил основной квест
@@ -381,24 +381,31 @@ namespace Utils
 
         public static double CalculateSuccessProbability(NpcData character, Quest quest)
         {
-            // Вычисляем процентное соотношение каждой характеристики
-            double strengthRatio = (double)character.Strength / quest.RequiredStrength;
-            double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
-            double charismaRatio = (double)character.Charisma / quest.RequiredCharisma;
-
-            // Средняя вероятность успеха на основе всех трех характеристик
-            double baseProbability = (strengthRatio + intelligenceRatio + charismaRatio) / 3;
-
-
-            if (character.ActivePotion != PotionType.None)
+            try
             {
-                baseProbability = Math.Clamp(baseProbability + 0.2f, 0, 1);
+                // Вычисляем процентное соотношение каждой характеристики
+                double strengthRatio = (double)character.Strength / quest.RequiredStrength;
+                double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
+                double charismaRatio = (double)character.Charisma / quest.RequiredCharisma;
+
+                // Средняя вероятность успеха на основе всех трех характеристик
+                double baseProbability = (strengthRatio + intelligenceRatio + charismaRatio) / 3;
+
+
+                if (character.ActivePotion != PotionType.None)
+                {
+                    baseProbability = Math.Clamp(baseProbability + 0.2d, 0, 1);
+                    return baseProbability * 100;
+                }
+
+                // Ограничиваем вероятность значениями от 0 до 1
+                baseProbability = Math.Clamp(baseProbability, 0, 1);
                 return baseProbability * 100;
             }
-
-            // Ограничиваем вероятность значениями от 0 до 1
-            baseProbability = Math.Clamp(baseProbability, 0, 1);
-            return baseProbability * 100;
+            catch
+            {
+                return 50d;
+            }
         }
 
         // private static double CalculateSuccessChance(NpcData npcData, Quest quest)
