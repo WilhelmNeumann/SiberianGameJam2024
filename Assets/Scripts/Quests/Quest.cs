@@ -11,7 +11,7 @@ namespace Quests
         public string QuestGiverName; // Продавец говна
         public Location Location;
         public QuestType QuestType;
-        public QuestState QuestState;
+        public QuestState QuestState = QuestState.None;
         public int RequiredStrength;
         public int RequiredIntelligence;
         public int RequiredCharisma;
@@ -19,7 +19,7 @@ namespace Quests
 
     public enum QuestState
     {
-        InProgress,
+        None,
         Success,
         Failed
     }

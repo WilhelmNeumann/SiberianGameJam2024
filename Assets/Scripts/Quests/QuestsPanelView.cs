@@ -9,7 +9,7 @@ namespace Quests
         [SerializeField] private QuestView questViewPrefab;
         [SerializeField] private Transform content;
 
-        private void Awake()
+        private void OnEnable()
         {
             QuestJournal.Instance.SideQuests.ForEach(AddQuest);
         }

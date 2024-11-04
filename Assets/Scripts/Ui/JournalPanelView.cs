@@ -12,7 +12,7 @@ namespace Quests
         [SerializeField] private VisitorEntryView visitorEntryViewPrefab;
         [SerializeField] private Transform content;
 
-        private void Awake()
+        private void OnEnable()
         {
             NpcFactory.GetAllHerosOnQuest().ForEach(AddNPC);
         }

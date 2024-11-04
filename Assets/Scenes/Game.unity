@@ -1735,6 +1735,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1311811783}
     m_Modifications:
+    - target: {fileID: 295458817595815983, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 458890726666630287, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -9.835083
@@ -1809,15 +1813,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 319.5194
+      value: 259.0079
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.000094939256
       objectReference: {fileID: 0}
     - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 109.75971
+      value: 79.50395
       objectReference: {fileID: 0}
     - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.011
       objectReference: {fileID: 0}
     - target: {fileID: 4549145343968039726, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_AnchorMax.y

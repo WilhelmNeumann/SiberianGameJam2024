@@ -443,9 +443,12 @@ namespace Utils
                 PotionType.Strength => Instance.strengthPotionsText,
                 PotionType.Intelligence => Instance.intelligencePotionsText,
                 PotionType.Charisma => Instance.charismaPotionsText,
+                PotionType.None => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
-            textField.text = Potions[type].ToString();
+
+            if (textField != null)
+                textField.text = Potions[type].ToString();
         }
 
         private static void AddRandomPotion()
