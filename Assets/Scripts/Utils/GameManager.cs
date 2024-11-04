@@ -10,6 +10,7 @@ using TMPro;
 using Ui;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 namespace Utils
@@ -19,9 +20,21 @@ namespace Utils
         [SerializeField] public TextMeshProUGUI GoldTextMesh;
         [SerializeField] public int Gold = 1000;
         [SerializeField] public int TaxToPay = 1000;
-
+        [SerializeField] public TextMeshProUGUI strengthPotionsText;
+        [SerializeField] public TextMeshProUGUI charismaPotionsText;
+        [SerializeField] public TextMeshProUGUI intelligencePotionsText;
+        
+        private static Dictionary<PotionType, int> Potions = new  Dictionary<PotionType, int>() 
+        {
+            {PotionType.Charisma, 0},
+            {PotionType.Intelligence, 0},
+            {PotionType.Strength, 0},
+        };
+        
         public IEnumerator Start()
         {
+            SetPotionValue(PotionType.Charisma, 0);
+
             while (true)
             {
                 yield return GameplayLoop();
@@ -364,5 +377,38 @@ namespace Utils
                     })
                 .SetEase(Ease.InOutSine)
                 .SetAutoKill(true);
+
+        // Получить новое зелье
+        private static void AddPotion(PotionType type, int amount)
+        {
+            Potions[type] += amount;
+            SetPotionValue(type, Potions[type]);
+        }
+
+        // Дать зелье челику
+        private static void GivePotionTo(PotionType type, NpcData npcData)
+        {
+            SetPotionValue(type, Potions[type] - 1);
+            npcData.ActivePotion = type;
+        }
+
+        private static void SetPotionValue(PotionType type, int value)
+        {
+            Potions[type] = value;
+            var textField = type switch
+            {
+                PotionType.Strength => Instance.strengthPotionsText,
+                PotionType.Intelligence => Instance.intelligencePotionsText,
+                PotionType.Charisma => Instance.charismaPotionsText,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+            textField.text = Potions[type].ToString();
+        }
+    }
+    public enum PotionType
+    {
+        Strength,
+        Intelligence,
+        Charisma,
     }
 }
