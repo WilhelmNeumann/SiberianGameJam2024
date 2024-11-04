@@ -46,6 +46,14 @@ namespace Utils
         private static IEnumerator GameplayLoop()
         {
             var npcData = NpcFactory.GetNextVisitor();
+            if (npcData.NpcType == NpcType.Hero &&
+                npcData.Quest != null &&
+                npcData.Quest.QuestState == QuestState.Failed)
+            {
+                PostManager.Instance.AddQuest(npcData.Quest, npcData);
+                yield return null;
+            }
+            
             var npc = NpcManager.Instance.CreateNpc(npcData);
             var tavernNpc = npc.GetComponent<TavernNpc>();
             yield return tavernNpc.WalkIn();
@@ -229,7 +237,7 @@ namespace Utils
                     else
                     {
                         npcData.Quest.QuestState = QuestState.Failed;
-                        PostManager.Instance.AddQuest(npcData.Quest, npcData);
+                        NpcFactory.AddNpcToQueue(npcData);
                     }
                 },
                 DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, q)
