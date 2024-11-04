@@ -25,14 +25,14 @@ namespace Utils
         [SerializeField] public TextMeshProUGUI strengthPotionsText;
         [SerializeField] public TextMeshProUGUI charismaPotionsText;
         [SerializeField] public TextMeshProUGUI intelligencePotionsText;
-        
-        private static Dictionary<PotionType, int> Potions = new  Dictionary<PotionType, int>() 
+
+        private static Dictionary<PotionType, int> Potions = new Dictionary<PotionType, int>()
         {
-            {PotionType.Charisma, 0},
-            {PotionType.Intelligence, 0},
-            {PotionType.Strength, 0},
+            { PotionType.Charisma, 0 },
+            { PotionType.Intelligence, 0 },
+            { PotionType.Strength, 0 },
         };
-        
+
         public IEnumerator Start()
         {
             SetPotionValue(PotionType.Charisma, 0);
@@ -53,7 +53,7 @@ namespace Utils
                 PostManager.Instance.AddQuest(npcData.Quest, npcData);
                 yield return null;
             }
-            
+
             var npc = NpcManager.Instance.CreateNpc(npcData);
             var tavernNpc = npc.GetComponent<TavernNpc>();
             yield return tavernNpc.WalkIn();
@@ -165,6 +165,13 @@ namespace Utils
 
                 npcData.Quest = null;
                 npcData.Level += 1;
+                
+                if (npcData.Strength >= npcData.Intelligence && npcData.Strength >= npcData.Charisma)
+                    npcData.Strength++;
+                else if (npcData.Intelligence >= npcData.Strength && npcData.Intelligence >= npcData.Charisma)
+                    npcData.Intelligence++;
+                else
+                    npcData.Charisma++;
             }
             else
             {
@@ -223,7 +230,7 @@ namespace Utils
                 {
                     DialogWindow.Instance.NpcTalk("Я вернусь как выполню задание!", npcData.NpcName);
                     npcData.Quest = q;
-                    var chance = CalculateSuccessProbability(npcData, q);
+                    var chance = CalculateSuccessChance(npcData, q);
                     var roll = new Random().Next(0, 100);
                     if (roll > chance)
                     {
@@ -373,7 +380,7 @@ namespace Utils
 
             return baseProbability * 100;
         }
-        
+
         private static double CalculateSuccessChance(NpcData npcData, Quest quest)
         {
             var heroLevel = npcData.Level;
@@ -432,6 +439,7 @@ namespace Utils
             textField.text = Potions[type].ToString();
         }
     }
+
     public enum PotionType
     {
         Strength,
