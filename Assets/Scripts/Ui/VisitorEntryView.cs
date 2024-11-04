@@ -15,10 +15,10 @@ namespace Ui {
         {
             //NPCName level doing quest
             return $"{npc.NpcName}." +
-                   $" \nLevel: {npc.Level}" +
-                   $" \nStrength: {npc.Strength}" +
-                   $" \nIntelligence: {npc.Intelligence}" +
-                   $" \nCharisma: {npc.Charisma}";
+                   $" \nУровень: {npc.Level}" +
+                   $" \nСила: {npc.Strength}" +
+                   $" \nИнтел.: {npc.Intelligence}" +
+                   $" \nХаризма: {npc.Charisma}";
         }
         
 
