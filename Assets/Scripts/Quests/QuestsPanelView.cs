@@ -8,9 +8,14 @@ namespace Quests
     {
         [SerializeField] private QuestView questViewPrefab;
         [SerializeField] private Transform content;
-
+        
         private void OnEnable()
         {
+            foreach (Transform child in content)
+            {
+                Destroy(child.gameObject);
+            }
+            
             QuestJournal.Instance.SideQuests.ForEach(AddQuest);
         }
 

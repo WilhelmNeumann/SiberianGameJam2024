@@ -14,6 +14,11 @@ namespace Quests
 
         private void OnEnable()
         {
+            foreach (Transform child in content)
+            {
+                Destroy(child.gameObject);
+            }
+            
             NpcFactory.GetAllHerosOnQuest().ForEach(AddNPC);
         }
 

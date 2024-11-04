@@ -1816,6 +1816,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2800000, guid: 6b31498ce76bab74099d8168d0ee589d, type: 3}
     - target: {fileID: 2647496041050554144, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+      propertyPath: questsPanel
+      value: 
+      objectReference: {fileID: 744883013}
+    - target: {fileID: 2647496041050554144, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: questViewPrefab
       value: 
       objectReference: {fileID: 4176914774705135960, guid: 8b853d90b23a3b244ba5b910a75523eb, type: 3}
@@ -2470,6 +2474,11 @@ Material:
     - _ShineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!224 &744883013 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5363521375312252872, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+  m_PrefabInstance: {fileID: 653704314}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &828636051 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3828927247577551403, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
