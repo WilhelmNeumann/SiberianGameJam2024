@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Quests;
+using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ namespace Npc
     {
         private static int villagerCount = 0;
         private static int heroCount = 0;
+        private static int phase = 1;
 
         private static int _taxCollectorInterval = 7;
         private static int _npcCount = 0;
@@ -25,7 +27,7 @@ namespace Npc
         {
             return NpcsQueue.FindAll(x => x.NpcType == NpcType.Hero && x.Quest != null);
         }
-        
+
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
         public static NpcData GetNextVisitor()
         {
@@ -33,6 +35,7 @@ namespace Npc
             if (_npcCount >= _taxCollectorInterval)
             {
                 _npcCount = 0;
+                phase++;
                 NpcsQueue.Add(GenerateNpcOfType(NpcType.TaxCollector));
             }
 
@@ -57,6 +60,47 @@ namespace Npc
                 npc.Quest.CompletionText
             };
             NpcsQueue.Add(npc);
+        }
+
+        private static int GenerateLevel(int phasa)
+        {
+            int[] levels;
+            float[] weights;
+            switch (phasa)
+            {
+                case 1:
+                    levels = new[] { 1, 2 };
+                    weights = new[] { 0.6f, 0.4f };
+                    return GetWeightedRandomLevel(levels, weights);
+                case 10:
+                    levels = new[] { 9, 10 };
+                    weights = new[] { 0.4f, 0.6f };
+                    return GetWeightedRandomLevel(levels, weights);
+            }
+
+            levels = new[] { phasa - 1, phasa, phasa + 1 };
+            weights = new[] { 0.2f, 0.6f, 0.2f };
+            return GetWeightedRandomLevel(levels, weights);
+        }
+
+
+        private static int GetWeightedRandomLevel(int[] levels, float[] weights)
+        {
+            var totalWeight = 0f;
+            for (var i = 0; i < weights.Length; i++)
+                totalWeight += weights[i];
+
+            var randomValue = Random.Range(0, totalWeight);
+            var cumulativeWeight = 0f;
+
+            for (var i = 0; i < levels.Length; i++)
+            {
+                cumulativeWeight += weights[i];
+                if (randomValue < cumulativeWeight)
+                    return levels[i];
+            }
+
+            return levels[^1];
         }
 
         public static void AddDemonToTheQueue(NpcData deadHeroData)
@@ -107,19 +151,56 @@ namespace Npc
         {
             const NpcType npcType = NpcType.Hero;
             var npcName = GenerateNpcName(npcType);
-            
-            
-            
-            return new NpcData
+
+            var npc = new NpcData
             {
                 NpcType = npcType,
-                Level = Random.Range(1, 5),
+                Level = GenerateLevel(phase),
                 NpcName = npcName,
                 GreetingsText = GenerateGreetingsText(),
                 ByeText = GenerateGoodByeText()
             };
+
+            DistributeSkillPoints(npc);
+            return npc;
         }
 
+        private static void DistributeSkillPoints(NpcData npcData)
+        {
+            // Calculate the total skill points based on the character level.
+            var totalSkillPoints = npcData.Level * 2;  // Example: 5 points per level
+
+            // Assign primary characteristic with a weight of 0.4 and others with 0.3 each.
+            const float primaryWeight = 0.4f;
+            var secondaryWeight = 0.3f;
+
+            // Select primary characteristic randomly.
+            var primaryCharacteristic = Random.Range(0, 3);
+
+            // Distribute points based on chosen primary characteristic.
+            int primaryPoints = Mathf.RoundToInt(totalSkillPoints * primaryWeight);
+            int secondaryPoints = Mathf.RoundToInt(totalSkillPoints * secondaryWeight);
+
+            if (primaryCharacteristic == 0)
+            {
+                npcData.Strength = primaryPoints;
+                npcData.Intelligence = secondaryPoints;
+                npcData.Charisma = totalSkillPoints - (primaryPoints + secondaryPoints);
+            }
+            else if (primaryCharacteristic == 1)
+            {
+                npcData.Intelligence = primaryPoints;
+                npcData.Strength = secondaryPoints;
+                npcData.Charisma = totalSkillPoints - (primaryPoints + secondaryPoints);
+            }
+            else
+            {
+                npcData.Charisma = primaryPoints;
+                npcData.Strength = secondaryPoints;
+                npcData.Intelligence = totalSkillPoints - (primaryPoints + secondaryPoints);
+            }
+        }
+        
         private static NpcData GenerateRandomTaxCollectorNpc()
         {
             const NpcType npcType = NpcType.TaxCollector;
@@ -151,9 +232,9 @@ namespace Npc
         private static NpcType GetRandomNpcType()
         {
             var types = new List<NpcType> { NpcType.Villager, NpcType.Hero };
-            
+
             return types[Random.Range(0, types.Count)];
-            
+
             // Рассчитаем вероятность для каждого типа
             var total = villagerCount + heroCount + 1; // +1 чтобы избежать деления на ноль в начале
             var villagerProbability =

@@ -5,8 +5,6 @@ namespace Npc
 {
     public class NpcData
     {
-        public static readonly int TotalSkillPoints = 5;
-        
         public string NpcName;
         public NpcType NpcType;
         public int Level;
