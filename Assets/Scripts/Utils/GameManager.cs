@@ -19,7 +19,7 @@ namespace Utils
     {
         [SerializeField] public TextMeshProUGUI GoldTextMesh;
         [SerializeField] public int Gold = 1000;
-        [SerializeField] public int TaxToPay = 1000;
+        [SerializeField] public int TaxToPay = 500;
         [SerializeField] private RectTransform gameOverPanel;
 
         [SerializeField] public TextMeshProUGUI strengthPotionsText;
@@ -37,7 +37,9 @@ namespace Utils
 
         public IEnumerator Start()
         {
-            SetPotionValue(PotionType.Charisma, 0);
+            SetPotionValue(PotionType.Charisma, 1);
+            SetPotionValue(PotionType.Intelligence, 1);
+            SetPotionValue(PotionType.Strength, 1);
 
             while (true)
             {
@@ -207,6 +209,7 @@ namespace Utils
                         npcData.Quest.Location.State = LocationState.Bad;
                         NpcFactory.AddDemonToTheQueue(npcData);
                     }
+
                     NpcFactory.AddHeroToLogs(npcData);
                 },
                 DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
@@ -239,9 +242,9 @@ namespace Utils
                     DialogWindow.Instance.NpcTalk("Я вернусь как выполню задание!", npcData.NpcName);
                     npcData.Quest = q;
                     NpcFactory.AddNpcToQueue(npcData);
-                    
+
                     NpcFactory.AddHeroToLogs(npcData);
-                    var chance = CalculateSuccessChance(npcData, q);
+                    var chance = CalculateSuccessProbability(npcData, q);
                     var roll = new Random().Next(0, 100);
                     if (roll > chance)
                     {
@@ -263,7 +266,8 @@ namespace Utils
 
         private static bool IsQuestSuccessfullyCompleted(NpcData npcData, Quest quest)
         {
-            var chance = CalculateSuccessChance(npcData, quest);
+            var chance = CalculateSuccessProbability(npcData, quest);
+            npcData.ActivePotion = PotionType.None;
             var roll = new Random().Next(0, 100);
             return roll > chance;
         }
@@ -371,7 +375,7 @@ namespace Utils
         private static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
         {
             var details = GenerateQuestDescription(quest);
-            details += $"\nШанс успеха: {CalculateSuccessChance(npcData, quest)}%";
+            details += $"\nШанс успеха: {CalculateSuccessProbability(npcData, quest)}%";
             return details;
         }
 
@@ -385,21 +389,27 @@ namespace Utils
             // Средняя вероятность успеха на основе всех трех характеристик
             double baseProbability = (strengthRatio + intelligenceRatio + charismaRatio) / 3;
 
+
+            if (character.ActivePotion != PotionType.None)
+            {
+                baseProbability = Math.Clamp(baseProbability + 0.2f, 0, 1);
+                return baseProbability * 100;
+            }
+
             // Ограничиваем вероятность значениями от 0 до 1
             baseProbability = Math.Clamp(baseProbability, 0, 1);
-
             return baseProbability * 100;
         }
 
-        private static double CalculateSuccessChance(NpcData npcData, Quest quest)
-        {
-            var heroLevel = npcData.Level;
-            var questDifficulty = quest.Difficulty;
-            // Рассчитываем вероятность успеха
-            var successProbability = 0.5 + 0.1 * (heroLevel - questDifficulty);
-            // Ограничиваем вероятность успеха в пределах от 0 до 1
-            return Math.Clamp(successProbability, 0.0, 1.0) * 100;
-        }
+        // private static double CalculateSuccessChance(NpcData npcData, Quest quest)
+        // {
+        //     var heroLevel = npcData.Level;
+        //     var questDifficulty = quest.Difficulty;
+        //     // Рассчитываем вероятность успеха
+        //     var successProbability = 0.5 + 0.1 * (heroLevel - questDifficulty);
+        //     // Ограничиваем вероятность успеха в пределах от 0 до 1
+        //     return Math.Clamp(successProbability, 0.0, 1.0) * 100;
+        // }
 
         private static void ReduceGold(int amount) =>
             DOVirtual.Int(Instance.Gold, Instance.Gold - amount, 1f,
