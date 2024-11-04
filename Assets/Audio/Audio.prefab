@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499483df1439c094197ac327c3d47393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPlaylist: {fileID: 0}
+  musicPlaylist: {fileID: 3360690404210092812}
   buttonHover: {fileID: 9136457522591902839}
   buttonClick: {fileID: 1704635984814646294}
   dialog: {fileID: 0}
