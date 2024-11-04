@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 499483df1439c094197ac327c3d47393
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - buttonHover: {fileID: 8300000, guid: 5975daeff14634440a050b6242d2d1c9, type: 3}
+  - buttonClick: {fileID: 8300000, guid: 79214f3723788ac4c8c6d5747ed01e64, type: 3}
+  - dialog: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
