@@ -244,7 +244,7 @@ namespace Utils
                     NpcFactory.AddNpcToQueue(npcData);
 
                     NpcFactory.AddHeroToLogs(npcData);
-                    var chance = CalculateSuccessProbability(npcData, q);
+                    var chance = CalculateSuccessChance(npcData, q);
                     var roll = new Random().Next(0, 100);
                     if (roll > chance)
                     {
@@ -266,7 +266,7 @@ namespace Utils
 
         private static bool IsQuestSuccessfullyCompleted(NpcData npcData, Quest quest)
         {
-            var chance = CalculateSuccessProbability(npcData, quest);
+            var chance = CalculateSuccessChance(npcData, quest);
             npcData.ActivePotion = PotionType.None;
             var roll = new Random().Next(0, 100);
             return roll > chance;
@@ -375,48 +375,53 @@ namespace Utils
         private static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
         {
             var details = GenerateQuestDescription(quest);
-            details += $"\nШанс успеха: {CalculateSuccessProbability(npcData, quest)}%";
+            details += $"\nШанс успеха: {CalculateSuccessChance(npcData, quest)}%";
             return details;
         }
 
-        public static double CalculateSuccessProbability(NpcData character, Quest quest)
-        {
-            try
-            {
-                // Вычисляем процентное соотношение каждой характеристики
-                double strengthRatio = (double)character.Strength / quest.RequiredStrength;
-                double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
-                double charismaRatio = (double)character.Charisma / quest.RequiredCharisma;
-
-                // Средняя вероятность успеха на основе всех трех характеристик
-                double baseProbability = (strengthRatio + intelligenceRatio + charismaRatio) / 3;
-
-
-                if (character.ActivePotion != PotionType.None)
-                {
-                    baseProbability = Math.Clamp(baseProbability + 0.2d, 0, 1);
-                    return baseProbability * 100;
-                }
-
-                // Ограничиваем вероятность значениями от 0 до 1
-                baseProbability = Math.Clamp(baseProbability, 0, 1);
-                return baseProbability * 100;
-            }
-            catch
-            {
-                return 50d;
-            }
-        }
-
-        // private static double CalculateSuccessChance(NpcData npcData, Quest quest)
+        // public static double CalculateSuccessProbability(NpcData character, Quest quest)
         // {
-        //     var heroLevel = npcData.Level;
-        //     var questDifficulty = quest.Difficulty;
-        //     // Рассчитываем вероятность успеха
-        //     var successProbability = 0.5 + 0.1 * (heroLevel - questDifficulty);
-        //     // Ограничиваем вероятность успеха в пределах от 0 до 1
-        //     return Math.Clamp(successProbability, 0.0, 1.0) * 100;
+        //     try
+        //     {
+        //         // Вычисляем процентное соотношение каждой характеристики
+        //         double strengthRatio = (double)character.Strength / quest.RequiredStrength;
+        //         double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
+        //         double charismaRatio = (double)character.Charisma / quest.RequiredCharisma;
+        //
+        //         // Средняя вероятность успеха на основе всех трех характеристик
+        //         double baseProbability = (strengthRatio + intelligenceRatio + charismaRatio) / 3;
+        //
+        //
+        //         if (character.ActivePotion != PotionType.None)
+        //         {
+        //             baseProbability = Math.Clamp(baseProbability + 0.2d, 0, 1);
+        //             return baseProbability * 100;
+        //         }
+        //
+        //         // Ограничиваем вероятность значениями от 0 до 1
+        //         baseProbability = Math.Clamp(baseProbability, 0, 1);
+        //         return baseProbability * 100;
+        //     }
+        //     catch
+        //     {
+        //         return 50d;
+        //     }
         // }
+
+        private static double CalculateSuccessChance(NpcData npcData, Quest quest)
+        {
+            var heroLevel = npcData.Level;
+            var questDifficulty = quest.Difficulty;
+            // Рассчитываем вероятность успеха
+            var successProbability = 0.5 + 0.1 * (heroLevel - questDifficulty);
+            // Ограничиваем вероятность успеха в пределах от 0 до 1
+
+            if (npcData.ActivePotion != PotionType.None)
+            {
+                successProbability += 0.2;
+            }
+            return Math.Clamp(successProbability, 0.0, 1.0) * 100;
+        }
 
         private static void ReduceGold(int amount) =>
             DOVirtual.Int(Instance.Gold, Instance.Gold - amount, 1f,
