@@ -52,8 +52,7 @@ namespace Utils
             var npcData = NpcFactory.GetNextVisitor();
             CurrentNpcData = npcData;
             if (npcData.NpcType == NpcType.Hero &&
-                npcData.Quest != null &&
-                npcData.Quest.QuestState == QuestState.Failed)
+                npcData.Quest is { QuestState: QuestState.Failed })
             {
                 PostManager.Instance.AddQuest(npcData.Quest, npcData);
                 yield return null;
@@ -241,14 +240,13 @@ namespace Utils
                 {
                     DialogWindow.Instance.NpcTalk("Я вернусь как выполню задание!", npcData.NpcName);
                     npcData.Quest = q;
-                    NpcFactory.AddNpcToQueue(npcData);
-
                     NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
                     var roll = new Random().Next(0, 100);
                     if (roll > chance)
                     {
                         npcData.Quest.QuestState = QuestState.Success;
+                        NpcFactory.AddNpcToQueue(npcData);
                         if (q.QuestType == QuestType.SideQuest)
                         {
                             QuestJournal.Instance.SideQuests.Remove(q);

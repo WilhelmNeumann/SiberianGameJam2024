@@ -62,7 +62,7 @@ namespace Npc
 
         public static void AddNpcToQueue(NpcData npc)
         {
-            if (npc.Quest.Location.ID == 10 && npc.Quest.QuestType == QuestType.MainQuest && npc.Quest.QuestState == QuestState.Success)
+            if (npc.Quest is { Location: { ID: 10 }, QuestType: QuestType.MainQuest, QuestState: QuestState.Success })
             {
                 //#TODO: тут хорошая концовка
             }
