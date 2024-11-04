@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -7,16 +8,16 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField]
-    private List<AudioClip> musicPlaylist;
+    private AudioSource musicPlaylist;
 
     [Header("SFX")]
 
     [Header("UI")]
     [SerializeField]
-    private AudioClip buttonHover;
+    private AudioSource buttonHover;
 
     [SerializeField]
-    private AudioClip buttonClick;
+    private AudioSource buttonClick;
 
     [Header("Dialogs")]
     [SerializeField]
@@ -25,5 +26,15 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    public void PlayClickSound()
+    {
+        buttonClick.Play();
+    }
+
+    public void PlayHoverSound()
+    {
+        buttonHover.Play();
     }
 }
