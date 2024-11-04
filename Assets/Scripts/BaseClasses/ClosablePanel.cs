@@ -7,7 +7,7 @@ namespace DefaultNamespace
     {
         
         public void ClosePanel() {
-            UIManager.Instance.ClosePanel(transform.parent as RectTransform);
+            UIManager.Instance.ClosePanel(transform as RectTransform);
         }
         
     }
