@@ -311,7 +311,7 @@ namespace Utils
 
         private static DialogLine ToNpcTalkDialogLine(string text) => new() { Text = text };
 
-        private static string GenerateQuestDescription(Quest quest)
+        public static string GenerateQuestDescription(Quest quest)
         {
             var details = "Задание\n\n";
             if (quest.QuestType == QuestType.MainQuest)
