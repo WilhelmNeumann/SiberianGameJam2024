@@ -207,6 +207,7 @@ namespace Utils
                         npcData.Quest.Location.State = LocationState.Bad;
                         NpcFactory.AddDemonToTheQueue(npcData);
                     }
+                    NpcFactory.AddHeroToLogs(npcData);
                 },
                 DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
             };
@@ -237,12 +238,14 @@ namespace Utils
                 {
                     DialogWindow.Instance.NpcTalk("Я вернусь как выполню задание!", npcData.NpcName);
                     npcData.Quest = q;
+                    NpcFactory.AddNpcToQueue(npcData);
+                    
+                    NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
                     var roll = new Random().Next(0, 100);
                     if (roll > chance)
                     {
                         npcData.Quest.QuestState = QuestState.Success;
-                        NpcFactory.AddNpcToQueue(npcData);
                         if (q.QuestType == QuestType.SideQuest)
                         {
                             QuestJournal.Instance.SideQuests.Remove(q);

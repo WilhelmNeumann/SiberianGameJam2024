@@ -23,9 +23,17 @@ namespace Npc
             GetCultistFirstInteraction()
         };
 
-        public static List<NpcData> GetAllHerosOnQuest()
+        public static Queue<NpcData> HeroLogs { get; private set; } = new Queue<NpcData>();
+
+        public static void AddHeroToLogs(NpcData npcData)
         {
-            return NpcsQueue.FindAll(x => x.NpcType == NpcType.Hero && x.Quest != null);
+            if (npcData.NpcType != NpcType.Hero) return;
+            if (HeroLogs.Contains(npcData)) return;
+            HeroLogs.Enqueue(npcData);
+            if (HeroLogs.Count > 5)
+            {
+                HeroLogs.Dequeue();
+            }
         }
 
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
@@ -169,7 +177,7 @@ namespace Npc
         private static void DistributeSkillPoints(NpcData npcData)
         {
             // Calculate the total skill points based on the character level.
-            var totalSkillPoints = npcData.Level * 2;  // Example: 5 points per level
+            var totalSkillPoints = npcData.Level * 2; // Example: 5 points per level
 
             // Assign primary characteristic with a weight of 0.4 and others with 0.3 each.
             const float primaryWeight = 0.4f;
@@ -201,7 +209,7 @@ namespace Npc
                 npcData.Intelligence = totalSkillPoints - (primaryPoints + secondaryPoints);
             }
         }
-        
+
         private static NpcData GenerateRandomTaxCollectorNpc()
         {
             const NpcType npcType = NpcType.TaxCollector;

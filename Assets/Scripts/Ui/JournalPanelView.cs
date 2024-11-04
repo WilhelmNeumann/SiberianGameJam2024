@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DefaultNamespace;
 using Npc;
 using Ui;
@@ -18,8 +19,8 @@ namespace Quests
             {
                 Destroy(child.gameObject);
             }
-            
-            NpcFactory.GetAllHerosOnQuest().ForEach(AddNPC);
+
+            NpcFactory.HeroLogs.ToList().ForEach(AddNPC);
         }
 
         private void AddNPC(NpcData npc)
@@ -27,6 +28,5 @@ namespace Quests
             var journalView = Instantiate(visitorEntryViewPrefab, Vector2.zero, Quaternion.identity, content);
             journalView.SetVisitor(npc);
         }
-        
     }
 }
