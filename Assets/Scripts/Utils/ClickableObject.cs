@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Utils
@@ -58,6 +59,7 @@ namespace Utils
 
         public void OnMouseDown()
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             if (UIManager.Instance.IsPanelOpen)
             {
                 return;

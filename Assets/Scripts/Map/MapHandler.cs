@@ -1,10 +1,11 @@
 using System.Linq;
+using DefaultNamespace;
 using Quests;
 using UnityEngine;
 using Utils;
 
 namespace Map {
-    public class MapHandler : Singleton<MapHandler> {
+    public class MapHandler : CloseablePanel {
         
         [SerializeField] 
         private MapRegion[] regions;
@@ -20,10 +21,5 @@ namespace Map {
                 }
             }
         }
-        
-        public void CloseMapPanel() {
-            UIManager.Instance.ClosePanel(transform.parent as RectTransform);
-        }
-
     }
 }
