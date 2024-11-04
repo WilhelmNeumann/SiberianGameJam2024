@@ -849,6 +849,8 @@ MonoBehaviour:
   Gold: 1000
   TaxToPay: 499
   gameOverPanel: {fileID: 880289995}
+  goodGamePanel: {fileID: 653704317}
+  badGamePanel: {fileID: 653704318}
   strengthPotionsText: {fileID: 1961839498}
   charismaPotionsText: {fileID: 445980067}
   intelligencePotionsText: {fileID: 1329405250}
@@ -2281,6 +2283,16 @@ RectTransform:
 --- !u!224 &653704316 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 458890726666630287, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+  m_PrefabInstance: {fileID: 653704314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &653704317 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8908966713297063052, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+  m_PrefabInstance: {fileID: 653704314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &653704318 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1374368537661743584, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
   m_PrefabInstance: {fileID: 653704314}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &661536216

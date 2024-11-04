@@ -21,6 +21,8 @@ namespace Utils
         [SerializeField] public int Gold = 1000;
         [SerializeField] public int TaxToPay = 500;
         [SerializeField] private RectTransform gameOverPanel;
+        [SerializeField] private RectTransform goodGamePanel;
+        [SerializeField] private RectTransform badGamePanel;
 
         [SerializeField] public TextMeshProUGUI strengthPotionsText;
         [SerializeField] public TextMeshProUGUI charismaPotionsText;
@@ -489,6 +491,14 @@ namespace Utils
                     AddPotion(PotionType.Charisma, 1);
                     break;
             }
+        }
+
+        public void GoodEnd() {
+            goodGamePanel.gameObject.SetActive(true);
+        }
+        
+        public void BadEnd() {
+            badGamePanel.gameObject.SetActive(true);
         }
     }
 

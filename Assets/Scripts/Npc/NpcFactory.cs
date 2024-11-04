@@ -64,7 +64,8 @@ namespace Npc
         {
             if (npc.Quest is { Location: { ID: 10 }, QuestType: QuestType.MainQuest, QuestState: QuestState.Success })
             {
-                //#TODO: тут хорошая концовка
+                GameManager.Instance.GoodEnd();
+                return;
             }
 
             npc.GreetingsText = new List<string>()
@@ -122,7 +123,8 @@ namespace Npc
             var nextLocation = deadHeroData.Quest.Location.ID + 1;
             if (nextLocation > Location.Locations.Count)
             {
-                //#TODO: тут плохая концовка
+                GameManager.Instance.BadEnd();
+                return;
             }
 
             var demon = new NpcData
