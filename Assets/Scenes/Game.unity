@@ -722,6 +722,7 @@ MonoBehaviour:
   GoldTextMesh: {fileID: 1424261874}
   Gold: 1000
   TaxToPay: 1000
+  gameOverPanel: {fileID: 0}
   strengthPotionsText: {fileID: 1961839498}
   charismaPotionsText: {fileID: 1050547700}
   intelligencePotionsText: {fileID: 2084353992}
@@ -1749,11 +1750,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3828927247577551403, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -194.09998
+      value: -194.1001
       objectReference: {fileID: 0}
     - target: {fileID: 3828927247577551403, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -8.899963
+      value: -8.899902
       objectReference: {fileID: 0}
     - target: {fileID: 3869266418433751407, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2900,8 +2901,8 @@ Transform:
   m_GameObject: {fileID: 1322533184}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalPosition: {x: -0.43, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.46044, y: 0.46044, z: 1.1511}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1391460032}
