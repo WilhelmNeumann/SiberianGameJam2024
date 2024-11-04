@@ -30,7 +30,8 @@ namespace Quests
         public static Quest GetNextMainQuest()
         {
             var location = Location.Locations.First(x => x.State == LocationState.Neutral);
-            return new Quest
+            
+            var quest =  new Quest
             {
                 QuestType = QuestType.MainQuest,
                 Location = location,
@@ -40,6 +41,9 @@ namespace Quests
                 Objective = location.QuestObjective,
                 CompletionText = location.GoodCompletionText
             };
+            
+            DistributeSkillPoints(quest);
+            return quest;
         }
         
         private static void DistributeSkillPoints(Quest quest)
