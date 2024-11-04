@@ -227,7 +227,7 @@ namespace Utils
                     else
                     {
                         npcData.Quest.QuestState = QuestState.Failed;
-                        // Получаем почту что герой умер на задании
+                        PostManager.Instance.AddQuest(npcData.Quest, npcData);
                     }
                 },
                 DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, q)
