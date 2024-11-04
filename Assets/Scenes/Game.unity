@@ -722,7 +722,7 @@ MonoBehaviour:
   GoldTextMesh: {fileID: 1424261874}
   Gold: 1000
   TaxToPay: 1000
-  gameOverPanel: {fileID: 0}
+  gameOverPanel: {fileID: 880289995}
   strengthPotionsText: {fileID: 1961839498}
   charismaPotionsText: {fileID: 1050547700}
   intelligencePotionsText: {fileID: 2084353992}
@@ -2306,6 +2306,11 @@ Material:
 --- !u!224 &828636051 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3828927247577551403, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
+  m_PrefabInstance: {fileID: 653704314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &880289995 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 114236310147266625, guid: b1102b94d8f23ae44a7021c7445fd094, type: 3}
   m_PrefabInstance: {fileID: 653704314}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &973874446

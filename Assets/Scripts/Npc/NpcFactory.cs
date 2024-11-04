@@ -57,7 +57,8 @@ namespace Npc
             npc.GreetingsText = new List<string>()
             {
                 GetQuestCompletionGreetings(),
-                npc.Quest.CompletionText
+                npc.Quest.CompletionText,
+                "И еще, ты должен купить мой лут"
             };
             NpcsQueue.Add(npc);
         }

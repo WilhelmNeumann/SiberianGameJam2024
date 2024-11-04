@@ -135,7 +135,11 @@ namespace Utils
                 {
                     // Если герой выполнил основной квест, мы платим из своего кармана
                     Text = $"Вот твоя награда, {npcData.Quest.Location.Name} может спать спокойно.",
-                    Action = () => { ReduceGold(reward); }
+                    Action = () =>
+                    {
+                        ReduceGold(reward);
+                        AddRandomPotion();
+                    }
                 };
             }
             else
@@ -437,6 +441,17 @@ namespace Utils
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
             textField.text = Potions[type].ToString();
+        }
+
+        private static void AddRandomPotion()
+        {
+            var r = UnityEngine.Random.Range(0, 2);
+            switch (r)
+            {
+                case 0: AddPotion(PotionType.Strength, 1); break;
+                case 1: AddPotion(PotionType.Intelligence, 1); break;
+                case 2: AddPotion(PotionType.Charisma, 1); break;
+            }
         }
     }
 
