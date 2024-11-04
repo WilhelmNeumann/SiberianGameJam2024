@@ -5,6 +5,8 @@ namespace Npc
 {
     public class NpcData
     {
+        public static readonly int TotalSkillPoints = 5;
+        
         public string NpcName;
         public NpcType NpcType;
         public int Level;
@@ -14,5 +16,8 @@ namespace Npc
         public bool IsIntro;
         public int PrefabIndex = - 1;
         public NpcViewData NpcViewData;
+        public int Strength = 0;
+        public int Intelligence = 0;
+        public int Charisma = 0;
     }
 }

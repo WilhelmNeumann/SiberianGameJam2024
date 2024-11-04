@@ -21,6 +21,11 @@ namespace Npc
             GetCultistFirstInteraction()
         };
 
+        public static List<NpcData> GetAllHerosOnQuest()
+        {
+            return NpcsQueue.FindAll(x => x.NpcType == NpcType.Hero && x.Quest != null);
+        }
+        
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
         public static NpcData GetNextVisitor()
         {
@@ -102,6 +107,9 @@ namespace Npc
         {
             const NpcType npcType = NpcType.Hero;
             var npcName = GenerateNpcName(npcType);
+            
+            
+            
             return new NpcData
             {
                 NpcType = npcType,
