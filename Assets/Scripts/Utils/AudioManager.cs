@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -8,7 +10,10 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField]
-    private AudioSource musicPlaylist;
+    private AudioClip[] musicPlaylist;
+
+    [SerializeField]
+    private AudioSource audioSource;
 
     [Header("SFX")]
 
@@ -26,6 +31,19 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        try
+        {
+            var r = Random.Range(0, musicPlaylist.Length);
+
+            audioSource.clip = musicPlaylist[r];
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        catch(System.Exception i)
+        {
+            audioSource.clip = musicPlaylist[0];
+        }
     }
 
     public void PlayClickSound()
