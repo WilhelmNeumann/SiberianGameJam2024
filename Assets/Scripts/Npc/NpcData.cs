@@ -18,6 +18,6 @@ namespace Npc
         public int Strength = 0;
         public int Intelligence = 0;
         public int Charisma = 0;
-        public PotionType ActivePotion;
+        public PotionType ActivePotion = PotionType.None;
     }
 }

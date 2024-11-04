@@ -26,6 +26,8 @@ namespace Utils
         [SerializeField] public TextMeshProUGUI charismaPotionsText;
         [SerializeField] public TextMeshProUGUI intelligencePotionsText;
 
+        public static NpcData CurrentNpcData;
+        
         private static Dictionary<PotionType, int> Potions = new Dictionary<PotionType, int>()
         {
             { PotionType.Charisma, 0 },
@@ -46,6 +48,7 @@ namespace Utils
         private static IEnumerator GameplayLoop()
         {
             var npcData = NpcFactory.GetNextVisitor();
+            CurrentNpcData = npcData;
             if (npcData.NpcType == NpcType.Hero &&
                 npcData.Quest != null &&
                 npcData.Quest.QuestState == QuestState.Failed)
@@ -424,7 +427,7 @@ namespace Utils
         }
 
         // Дать зелье челику
-        private static void GivePotionTo(PotionType type, NpcData npcData)
+        public static void GivePotionTo(PotionType type, NpcData npcData)
         {
             SetPotionValue(type, Potions[type] - 1);
             npcData.ActivePotion = type;
@@ -457,6 +460,7 @@ namespace Utils
 
     public enum PotionType
     {
+        None,
         Strength,
         Intelligence,
         Charisma,
