@@ -12,6 +12,9 @@ namespace Quests
         public Location Location;
         public QuestType QuestType;
         public QuestState QuestState;
+        public int RequiredStrength;
+        public int RequiredIntelligence;
+        public int RequiredCharisma;
     }
 
     public enum QuestState

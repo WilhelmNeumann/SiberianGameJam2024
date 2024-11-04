@@ -42,6 +42,41 @@ namespace Quests
             };
         }
         
+        private static void DistributeSkillPoints(Quest quest)
+        {
+            // Calculate the total skill points based on the character level.
+            var totalSkillPoints = quest.Difficulty * 2;  // Example: 5 points per level
+
+            // Assign primary characteristic with a weight of 0.4 and others with 0.3 each.
+            const float primaryWeight = 0.4f;
+            var secondaryWeight = 0.3f;
+
+            // Select primary characteristic randomly.
+            var primaryCharacteristic = Random.Range(0, 3);
+
+            // Distribute points based on chosen primary characteristic.
+            int primaryPoints = Mathf.RoundToInt(totalSkillPoints * primaryWeight);
+            int secondaryPoints = Mathf.RoundToInt(totalSkillPoints * secondaryWeight);
+
+            if (primaryCharacteristic == 0)
+            {
+                quest.RequiredStrength = primaryPoints;
+                quest.RequiredIntelligence = secondaryPoints;
+                quest.RequiredCharisma = totalSkillPoints - (primaryPoints + secondaryPoints);
+            }
+            else if (primaryCharacteristic == 1)
+            {
+                quest.RequiredIntelligence = primaryPoints;
+                quest.RequiredStrength = secondaryPoints;
+                quest.RequiredCharisma = totalSkillPoints - (primaryPoints + secondaryPoints);
+            }
+            else
+            {
+                quest.RequiredCharisma = primaryPoints;
+                quest.RequiredStrength = secondaryPoints;
+                quest.RequiredIntelligence = totalSkillPoints - (primaryPoints + secondaryPoints);
+            }
+        }
         
         // Абсурдные шаблоны квестов
         private static List<string> introductionPhrases = new List<string>

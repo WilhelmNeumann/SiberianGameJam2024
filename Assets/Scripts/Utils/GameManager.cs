@@ -223,7 +223,7 @@ namespace Utils
                 {
                     DialogWindow.Instance.NpcTalk("Я вернусь как выполню задание!", npcData.NpcName);
                     npcData.Quest = q;
-                    var chance = CalculateSuccessChance(npcData, q);
+                    var chance = CalculateSuccessProbability(npcData, q);
                     var roll = new Random().Next(0, 100);
                     if (roll > chance)
                     {
@@ -358,6 +358,22 @@ namespace Utils
             return details;
         }
 
+        public static double CalculateSuccessProbability(NpcData character, Quest quest)
+        {
+            // Вычисляем процентное соотношение каждой характеристики
+            double strengthRatio = (double)character.Strength / quest.RequiredStrength;
+            double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
+            double charismaRatio = (double)character.Charisma / quest.RequiredCharisma;
+
+            // Средняя вероятность успеха на основе всех трех характеристик
+            double baseProbability = (strengthRatio + intelligenceRatio + charismaRatio) / 3;
+
+            // Ограничиваем вероятность значениями от 0 до 1
+            baseProbability = Math.Clamp(baseProbability, 0, 1);
+
+            return baseProbability * 100;
+        }
+        
         private static double CalculateSuccessChance(NpcData npcData, Quest quest)
         {
             var heroLevel = npcData.Level;
