@@ -20,6 +20,8 @@ namespace Utils
         [SerializeField] public TextMeshProUGUI GoldTextMesh;
         [SerializeField] public int Gold = 1000;
         [SerializeField] public int TaxToPay = 1000;
+        [SerializeField] private RectTransform gameOverPanel;
+
         [SerializeField] public TextMeshProUGUI strengthPotionsText;
         [SerializeField] public TextMeshProUGUI charismaPotionsText;
         [SerializeField] public TextMeshProUGUI intelligencePotionsText;
@@ -261,7 +263,7 @@ namespace Utils
                     Action = () =>
                     {
                         DialogWindow.Instance.NpcTalk("Тогда твоя таверна закрыта", npcData.NpcName);
-                        GameOver();
+                        Instance.GameOver();
                     }
                 };
             }
@@ -318,8 +320,9 @@ namespace Utils
             return quest;
         }
 
-        private static void GameOver()
+        private void GameOver()
         {
+            gameOverPanel.gameObject.SetActive(true);
         }
 
         private static DialogLine ToNpcTalkDialogLine(string text) => new() { Text = text };
