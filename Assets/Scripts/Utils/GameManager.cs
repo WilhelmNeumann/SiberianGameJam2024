@@ -27,7 +27,7 @@ namespace Utils
         [SerializeField] public TextMeshProUGUI intelligencePotionsText;
 
         public static NpcData CurrentNpcData;
-        
+
         private static Dictionary<PotionType, int> Potions = new Dictionary<PotionType, int>()
         {
             { PotionType.Charisma, 0 },
@@ -172,7 +172,7 @@ namespace Utils
 
                 npcData.Quest = null;
                 npcData.Level += 1;
-                
+
                 if (npcData.Strength >= npcData.Intelligence && npcData.Strength >= npcData.Charisma)
                     npcData.Strength++;
                 else if (npcData.Intelligence >= npcData.Strength && npcData.Intelligence >= npcData.Charisma)
@@ -429,6 +429,8 @@ namespace Utils
         // Дать зелье челику
         public static void GivePotionTo(PotionType type, NpcData npcData)
         {
+            if (Potions[type] == 0) return;
+
             SetPotionValue(type, Potions[type] - 1);
             npcData.ActivePotion = type;
         }
@@ -451,9 +453,15 @@ namespace Utils
             var r = UnityEngine.Random.Range(0, 2);
             switch (r)
             {
-                case 0: AddPotion(PotionType.Strength, 1); break;
-                case 1: AddPotion(PotionType.Intelligence, 1); break;
-                case 2: AddPotion(PotionType.Charisma, 1); break;
+                case 0:
+                    AddPotion(PotionType.Strength, 1);
+                    break;
+                case 1:
+                    AddPotion(PotionType.Intelligence, 1);
+                    break;
+                case 2:
+                    AddPotion(PotionType.Charisma, 1);
+                    break;
             }
         }
     }

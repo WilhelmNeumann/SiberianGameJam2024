@@ -14,7 +14,11 @@ namespace Ui {
         private static string GenerateQuestDescription(NpcData npc)
         {
             //NPCName level doing quest
-            return $"{npc.NpcName} {npc.Level} doing quest";
+            return $"{npc.NpcName}." +
+                   $" \nLevel: {npc.Level}" +
+                   $" \nStrength: {npc.Strength}" +
+                   $" \nIntelligence: {npc.Intelligence}" +
+                   $" \nCharisma: {npc.Charisma}";
         }
         
 
