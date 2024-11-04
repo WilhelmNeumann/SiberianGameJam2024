@@ -62,6 +62,11 @@ namespace Npc
 
         public static void AddNpcToQueue(NpcData npc)
         {
+            if (npc.Quest.Location.ID == 10 && npc.Quest.QuestType == QuestType.MainQuest && npc.Quest.QuestState == QuestState.Success)
+            {
+                //#TODO: тут хорошая концовка
+            }
+
             npc.GreetingsText = new List<string>()
             {
                 GetQuestCompletionGreetings(),
@@ -117,7 +122,7 @@ namespace Npc
             var nextLocation = deadHeroData.Quest.Location.ID + 1;
             if (nextLocation > Location.Locations.Count)
             {
-                //#TODO: локации закончились
+                //#TODO: тут плохая концовка
             }
 
             var demon = new NpcData
@@ -147,7 +152,7 @@ namespace Npc
             {
                 return GenerateNpcOfType(NpcType.Hero);
             }
-            
+
             var npcType = GetRandomNpcType();
             return GenerateNpcOfType(npcType);
         }
