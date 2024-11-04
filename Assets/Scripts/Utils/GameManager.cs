@@ -420,10 +420,17 @@ namespace Utils
             {
                 successProbability += 0.2;
             }
+
             return Math.Clamp(successProbability, 0.0, 1.0) * 100;
         }
 
-        private static void ReduceGold(int amount) =>
+        private static void ReduceGold(int amount)
+        {
+            if ((Instance.Gold - amount) < 0)
+            {
+                Instance.GameOver();
+            }
+            
             DOVirtual.Int(Instance.Gold, Instance.Gold - amount, 1f,
                     value =>
                     {
@@ -432,7 +439,7 @@ namespace Utils
                     })
                 .SetEase(Ease.InOutSine)
                 .SetAutoKill(true);
-
+        }
 
         private static void IncreaseGold(int amount) =>
             DOVirtual.Int(Instance.Gold, Instance.Gold + amount, 1f,
@@ -493,11 +500,13 @@ namespace Utils
             }
         }
 
-        public void GoodEnd() {
+        public void GoodEnd()
+        {
             goodGamePanel.gameObject.SetActive(true);
         }
-        
-        public void BadEnd() {
+
+        public void BadEnd()
+        {
             badGamePanel.gameObject.SetActive(true);
         }
     }

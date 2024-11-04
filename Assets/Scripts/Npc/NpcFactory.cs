@@ -24,7 +24,7 @@ namespace Npc
         };
 
         public static Queue<NpcData> HeroLogs { get; private set; } = new Queue<NpcData>();
-
+        
         public static void AddHeroToLogs(NpcData npcData)
         {
             if (npcData.NpcType != NpcType.Hero) return;
