@@ -55,7 +55,7 @@ namespace Npc
             var npc = NpcsQueue[0];
             NpcsQueue.RemoveAt(0);
 
-            if (NpcsQueue.Count < 3)
+            if (NpcsQueue.Count < 2)
                 NpcsQueue.Add(GenerateRandomNpc());
             return npc;
         }
@@ -143,6 +143,11 @@ namespace Npc
 
         private static NpcData GenerateRandomNpc()
         {
+            if (QuestJournal.Instance.SideQuests.Count >= 3)
+            {
+                return GenerateNpcOfType(NpcType.Hero);
+            }
+            
             var npcType = GetRandomNpcType();
             return GenerateNpcOfType(npcType);
         }
