@@ -13,7 +13,7 @@ namespace Quests
             var random = new System.Random();
             // objective and solution has same index
             var randomIndex = random.Next(0, objectives.Count);
-            return new Quest
+            var q = new Quest
             {
                 Xp = Random.Range(1, 50),
                 Gold = Random.Range(10, 500),
@@ -25,6 +25,9 @@ namespace Quests
                 QuestGiverName = questGiverName,
                 QuestType = QuestType.SideQuest
             };
+            
+            DistributeSkillPoints(q);
+            return q;
         }
 
         public static Quest GetNextMainQuest()
@@ -39,7 +42,7 @@ namespace Quests
                 Xp = Random.Range(1, 50),
                 Gold = location.RewardToGive,
                 Objective = location.QuestObjective,
-                CompletionText = location.GoodCompletionText
+                CompletionText = location.GoodCompletionText,
             };
             
             DistributeSkillPoints(quest);
