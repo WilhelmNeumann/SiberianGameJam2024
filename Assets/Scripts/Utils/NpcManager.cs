@@ -25,7 +25,8 @@ namespace Utils {
                 return CreateNewNpc(npcData);
             }
             var npc = Instantiate(npcPrefabs[npcData.PrefabIndex], spawnPosition, Quaternion.identity);
-            npc.GetComponent<NpcView>().SetSprites(npcData.NpcViewData, npcData.Level);
+            var view = npc.GetComponent<NpcView>();
+            view.SetSprites(npcData.NpcViewData, npcData.Level, npcData);
             return npc;
         }
         
@@ -41,7 +42,7 @@ namespace Utils {
                 npcViewData.Hat = _hats[Random.Range(0, _hats.Count)];
                 npcViewData.Head = _heads[Random.Range(0, _heads.Count)];
                 npcViewData.Weapon = _weapons[Random.Range(0, _weapons.Count)];
-                npc.GetComponent<NpcView>().SetSprites(npcViewData, npcData.Level);
+                npc.GetComponent<NpcView>().SetSprites(npcViewData, npcData.Level, npcData);
             }
             npcData.NpcViewData = npcViewData;
             npcData.PrefabIndex = prefabIndex;
