@@ -8,9 +8,7 @@ using Npc;
 using Quests;
 using TMPro;
 using Ui;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = System.Random;
 
 namespace Utils
