@@ -39,9 +39,9 @@ namespace Utils
 
         public IEnumerator Start()
         {
-            SetPotionValue(PotionType.Charisma, 1);
-            SetPotionValue(PotionType.Intelligence, 1);
-            SetPotionValue(PotionType.Strength, 1);
+            SetPotionValue(PotionType.Charisma, 0);
+            SetPotionValue(PotionType.Intelligence, 0);
+            SetPotionValue(PotionType.Strength, 0);
 
             while (true)
             {

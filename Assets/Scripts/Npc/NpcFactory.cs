@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using MoreMountains.Tools;
+using NUnit.Framework;
 using Quests;
 using UnityEngine;
 using Utils;
@@ -13,18 +16,18 @@ namespace Npc
         private static int heroCount = 0;
         private static int phase = 1;
 
-        private static int _taxCollectorInterval = 7;
+        private const int _taxCollectorInterval = 7;
         private static int _npcCount = 0;
 
         private static readonly List<NpcData> NpcsQueue = new()
         {
-            GetTaxCollectorFirstInteraction(),
-            GetVillagerFirstInteraction(),
-            GetCultistFirstInteraction()
+            // GetTaxCollectorFirstInteraction(),
+            // GetVillagerFirstInteraction(),
+            // GetCultistFirstInteraction()
         };
 
         public static Queue<NpcData> HeroLogs { get; private set; } = new Queue<NpcData>();
-        
+
         public static void AddHeroToLogs(NpcData npcData)
         {
             if (npcData.NpcType != NpcType.Hero) return;
@@ -137,7 +140,7 @@ namespace Npc
                 {
                     $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и был принесен в жертву.",
                     deadHeroData.Quest.Location.BadCompletionText,
-                    "Отправляй к нам больше душ и Король Демонов Тебя вознаградит"
+                    "Отправляй к нам больше душ и Король Демонов Тебя вознаградит. Вот твое золото."
                 },
                 ByeText = new List<string>
                 {
@@ -317,7 +320,7 @@ namespace Npc
             IsIntro = true,
             GreetingsText = new List<string>
             {
-                "Здравствуй трактирщик! Наш культ пытается возродить Короля Демонов",
+                "Эй трактирщик!\n Наш культ пытается возродить Короля Демонов",
                 "Для его воскрешения нам нужны души героев",
                 "Если к тебе зайдет парочка, отправь их к нам, мы в долгу не останемся",
             },
@@ -335,7 +338,7 @@ namespace Npc
                 "Культ Короля Демонов вновь набирает силу. Они захватывают наши земли и аванпосты.",
                 $"Поэтому Ярл поднимает налоги на нужды армии.\nЯ буду приходить раз в неделю, так что готовь золотишко. [{GameManager.Instance.TaxToPay}]",
             },
-            ByeText = new List<string> { "Теперь пора идти к Кузнецу, бывай" }
+            ByeText = new List<string> { "Я скоро вернусь, бывай!" }
         };
 
         private static readonly string[] Greetings1 =
@@ -367,32 +370,42 @@ namespace Npc
         };
 
 
+        private static readonly List<string> HeroNames = new()
+        {
+            "Гервант из Рыбии",
+            "Старк Хранитель Света",
+            "Ланс Сверкающий Меч",
+            "Кратарс Гнев Олимпийцев",
+            "Артис Избранный",
+            "Соларий Искатель Света",
+            "Уелл Клинок Фронтира",
+            "Бьёрн Войн Стихий",
+            "Орлан Страж Небес",
+            "Такао Дух Сумрака",
+            "Масон Тёмный Волк",
+            "Пэйт Ловец Теней",
+            "Сильвестр Железная Рука",
+            "Лерой Дженкинс",
+            "Фримен Легендарный",
+            "Дэйн Изгнанный Провидец",
+            "Грей Громовой Всадник",
+            "Ивар Волчий Воин",
+            "Магистр-Щит Ульфрик"
+        };
+
+        private static List<string> _heroNamesToPick = new();
+
         private static string GetRandomHeroName()
         {
-            var names = new List<string>
+            if (_heroNamesToPick.Count == 0)
             {
-                "Драгар Сын Дракона",
-                "Старк Хранитель Света",
-                "Ланс Сверкающий Меч",
-                "Кратарс Гнев Олимпийцев",
-                "Артис Избранный",
-                "Соларий Искатель Света",
-                "Уелл Клинок Фронтира",
-                "Бьёрн Войн Стихий",
-                "Орлан Страж Небес",
-                "Такао Дух Сумрака",
-                "Масон Тёмный Волк",
-                "Пэйт Ловец Теней",
-                "Сильвестр Железная Рука",
-                "Элея Охотница за Правдой",
-                "Фримен Легендарный",
-                "Дэйн Изгнанный Провидец",
-                "Грей Громовой Всадник",
-                "Ивара Волчий Воин",
-                "Магистр-Щит Ульфрик"
-            };
-
-            return names[Random.Range(0, names.Count)];
+                _heroNamesToPick = HeroNames.ToList();
+                _heroNamesToPick.MMShuffle();
+            }
+            
+            var name = _heroNamesToPick[0];
+            _heroNamesToPick.RemoveAt(0);
+            return name;
         }
 
         private static List<string> GenerateGoodByeText() => new()
