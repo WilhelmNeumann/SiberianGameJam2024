@@ -25,11 +25,10 @@ namespace Quests
             {
                 ID = 1,
                 Name = "Болото",
-                Difficulty = 3,
-                QuestObjective = "Ребенок потерялся в лесу с волками, надо его спасти",
-                GoodCompletionText = "Я спас ребенка от волков, где моя награда?",
-                BadCompletionText =
-                    "Волки сожрали твоего героя, он мертв и его душа принадлежит нам.",
+                Difficulty = 1,
+                QuestObjective = "Зачистить болото от культистов",
+                GoodCompletionText = "Я зачистил болото от культистов и собрал гору лута.",
+                BadCompletionText = "Твой герой мертв, и болото теперь под нашим контролем.",
                 RewardToGive = 200,
                 RewardToReceive = 500
             },
@@ -37,11 +36,10 @@ namespace Quests
             {
                 ID = 2,
                 Name = "Мельница",
-                Difficulty = 2,
-                QuestObjective = "Освободить регион от культистов",
-                GoodCompletionText = "Я освободил регион от культистов, где моя награда?",
-                BadCompletionText =
-                    "Спасибо что послал к нам героя, он мертв и его душа принадлежит нам.",
+                Difficulty = 1,
+                QuestObjective = "Освободить мельницу от культистов",
+                GoodCompletionText = "Я освободил мельницу от культистов, правда теперь там бардак",
+                BadCompletionText = "Мельница стала могилой твоего героя. Теперь мы там заправляем.",
                 RewardToGive = 200,
                 RewardToReceive = 500
             },
@@ -49,10 +47,10 @@ namespace Quests
             {
                 ID = 3,
                 Name = "Копи гномов",
-                Difficulty = 4,
-                QuestObjective = "Найти потерянное сокровище гномов",
-                GoodCompletionText = "Я нашел сокровище гномов, где моя награда?",
-                BadCompletionText = "Гномы поймали твоего героя и забрали его душу.",
+                Difficulty = 2,
+                QuestObjective = "Защитить гномью гору от атаки культистов",
+                GoodCompletionText = "Гномы могут спать спокойно, регион освобожден",
+                BadCompletionText = "Гномья гора теперь наша благодаря тебе. Твой герой не продержался и 5 минут.",
                 RewardToGive = 300,
                 RewardToReceive = 600
             },
@@ -60,10 +58,10 @@ namespace Quests
             {
                 ID = 4,
                 Name = "Лес",
-                Difficulty = 1,
-                QuestObjective = "Собрать лечебные травы",
-                GoodCompletionText = "Я собрал лечебные травы, где моя награда?",
-                BadCompletionText = "Твой герой заблудился в лесу и погиб.",
+                Difficulty = 3,
+                QuestObjective = "Зачистить лес от культистов",
+                GoodCompletionText = "В лесу теперь спокойно, ни одной живой души.",
+                BadCompletionText = "Мы устроили кровавый пир с твоим героем в главной роли. И лес теперь наш.",
                 RewardToGive = 100,
                 RewardToReceive = 300
             },
@@ -71,10 +69,10 @@ namespace Quests
             {
                 ID = 5,
                 Name = "Башни Магов",
-                Difficulty = 5,
-                QuestObjective = "Победить злого мага",
-                GoodCompletionText = "Я победил злого мага, где моя награда?",
-                BadCompletionText = "Маг уничтожил твоего героя.",
+                Difficulty = 3,
+                QuestObjective = "Защитить башню мага от нападения культистов",
+                GoodCompletionText = "Волшебник в безопасности. Он поможет нам в финальной битве?",
+                BadCompletionText = "Мы сбросили твоего героя с башни. Жалко ты этого не видел.",
                 RewardToGive = 400,
                 RewardToReceive = 700,
             },
@@ -82,10 +80,10 @@ namespace Quests
             {
                 ID = 6,
                 Name = "Городок",
-                Difficulty = 2,
-                QuestObjective = "Помочь жителям с ремонтом",
-                GoodCompletionText = "Я помог жителям, где моя награда?",
-                BadCompletionText = "Твой герой погиб, помогая жителям.",
+                Difficulty = 4,
+                QuestObjective = "Помочь ярлу в битве за город",
+                GoodCompletionText = "Мы отбили нападение на город, где моя награда?",
+                BadCompletionText = "Город захвачен. Герой мертв! Король Демонов скоро восстанет!",
                 RewardToGive = 150,
                 RewardToReceive = 350
             },
@@ -93,10 +91,10 @@ namespace Quests
             {
                 ID = 7,
                 Name = "Рыбацкая деревня",
-                Difficulty = 3,
-                QuestObjective = "Избавиться от морского чудовища",
-                GoodCompletionText = "Я избавился от морского чудовища, где моя награда?",
-                BadCompletionText = "Морское чудовище убило твоего героя.",
+                Difficulty = 5,
+                QuestObjective = "Выяснить что стало с рыбаками",
+                GoodCompletionText = "Рыбаков забрали в рабство, но я их освободил",
+                BadCompletionText = "Мы забрали твоего героя в рабство. Теперь он служит нам.",
                 RewardToGive = 250,
                 RewardToReceive = 550
             },
@@ -104,10 +102,10 @@ namespace Quests
             {
                 ID = 8,
                 Name = "Пашня",
-                Difficulty = 1,
-                QuestObjective = "Помочь с уборкой урожая",
-                GoodCompletionText = "Я помог с уборкой урожая, где моя награда?",
-                BadCompletionText = "Твой герой погиб, помогая с уборкой урожая.",
+                Difficulty = 6,
+                QuestObjective = "Защитить доставку зерна в город",
+                GoodCompletionText = "Было жарко, но я помог отбить караван от культистов",
+                BadCompletionText = "Твой герой был убит и воскрешен в качестве нежити.",
                 RewardToGive = 100,
                 RewardToReceive = 300
             },
@@ -115,10 +113,10 @@ namespace Quests
             {
                 ID = 9,
                 Name = "Озеро",
-                Difficulty = 2,
-                QuestObjective = "Поймать редкую рыбу",
-                GoodCompletionText = "Я поймал редкую рыбу, где моя награда?",
-                BadCompletionText = "Твой герой утонул в озере.",
+                Difficulty = 7,
+                QuestObjective = "Отыскать древний меч убийцы демонов",
+                GoodCompletionText = "Я отыскал древний клинок! Им я сражу Короля Демонов!",
+                BadCompletionText = "Твой герой отыскал древний клинок, и был обезглавлен",
                 RewardToGive = 200,
                 RewardToReceive = 400
             },
@@ -126,10 +124,10 @@ namespace Quests
             {
                 ID = 10,
                 Name = "Чёртова Гора",
-                Difficulty = 5,
-                QuestObjective = "Победить демона",
-                GoodCompletionText = "Я победил демона, где моя награда?",
-                BadCompletionText = "Демон уничтожил твоего героя.",
+                Difficulty = 8,
+                QuestObjective = "Победить Короля Демонов",
+                GoodCompletionText = "Король Демонов уничтожен! Мир спасен! Время пировать!",
+                BadCompletionText = "Твой герой послужил пищей для короля демонов! Он восстал и идет сюда!",
                 RewardToGive = 500,
                 RewardToReceive = 800
             }
