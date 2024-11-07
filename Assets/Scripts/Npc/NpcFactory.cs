@@ -135,7 +135,7 @@ namespace Npc
                 NpcType = NpcType.Cultist,
                 Level = 0,
                 IsIntro = true,
-                NpcName = "Культист Короля Демонов",
+                NpcName = "Демон Рафаэль",
                 GreetingsText = new List<string>
                 {
                     $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и был принесен в жертву.",
@@ -234,7 +234,7 @@ namespace Npc
                 NpcType = npcType,
                 NpcName = npcName,
                 GreetingsText = new List<string> { "Доброго дня трактирщик, надеюсь, дела идут хорошо?" },
-                ByeText = new List<string> { "Вот и славненько" }
+                ByeText = new List<string> { "Но сильно не расслабляйся,\nя вернусь через неделю." }
             };
         }
 

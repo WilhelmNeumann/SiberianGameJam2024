@@ -10,15 +10,24 @@ namespace Map {
         [SerializeField] 
         private MapRegion[] regions;
         
+        [SerializeField] 
+        private MapRegion[] goodRegions;
+        
         private void Awake() {
             foreach (var region in regions) {
+                region.gameObject.SetActive(false);
+            }
+            foreach (var region in goodRegions) {
                 region.gameObject.SetActive(false);
             }
             //For every Location.Locations set the region active if locationstate is bad
             foreach (var location in Location.Locations) {
                 if (location.State == LocationState.Bad) {
                     regions[location.ID - 1].gameObject.SetActive(true);
-                }
+                } 
+                if (location.State == LocationState.Good) {
+                    goodRegions[location.ID - 1].gameObject.SetActive(true);
+                } 
             }
         }
     }

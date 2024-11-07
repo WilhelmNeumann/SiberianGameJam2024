@@ -78,8 +78,6 @@ namespace Utils
 
             DialogWindow.Instance.Hide();
             yield return tavernNpc.WalkOut();
-            // Если захотим добавтить паузу между посетителями
-            // yield return new WaitForSeconds(Random.Range(0.8f, 3.2f));
         }
 
 
