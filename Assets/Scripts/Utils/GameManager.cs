@@ -47,37 +47,43 @@ namespace Utils
             }
         }
 
+        private static bool IsHeroFailedSideQuest(NpcData npcData) =>
+            npcData.NpcType == NpcType.Hero &&
+            npcData.Quest is { QuestState: QuestState.Failed };
+
+
         private static IEnumerator GameplayLoop()
         {
             var npcData = NpcFactory.GetNextVisitor();
             CurrentNpcData = npcData;
-            if (npcData.NpcType == NpcType.Hero &&
-                npcData.Quest is { QuestState: QuestState.Failed })
+            if (IsHeroFailedSideQuest(npcData))
             {
                 PostManager.Instance.AddQuest(npcData.Quest, npcData);
                 yield return null;
             }
-
-            var npc = NpcManager.Instance.CreateNpc(npcData);
-            var tavernNpc = npc.GetComponent<TavernNpc>();
-            yield return tavernNpc.WalkIn();
-
-            var scenario = GetDialogScenario(npcData);
-
-            foreach (var dialogLine in scenario)
+            else
             {
-                DialogWindow.Instance.NpcTalk(dialogLine.Text, npcData.NpcName);
-                yield return new WaitUntil(() => DialogWindow.Instance.CanContinue);
+                var npc = NpcManager.Instance.CreateNpc(npcData);
+                var tavernNpc = npc.GetComponent<TavernNpc>();
+                yield return tavernNpc.WalkIn();
 
-                if (dialogLine.ResponseOptions != null)
+                var scenario = GetDialogScenario(npcData);
+
+                foreach (var dialogLine in scenario)
                 {
-                    DialogWindow.Instance.ShowPlayerDialogOptions(dialogLine.ResponseOptions);
+                    DialogWindow.Instance.NpcTalk(dialogLine.Text, npcData.NpcName);
                     yield return new WaitUntil(() => DialogWindow.Instance.CanContinue);
-                }
-            }
 
-            DialogWindow.Instance.Hide();
-            yield return tavernNpc.WalkOut();
+                    if (dialogLine.ResponseOptions != null)
+                    {
+                        DialogWindow.Instance.ShowPlayerDialogOptions(dialogLine.ResponseOptions);
+                        yield return new WaitUntil(() => DialogWindow.Instance.CanContinue);
+                    }
+                }
+
+                DialogWindow.Instance.Hide();
+                yield return tavernNpc.WalkOut();
+            }
         }
 
 
@@ -240,7 +246,8 @@ namespace Utils
                     npcData.Quest = q;
                     NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
-                    var roll = new Random().Next(0, 100);
+                    // var roll = new Random().Next(0, 100);
+                    var roll = 0;
                     if (roll > chance)
                     {
                         npcData.Quest.QuestState = QuestState.Success;
@@ -426,7 +433,7 @@ namespace Utils
             {
                 Instance.GameOver();
             }
-            
+
             DOVirtual.Int(Instance.Gold, Instance.Gold - amount, 1f,
                     value =>
                     {

@@ -23,7 +23,8 @@ namespace Quests
                     $"{introductionPhrases[random.Next(introductionPhrases.Count)]} {problems[randomIndex]}, {solutions[random.Next(solutions.Count)]}",
                 CompletionText = completions[randomIndex],
                 QuestGiverName = questGiverName,
-                QuestType = QuestType.SideQuest
+                QuestType = QuestType.SideQuest,
+                QuestState = QuestState.None
             };
             
             DistributeSkillPoints(q);
