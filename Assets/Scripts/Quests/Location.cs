@@ -35,7 +35,7 @@ namespace Quests
                 GoodCompletionText = "Я зачистил болото от культистов и собрал гору лута.",
                 BadCompletionText = "Твой герой мертв, и болото теперь под нашим контролем.",
                 RewardToGive = 200,
-                RewardToReceive = 500,
+                RewardToReceive = 150,
             },
             new Location
             {
@@ -46,7 +46,7 @@ namespace Quests
                 GoodCompletionText = "Я освободил мельницу от культистов, правда теперь там бардак",
                 BadCompletionText = "Мельница стала могилой твоего героя. Теперь мы там заправляем.",
                 RewardToGive = 200,
-                RewardToReceive = 500
+                RewardToReceive = 200
             },
             new Location
             {
@@ -57,7 +57,7 @@ namespace Quests
                 GoodCompletionText = "Гномы могут спать спокойно, регион освобожден",
                 BadCompletionText = "Гномья гора теперь наша благодаря тебе. Твой герой не продержался и 5 минут.",
                 RewardToGive = 300,
-                RewardToReceive = 600
+                RewardToReceive = 250
             },
             new Location
             {
@@ -79,7 +79,7 @@ namespace Quests
                 GoodCompletionText = "Волшебник в безопасности. Он поможет нам в финальной битве?",
                 BadCompletionText = "Мы сбросили твоего героя с башни. Жалко ты этого не видел.",
                 RewardToGive = 400,
-                RewardToReceive = 700,
+                RewardToReceive = 350,
             },
             new Location
             {
@@ -90,7 +90,7 @@ namespace Quests
                 GoodCompletionText = "Мы отбили нападение на город, где моя награда?",
                 BadCompletionText = "Город захвачен. Герой мертв! Король Демонов скоро восстанет!",
                 RewardToGive = 150,
-                RewardToReceive = 350
+                RewardToReceive = 400
             },
             new Location
             {
@@ -101,7 +101,7 @@ namespace Quests
                 GoodCompletionText = "Рыбаков забрали в рабство, но я их освободил",
                 BadCompletionText = "Мы забрали твоего героя в рабство. Теперь он служит нам.",
                 RewardToGive = 250,
-                RewardToReceive = 550
+                RewardToReceive = 450
             },
             new Location
             {
@@ -112,7 +112,7 @@ namespace Quests
                 GoodCompletionText = "Было жарко, но я помог отбить караван от культистов",
                 BadCompletionText = "Твой герой был убит и воскрешен в качестве нежити.",
                 RewardToGive = 100,
-                RewardToReceive = 300
+                RewardToReceive = 500
             },
             new Location
             {
@@ -123,7 +123,7 @@ namespace Quests
                 GoodCompletionText = "Я отыскал древний клинок! Им я сражу Короля Демонов!",
                 BadCompletionText = "Твой герой отыскал древний клинок, и был обезглавлен",
                 RewardToGive = 200,
-                RewardToReceive = 400
+                RewardToReceive = 550
             },
             new Location
             {
@@ -141,6 +141,7 @@ namespace Quests
 
     public enum LocationState
     {
+        InProgress,
         Neutral,
         Good,
         Bad
