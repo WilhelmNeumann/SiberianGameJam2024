@@ -22,9 +22,9 @@ namespace Npc
 
         private static readonly List<NpcData> NpcsQueue = new()
         {
-            // GetTaxCollectorFirstInteraction(),
-            // GetVillagerFirstInteraction(),
-            // GetCultistFirstInteraction()
+            GetTaxCollectorFirstInteraction(),
+            GetVillagerFirstInteraction(),
+            GetCultistFirstInteraction(),
         };
 
         public static Queue<NpcData> HeroLogs { get; private set; } = new Queue<NpcData>();
@@ -51,9 +51,12 @@ namespace Npc
                 NpcsQueue.Add(GenerateNpcOfType(NpcType.TaxCollector));
             }
 
-            if (NpcsQueue.Count == 0)
+            if (NpcsQueue.Count < 3)
             {
-                return GenerateRandomNpc();
+                while (NpcsQueue.Count < 3)
+                {
+                    NpcsQueue.Add(GenerateRandomNpc());
+                }
             }
 
             var npc = NpcsQueue[0];
@@ -141,7 +144,7 @@ namespace Npc
                 {
                     $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и несен в жертву.",
                     deadHeroData.Quest.Location.BadCompletionText,
-                    "Отправляй к нам больше душ и Король Демонов Тебя вознаградит. Вот твое золото. [500]"
+                    $"Отправляй к нам больше душ и Король Демонов Тебя вознаградит. Вот твое золото. [{deadHeroData.Quest.Location.RewardToReceive}]"
                 },
                 ByeText = new List<string>
                 {
@@ -329,11 +332,11 @@ namespace Npc
             IsIntro = true,
             GreetingsText = new List<string>
             {
-                "Эй трактирщик!\n Наш культ пытается возродить Короля Демонов",
-                "Для его воскрешения нам нужны души героев",
-                "Если к тебе зайдет парочка, отправь их к нам, мы в долгу не останемся",
+                "Эй трактирщик!\n Наш культ возрождает Короля Демонов",
+                "Для его воскрешения нам нужно собрать 7 душ героев. \nОтправляй их к нам в засаду и темный владыка тебя вознаградит",
+                "Будешь получать кошель монет за каждого",
             },
-            ByeText = new List<string> { "Спасибо тебе, бывай!" }
+            ByeText = new List<string> { "Мой темный владыка ждет. А я жду от тебя героев." }
         };
 
         private static NpcData GetTaxCollectorFirstInteraction() => new()
@@ -343,8 +346,8 @@ namespace Npc
             IsIntro = true,
             GreetingsText = new List<string>
             {
-                "Приветствую!\n Эх, после вчерашней попойки до сих пор болит голова, так еще и новости плохие",
-                "Культ Короля Демонов вновь набирает силу. Они захватывают наши земли и аванпосты.",
+                "Приветствую!\nЭх, после вчерашней попойки до сих пор болит голова, так еще и новости плохие",
+                "Культ Короля Демонов вновь набирает силу.\nОни захватывают наши земли и аванпосты по всему королевству.",
                 $"Поэтому Ярл поднимает налоги на нужды армии.\nЯ буду приходить раз в неделю, так что готовь золотишко. [{GameManager.Instance.TaxToPay}]",
             },
             ByeText = new List<string> { "Я скоро вернусь, бывай!" }
@@ -452,11 +455,14 @@ namespace Npc
             "Когда деревни будут спасены, я непременно вернусь сюда на пир."
         };
 
-        private static List<string> GenerateVillagerGreetingsText() => new()
+        private static List<string> GenerateVillagerGreetingsText()
         {
-            GreetingsVillagerPart1[Random.Range(0, Greetings1.Length)],
-            GreetingsVillagerPart2[Random.Range(0, Greetings2.Length)],
-        };
+            return new List<string>()
+            {
+                GreetingsVillagerPart1[Random.Range(0, Greetings1.Length)] + "\n" +
+                GreetingsVillagerPart2[Random.Range(0, Greetings2.Length)]
+            };
+        }
 
         private static readonly string[] GreetingsVillagerPart1 =
         {
