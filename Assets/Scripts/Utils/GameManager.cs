@@ -37,9 +37,9 @@ namespace Utils
 
         public IEnumerator Start()
         {
-            SetPotionValue(PotionType.Charisma, 0);
-            SetPotionValue(PotionType.Intelligence, 0);
-            SetPotionValue(PotionType.Strength, 0);
+            SetPotionValue(PotionType.Charisma, 1);
+            SetPotionValue(PotionType.Intelligence, 1);
+            SetPotionValue(PotionType.Strength, 1);
 
             while (true)
             {
@@ -56,10 +56,10 @@ namespace Utils
         {
             var npcData = NpcFactory.GetNextVisitor();
             CurrentNpcData = npcData;
-            
+
             npcData.PreVisitAction?.Invoke();
             npcData.PreVisitAction = null;
-            
+
             if (IsHeroFailedSideQuest(npcData))
             {
                 PostManager.Instance.AddHeroDiedLetter(npcData.Quest, npcData);
@@ -248,7 +248,8 @@ namespace Utils
                             QuestState = quest.QuestState,
                             Location = quest.Location
                         };
-                        
+
+                        // Экшен выполнится перед следующим посещением
                         npcData.PreVisitAction = () =>
                         {
                             questCopy.Location.State = LocationState.Good;
@@ -256,13 +257,14 @@ namespace Utils
 
                             var text = $"Прогресс сюжета: {Location.GetStoryCompletePercent()}%\n" +
                                        $"Откройте карту для подробностей";
-                            
+
                             MapUpdatePopup.Instance.SetText(text);
                             MapUpdatePopup.Instance.gameObject.SetActive(true);
                         };
                     }
                     else
                     {
+                        // Мейн квест провален, спавним демона и меняем стейт локации
                         npcData.Quest.QuestState = QuestState.Failed;
                         npcData.Quest.Location.State = LocationState.Bad;
                         NpcFactory.AddDemonToTheQueue(npcData);
@@ -270,7 +272,7 @@ namespace Utils
 
                     NpcFactory.AddHeroToLogs(npcData);
                 },
-                DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
+                GetDetailsText = () => GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
             };
 
             var dialogOptionNoQuest = new List<DialogOption>()
@@ -318,7 +320,7 @@ namespace Utils
                         NpcFactory.AddNpcToQueue(npcData);
                     }
                 },
-                DetailsText = GenerateQuestDescriptionWithSuccessRate(npcData, q)
+                GetDetailsText = () => GenerateQuestDescriptionWithSuccessRate(npcData, q)
             }).ToList();
         }
 
@@ -393,7 +395,7 @@ namespace Utils
                         NewQuestPopup.Instance.gameObject.SetActive(true);
                         DialogWindow.Instance.NpcTalk("Отлично!", npcData.NpcName);
                     },
-                    DetailsText = GenerateQuestDescription(npcData.Quest)
+                    GetDetailsText = () => GenerateQuestDescription(npcData.Quest)
                 },
                 new()
                 {
@@ -429,7 +431,7 @@ namespace Utils
         }
 
 
-        private static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
+        public static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
         {
             var details = GenerateQuestDescription(quest);
             var chance = CalculateSuccessChance(npcData, quest);

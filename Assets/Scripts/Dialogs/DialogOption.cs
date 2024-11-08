@@ -1,4 +1,5 @@
 using System;
+using Quests;
 
 namespace Dialogs
 {
@@ -6,6 +7,6 @@ namespace Dialogs
     {
         public string Text;
         public Action Action;
-        public string DetailsText;
+        public Func<string> GetDetailsText;
     }
 }

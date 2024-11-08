@@ -43,6 +43,7 @@ namespace Npc
         // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
         public static NpcData GetNextVisitor()
         {
+            // Считаем кол-вл НПС. Если больше чем _taxCollectorInterval, то спавним коллектора
             _npcCount += 1;
             if (_npcCount >= _taxCollectorInterval)
             {
