@@ -539,6 +539,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 3516992281454472624}
   LevelText: {fileID: 0}
+  view: {fileID: 6389484014895155347}
+  potionEffectMaterial: {fileID: 2100000, guid: 41e6c7a3243b16d439784ffb7e7b1f8c, type: 2}
 --- !u!114 &4893082685456221557
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using System.Collections;
+using DG.Tweening;
 using Npc;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,10 +17,18 @@ namespace Dialogs
         public void OnClick()
         {
             var currentNpc = GameManager.CurrentNpcData;
-            if (currentNpc is { NpcType: NpcType.Hero } && currentNpc.ActivePotion == PotionType.None)
+            if (currentNpc is { NpcType: NpcType.Hero, ActivePotion: PotionType.None })
             {
-                GameManager.GivePotionTo(PotionType, currentNpc);
+                StartCoroutine(GivePotion(currentNpc));
             }
+        }
+
+        private IEnumerator GivePotion(NpcData npcData)
+        {
+            transform.DOPunchPosition(new Vector2(320, -232), .5f, 5, .5f);
+            transform.DOPunchScale(new Vector2(2, 2), .5f, 5, .5f);
+            yield return new WaitForSeconds(0.2f);
+            GameManager.GivePotionTo(PotionType, npcData);
         }
 
         public void OnPointerEnter(PointerEventData eventData)

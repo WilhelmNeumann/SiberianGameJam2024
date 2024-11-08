@@ -22,9 +22,9 @@ namespace Npc
 
         private static readonly List<NpcData> NpcsQueue = new()
         {
-            GetTaxCollectorFirstInteraction(),
-            GetVillagerFirstInteraction(),
-            GetCultistFirstInteraction(),
+            // GetTaxCollectorFirstInteraction(),
+            // GetVillagerFirstInteraction(),
+            // GetCultistFirstInteraction(),
         };
 
         public static Queue<NpcData> HeroLogs { get; private set; } = new Queue<NpcData>();

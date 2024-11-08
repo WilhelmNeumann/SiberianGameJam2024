@@ -27,6 +27,7 @@ namespace Utils
         [SerializeField] public TextMeshProUGUI intelligencePotionsText;
 
         public static NpcData CurrentNpcData;
+        public static TavernNpc CurrentTavernNpc;
 
         private static Dictionary<PotionType, int> Potions = new Dictionary<PotionType, int>()
         {
@@ -69,6 +70,7 @@ namespace Utils
             {
                 var npc = NpcManager.Instance.CreateNpc(npcData);
                 var tavernNpc = npc.GetComponent<TavernNpc>();
+                CurrentTavernNpc = tavernNpc;
                 yield return tavernNpc.WalkIn();
 
                 var scenario = GetDialogScenario(npcData);
@@ -533,6 +535,7 @@ namespace Utils
 
             SetPotionValue(type, Potions[type] - 1);
             npcData.ActivePotion = type;
+            CurrentTavernNpc.GivePotion();
         }
 
         private static void SetPotionValue(PotionType type, int value)
