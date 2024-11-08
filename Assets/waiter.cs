@@ -15,6 +15,8 @@ public class waiter : MonoBehaviour
             .SetEase(Ease.Linear)
             .AppendCallback(() => transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y))
             .SetLoops(-1, LoopType.Restart);
+
+        transform.DOMoveY(-2, .3f).SetLoops(-1, LoopType.Yoyo);
     }
 
     // Update is called once per frame
