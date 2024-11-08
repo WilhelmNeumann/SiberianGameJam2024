@@ -50,7 +50,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlowTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 345e27f61073ff743b11a788d3416791, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -148,7 +148,7 @@ Material:
     - _HologramUnmodAmount: 0
     - _HsvBright: 1
     - _HsvSaturation: 1
-    - _HsvShift: 180
+    - _HsvShift: 191
     - _InnerOutlineAlpha: 0.238
     - _InnerOutlineGlow: 27
     - _InnerOutlineThickness: 1.12
@@ -165,19 +165,19 @@ Material:
     - _OffsetUvY: 0
     - _OnlyInnerOutline: 0
     - _OnlyOutline: 0
-    - _OutlineAlpha: 1
+    - _OutlineAlpha: 0.164
     - _OutlineDistortAmount: 0.5
     - _OutlineDistortTexXSpeed: 5
     - _OutlineDistortTexYSpeed: 5
-    - _OutlineGlow: 100
+    - _OutlineGlow: 43.1
     - _OutlinePixelWidth: 1
     - _OutlineTexXSpeed: 10
     - _OutlineTexYSpeed: 0
     - _OutlineWidth: 0.016
-    - _OverlayBlend: 1
-    - _OverlayGlow: 1
-    - _OverlayTextureScrollXSpeed: 0.25
-    - _OverlayTextureScrollYSpeed: 0.25
+    - _OverlayBlend: 0.045
+    - _OverlayGlow: 8.9
+    - _OverlayTextureScrollXSpeed: 0
+    - _OverlayTextureScrollYSpeed: -0.25
     - _PinchUvAmount: 0.35
     - _PixelateSize: 330
     - _PosterizeGamma: 0.75
@@ -212,7 +212,7 @@ Material:
     - _WarpStrength: 0.025
     - _WaveAmount: 7
     - _WaveSpeed: 10
-    - _WaveStrength: 7.5
+    - _WaveStrength: 0.2
     - _WaveX: 0
     - _WaveY: 0.5
     - _ZTestMode: 4
