@@ -1,7 +1,5 @@
-using System;
 using Quests;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Map
