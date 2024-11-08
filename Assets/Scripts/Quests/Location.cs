@@ -19,6 +19,11 @@ namespace Quests
 
         public static Location GetById(int id) => Locations.First(x => x.ID == id);
 
+        public static int GetFailedCount() => Locations.Where(x => x.State == LocationState.Bad).ToList().Count;
+        public static int GetNeutralCount() => Locations.Where(x => x.State == LocationState.Neutral).ToList().Count;
+        public static int GetGoodCount() => Locations.Where(x => x.State == LocationState.Good).ToList().Count;
+        public static int GetStoryCompletePercent() => (Locations.Count - GetNeutralCount()) * 10;
+        
         public static readonly List<Location> Locations = new()
         {
             new Location
@@ -30,7 +35,7 @@ namespace Quests
                 GoodCompletionText = "Я зачистил болото от культистов и собрал гору лута.",
                 BadCompletionText = "Твой герой мертв, и болото теперь под нашим контролем.",
                 RewardToGive = 200,
-                RewardToReceive = 500
+                RewardToReceive = 500,
             },
             new Location
             {

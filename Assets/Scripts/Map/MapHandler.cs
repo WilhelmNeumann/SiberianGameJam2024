@@ -13,7 +13,7 @@ namespace Map {
         [SerializeField] 
         private MapRegion[] goodRegions;
         
-        private void Awake() {
+        private void OnEnable() {
             foreach (var region in regions) {
                 region.gameObject.SetActive(false);
             }

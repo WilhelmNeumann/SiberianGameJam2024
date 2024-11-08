@@ -56,6 +56,10 @@ namespace Utils
         {
             var npcData = NpcFactory.GetNextVisitor();
             CurrentNpcData = npcData;
+            
+            npcData.PreVisitAction?.Invoke();
+            npcData.PreVisitAction = null;
+            
             if (IsHeroFailedSideQuest(npcData))
             {
                 PostManager.Instance.AddHeroDiedLetter(npcData.Quest, npcData);
@@ -235,9 +239,27 @@ namespace Utils
                     var success = IsQuestSuccessfullyCompleted(npcData, mainQuest);
                     if (success)
                     {
-                        npcData.Quest.QuestState = QuestState.Success;
-                        npcData.Quest.Location.State = LocationState.Good;
+                        var quest = npcData.Quest;
+                        quest.QuestState = QuestState.Success;
                         NpcFactory.AddNpcToQueue(npcData);
+
+                        var questCopy = new Quest
+                        {
+                            QuestState = quest.QuestState,
+                            Location = quest.Location
+                        };
+                        
+                        npcData.PreVisitAction = () =>
+                        {
+                            questCopy.Location.State = LocationState.Good;
+                            Location.GetById(npcData.Quest.Location.ID).State = LocationState.Good;
+
+                            var text = $"Прогресс сюжета: {Location.GetStoryCompletePercent()}%\n" +
+                                       $"Откройте карту для подробностей";
+                            
+                            MapUpdatePopup.Instance.SetText(text);
+                            MapUpdatePopup.Instance.gameObject.SetActive(true);
+                        };
                     }
                     else
                     {
@@ -279,8 +301,7 @@ namespace Utils
                     npcData.Quest = q;
                     NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
-                    // var roll = new Random().Next(0, 100);
-                    var roll = 100;
+                    var roll = new Random().Next(0, 100);
                     if (roll > chance)
                     {
                         npcData.Quest.QuestState = QuestState.Success;

@@ -4,6 +4,7 @@ using System.Linq;
 using MoreMountains.Tools;
 using NUnit.Framework;
 using Quests;
+using Ui;
 using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
@@ -138,7 +139,7 @@ namespace Npc
                 NpcName = "Демон Рафаэль",
                 GreetingsText = new List<string>
                 {
-                    $"{deadHeroData.NpcName} пришел к нам в <color=green>{deadHeroData.Quest.Location.Name}</color> и несен в жертву.",
+                    $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и несен в жертву.",
                     deadHeroData.Quest.Location.BadCompletionText,
                     "Отправляй к нам больше душ и Король Демонов Тебя вознаградит. Вот твое золото."
                 },
@@ -147,6 +148,14 @@ namespace Npc
                     $"Следующую жертву приведи в {Location.GetById(nextLocation).Name}"
                 },
                 Quest = deadHeroData.Quest,
+                PreVisitAction = () =>
+                {
+                    var text = $"Прогресс сюжета: {Location.GetStoryCompletePercent()}%\n" +
+                               $"Откройте карту для подробностей";
+                            
+                    MapUpdatePopup.Instance.SetText(text);
+                    MapUpdatePopup.Instance.gameObject.SetActive(true);
+                }
             };
             NpcsQueue.Add(demon);
         }

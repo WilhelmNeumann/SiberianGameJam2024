@@ -7,7 +7,7 @@ namespace System {
         [SerializeField]
         private UnityEngine.UI.Text letterText;
 
-        private void Awake() {
+        private void OnEnable() {
             var quest = PostManager.Instance.GetQuest();
             SetLetter(quest);
         }
