@@ -58,7 +58,7 @@ namespace Utils
             CurrentNpcData = npcData;
             if (IsHeroFailedSideQuest(npcData))
             {
-                PostManager.Instance.AddQuest(npcData.Quest, npcData);
+                PostManager.Instance.AddHeroDiedLetter(npcData.Quest, npcData);
                 yield return null;
             }
             else
@@ -83,6 +83,9 @@ namespace Utils
 
                 DialogWindow.Instance.Hide();
                 yield return tavernNpc.WalkOut();
+                npcData.PostVisitAction?.Invoke();
+                npcData.PostVisitAction = null;
+                yield return null;
             }
         }
 
@@ -131,9 +134,17 @@ namespace Utils
                 option = new DialogOption
                 {
                     // Если герой выполнил побочку квест, нам платит заказчик, а мы берем процент
-                    Text = "Вот твоя награда, но я заберу себе скромный процент",
-                    Action = () => { IncreaseGold(reward * 2); }
+                    Text = $"Вот твоя награда.\n [Заплатить {reward / 10} золота]",
+                    Action = () => { ReduceGold(reward / 10); }
                 };
+
+                var questCopy = new Quest
+                {
+                    Objective = npcData.Quest.Objective,
+                    Gold = npcData.Quest.Gold
+                };
+                var npcCopy = new NpcData { NpcName = npcData.NpcName };
+                npcData.PostVisitAction = () => { PostManager.Instance.AddQuestCompleted(questCopy, npcCopy); };
             }
             // Прише герой который выполнил основной квест
             else if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.MainQuest })
@@ -142,7 +153,8 @@ namespace Utils
                 option = new DialogOption
                 {
                     // Если герой выполнил основной квест, мы платим из своего кармана
-                    Text = $"Вот твоя награда, {npcData.Quest.Location.Name} может спать спокойно.",
+                    Text =
+                        $"Благодарю, {npcData.Quest.Location.Name} может спать спокойно.\n [Заплатить {npcData.Quest.Gold} золота]",
                     Action = () =>
                     {
                         ReduceGold(reward);
@@ -161,6 +173,34 @@ namespace Utils
             greetings.Last().ResponseOptions = new List<DialogOption> { option };
         }
 
+        private static void LevelUpHero(NpcData npcData)
+        {
+            // Прокачиваем героя, за уровень дается 2 скиллпоинта. Один всегда вкладывается в самую высокую харрактеристику
+            // Второй вкладывается рандомно
+            npcData.Level += 1;
+
+            if (npcData.Strength >= npcData.Intelligence && npcData.Strength >= npcData.Charisma)
+                npcData.Strength++;
+            else if (npcData.Intelligence >= npcData.Strength && npcData.Intelligence >= npcData.Charisma)
+                npcData.Intelligence++;
+            else
+                npcData.Charisma++;
+
+            var rand = UnityEngine.Random.Range(0, 3);
+            switch (rand)
+            {
+                case 0:
+                    npcData.Strength++;
+                    break;
+                case 1:
+                    npcData.Intelligence++;
+                    break;
+                case 2:
+                    npcData.Charisma++;
+                    break;
+            }
+        }
+
         private static DialogLine GetDialogWithHero(NpcData npcData)
         {
             DialogLine line;
@@ -176,14 +216,7 @@ namespace Utils
                 }
 
                 npcData.Quest = null;
-                npcData.Level += 1;
-
-                if (npcData.Strength >= npcData.Intelligence && npcData.Strength >= npcData.Charisma)
-                    npcData.Strength++;
-                else if (npcData.Intelligence >= npcData.Strength && npcData.Intelligence >= npcData.Charisma)
-                    npcData.Intelligence++;
-                else
-                    npcData.Charisma++;
+                LevelUpHero(npcData);
             }
             else
             {
@@ -247,10 +280,11 @@ namespace Utils
                     NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
                     // var roll = new Random().Next(0, 100);
-                    var roll = 0;
+                    var roll = 100;
                     if (roll > chance)
                     {
                         npcData.Quest.QuestState = QuestState.Success;
+                        // В случае успеха, добавляем его обратно в очередь
                         NpcFactory.AddNpcToQueue(npcData);
                         if (q.QuestType == QuestType.SideQuest)
                         {
@@ -278,7 +312,7 @@ namespace Utils
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
         {
             if (npcData.IsIntro) return null;
-            var line = ToNpcTalkDialogLine($"Я пришел собрать нологи! Плоти {Instance.TaxToPay} золота");
+            var line = ToNpcTalkDialogLine($"Я пришел собрать налоги! Плати {Instance.TaxToPay} золота");
             line.ResponseOptions = GetTaxCollectorDialogOptions(npcData, Instance.TaxToPay);
             return line;
         }
@@ -292,18 +326,16 @@ namespace Utils
                 option = new DialogOption
                 {
                     Text = "У меня нет таких денег",
-                    Action = () =>
-                    {
-                        DialogWindow.Instance.NpcTalk("Тогда твоя таверна закрыта", npcData.NpcName);
-                        Instance.GameOver();
-                    }
+                    Action = () => { DialogWindow.Instance.NpcTalk("Тогда твоя таверна закрыта", npcData.NpcName); }
                 };
+
+                npcData.PostVisitAction = () => Instance.GameOver();
             }
             else
             {
                 option = new DialogOption
                 {
-                    Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золотых]",
+                    Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золота]",
                     Action = () =>
                     {
                         ReduceGold(Instance.TaxToPay);
@@ -344,7 +376,7 @@ namespace Utils
                 },
                 new()
                 {
-                    Text = "Увы дружище, ничем не могу помочь",
+                    Text = "Увы дружище, ничем не могу помочь. \nНаграда слишком мала.",
                     Action = () => { DialogWindow.Instance.NpcTalk("Эхх, а я так надеялся...", npcData.NpcName); }
                 }
             };
@@ -363,9 +395,10 @@ namespace Utils
         {
             var details = "Задание\n\n";
             if (quest.QuestType == QuestType.MainQuest)
-                details += "Тип: Сюжетный квест\n";
+                details += "Тип: <color=green>Сюжетный квест</color>\n" +
+                           $"Регион: {quest.Location.Name}\n";
             else
-                details += "Тип: Побочный квест\n";
+                details += "Тип: <color=green>Побочный квест</color>\n";
 
             return details +
                    $"Цель: {quest.Objective}\n" +
@@ -378,7 +411,16 @@ namespace Utils
         private static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
         {
             var details = GenerateQuestDescription(quest);
-            details += $"\nШанс успеха: {CalculateSuccessChance(npcData, quest)}%";
+            var chance = CalculateSuccessChance(npcData, quest);
+            var color = chance switch
+            {
+                <= 30 => "red",
+                <= 70 => "orange",
+                <= 100 => "green",
+                _ => "black"
+            };
+
+            details += $"\nШанс успеха: <color={color}>{chance}%</color>";
             return details;
         }
 
@@ -444,7 +486,7 @@ namespace Utils
                 .SetAutoKill(true);
         }
 
-        private static void IncreaseGold(int amount) =>
+        public static void IncreaseGold(int amount) =>
             DOVirtual.Int(Instance.Gold, Instance.Gold + amount, 1f,
                     value =>
                     {

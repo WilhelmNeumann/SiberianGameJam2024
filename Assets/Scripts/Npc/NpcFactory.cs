@@ -138,7 +138,7 @@ namespace Npc
                 NpcName = "Демон Рафаэль",
                 GreetingsText = new List<string>
                 {
-                    $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и был принесен в жертву.",
+                    $"{deadHeroData.NpcName} пришел к нам в <color=green>{deadHeroData.Quest.Location.Name}</color> и несен в жертву.",
                     deadHeroData.Quest.Location.BadCompletionText,
                     "Отправляй к нам больше душ и Король Демонов Тебя вознаградит. Вот твое золото."
                 },

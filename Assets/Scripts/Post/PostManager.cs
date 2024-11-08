@@ -6,48 +6,62 @@ using TMPro;
 using UnityEngine;
 using Utils;
 
-namespace System {
-    public class PostManager : Singleton<PostManager> {
-        
-        [SerializeField]
-        private TMP_Text lettersCountText;
+namespace System
+{
+    public class PostManager : Singleton<PostManager>
+    {
+        [SerializeField] private TMP_Text lettersCountText;
 
-        [SerializeField]
-        private Vector2 position;
-        
+        [SerializeField] private Vector2 position;
+
         private Queue<String> _quests = new Queue<String>();
-        
-        private void Start() {
+
+        private void Start()
+        {
             UpdateCounter();
         }
-        
-        public void AddQuest(Quest quest, NpcData npc) {
-            _quests.Enqueue(GetLetterText(quest, npc));
+
+        public void AddQuestCompleted(Quest quest, NpcData npc)
+        {
+            _quests.Enqueue(GetRewardLetterText(quest, npc));
             UpdateCounter();
         }
-        
-        public String GetQuest() {
-            var nextText =  _quests.Dequeue();
+
+        public void AddHeroDiedLetter(Quest quest, NpcData npc)
+        {
+            _quests.Enqueue(GetHeroDiedLetterText(quest, npc));
+            UpdateCounter();
+        }
+
+        public String GetQuest()
+        {
+            var nextText = _quests.Dequeue();
             UpdateCounter();
             return nextText;
         }
-        
-        private void UpdateCounter() {
+
+        public void UpdateCounter()
+        {
             var questCount = _quests.Count;
-            if (questCount > 0) {
-                transform.position = position;
-            }
-            else {
-                transform.position = new Vector2(-1000, -1000);
-            }
+            transform.position = questCount > 0 ? position : new Vector2(-1000, -1000);
             lettersCountText.text = questCount.ToString();
         }
 
-        private string GetLetterText(Quest quest, NpcData npc) {
+        private string GetHeroDiedLetterText(Quest quest, NpcData npc)
+        {
+            GameManager.IncreaseGold(quest.Gold);
             //NPCName умер выполняя квест quest.objective
             return $"От старосты деревни:\n\n" +
                    $"С прискорбием сообщаем, что {npc.NpcName} умер пытаясь {quest.Objective}\n" +
                    $"Причина смерти: {DeathReasons[UnityEngine.Random.Range(0, DeathReasons.Count)]}";
+        }
+
+        private string GetRewardLetterText(Quest quest, NpcData npc)
+        {
+            return $"От старосты деревни:\n\n" +
+                   $"Благодарим что отправили к нам героя.\n" +
+                   $"{npc.NpcName} помог {quest.Objective.ToLower()}.\n" +
+                   $"Передайте ему награду: {quest.Gold} золота";
         }
 
         private static readonly List<string> DeathReasons = new()

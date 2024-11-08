@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Quests;
 using Utils;
@@ -19,5 +20,7 @@ namespace Npc
         public int Intelligence = 0;
         public int Charisma = 0;
         public PotionType ActivePotion = PotionType.None;
+        public Action PreVisitAction;
+        public Action PostVisitAction;
     }
 }
