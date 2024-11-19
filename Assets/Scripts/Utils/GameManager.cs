@@ -397,7 +397,7 @@ namespace Utils
                         NewQuestPopup.Instance.gameObject.SetActive(true);
                         DialogWindow.Instance.NpcTalk("Отлично!", npcData.NpcName);
                     },
-                    GetDetailsText = () => GenerateQuestDescription(npcData.Quest)
+                    GetDetailsText = () => new QuestDescription(GenerateQuestDescription(npcData.Quest), npcData.Quest.GetMainSkill())
                 },
                 new()
                 {
@@ -433,7 +433,7 @@ namespace Utils
         }
 
 
-        public static string GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
+        public static QuestDescription GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
         {
             var details = GenerateQuestDescription(quest);
             var chance = CalculateSuccessChance(npcData, quest);
@@ -446,39 +446,39 @@ namespace Utils
             };
 
             details += $"\nШанс успеха: <color={color}>{chance}%</color>";
-            return details;
+            return new QuestDescription(details, quest.GetMainSkill());
         }
 
-        // public static double CalculateSuccessProbability(NpcData character, Quest quest)
-        // {
-        //     try
-        //     {
-        //         // Вычисляем процентное соотношение каждой характеристики
-        //         double strengthRatio = (double)character.Strength / quest.RequiredStrength;
-        //         double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
-        //         double charismaRatio = (double)character.Charisma / quest.RequiredCharisma;
-        //
-        //         // Средняя вероятность успеха на основе всех трех характеристик
-        //         double baseProbability = (strengthRatio + intelligenceRatio + charismaRatio) / 3;
-        //
-        //
-        //         if (character.ActivePotion != PotionType.None)
-        //         {
-        //             baseProbability = Math.Clamp(baseProbability + 0.2d, 0, 1);
-        //             return baseProbability * 100;
-        //         }
-        //
-        //         // Ограничиваем вероятность значениями от 0 до 1
-        //         baseProbability = Math.Clamp(baseProbability, 0, 1);
-        //         return baseProbability * 100;
-        //     }
-        //     catch
-        //     {
-        //         return 50d;
-        //     }
-        // }
+        public static double CalculateSuccessChance(NpcData character, Quest quest)
+        {
+            try
+            {
+                // Calculate the ratio of each characteristic to the required value
+                double strengthRatio = (double)character.Strength / quest.RequiredStrength;
+                double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
+                double charismaRatio = (double)character.Charisma / quest.RequiredCharisma;
 
-        private static double CalculateSuccessChance(NpcData npcData, Quest quest)
+                // Use a logarithmic scale to reduce the impact of high attribute values
+                double baseProbability = (Math.Log10(strengthRatio + 1) + Math.Log10(intelligenceRatio + 1) +
+                                          Math.Log10(charismaRatio + 1)) / 3;
+
+                // Apply potion effect if any
+                if (character.ActivePotion != PotionType.None)
+                {
+                    baseProbability = Math.Clamp(baseProbability + 0.2d, 0, 1);
+                }
+
+                // Clamp the probability between 0 and 1
+                baseProbability = Math.Clamp(baseProbability, 0, 1);
+                return baseProbability * 100;
+            }
+            catch
+            {
+                return 50d;
+            }
+        }
+
+        /*private static double CalculateSuccessChance(NpcData npcData, Quest quest)
         {
             var heroLevel = npcData.Level;
             var questDifficulty = quest.Difficulty;
@@ -492,7 +492,7 @@ namespace Utils
             }
 
             return Math.Clamp(successProbability, 0.0, 1.0) * 100;
-        }
+        }*/
 
         private static void ReduceGold(int amount)
         {

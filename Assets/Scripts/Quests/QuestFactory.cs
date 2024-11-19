@@ -24,7 +24,7 @@ namespace Quests
                 CompletionText = completions[randomIndex],
                 QuestGiverName = questGiverName,
                 QuestType = QuestType.SideQuest,
-                QuestState = QuestState.None
+                QuestState = QuestState.None,
             };
             
             DistributeSkillPoints(q);

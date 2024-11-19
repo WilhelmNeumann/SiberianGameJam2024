@@ -7,6 +7,6 @@ namespace Dialogs
     {
         public string Text;
         public Action Action;
-        public Func<string> GetDetailsText;
+        public Func<QuestDescription> GetDetailsText;
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using Quests;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,8 +13,10 @@ namespace Dialogs
         [SerializeField] public Material Glow;
         [SerializeField] public GameObject Details;
         [SerializeField] public Text DetailsText;
+        [SerializeField] public RawImage Icon;
+        [SerializeField] public Sprite[] Icons;
 
-        private Func<string> _getDetailsText;
+        private Func<QuestDescription> _getDetailsText;
 
         public Action Action;
 
@@ -23,13 +26,13 @@ namespace Dialogs
             DialogWindow.Instance.ContinueDialog();
         }
 
-        public void Init(string optionText, Action action, Func<string> getDetailsText)
+        public void Init(string optionText, Action action, Func<QuestDescription> getDetailsText)
         {
             Action = action;
             UiText.text = optionText;
             if (getDetailsText == null) return;
             _getDetailsText = getDetailsText;
-            DetailsText.text = getDetailsText.Invoke();
+            DetailsText.text = getDetailsText.Invoke().Description;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -38,7 +41,8 @@ namespace Dialogs
 
             if (_getDetailsText != null)
             {
-                DetailsText.text = _getDetailsText.Invoke();
+                DetailsText.text = _getDetailsText.Invoke().Description;
+                Icon.texture = GetIcon(_getDetailsText.Invoke().MainSkill).texture;
             }
             
             if (DetailsText.text.Length > 0)
@@ -52,5 +56,20 @@ namespace Dialogs
             Image.material = null;
             Details.SetActive(false);
         }
+
+        private Sprite GetIcon(MainSkill skill)
+        {
+            switch (skill)
+            {
+                case MainSkill.Strength:
+                    return Icons[0];
+                case MainSkill.Intelligence:
+                    return Icons[1];
+                case MainSkill.Charisma:
+                    return Icons[2];
+            }
+            return Icons[0];
+        }
+        
     }
 }
