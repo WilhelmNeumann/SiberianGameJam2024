@@ -13,6 +13,8 @@ namespace Quests
             var random = new System.Random();
             // objective and solution has same index
             var randomIndex = random.Next(0, objectives.Count);
+            var problemDescription = problems.ElementAt(randomIndex).Key;
+            var mainSkill = problems[problemDescription];
             var q = new Quest
             {
                 Xp = Random.Range(1, 50),
@@ -20,13 +22,14 @@ namespace Quests
                 Difficulty = Random.Range(1, 5),
                 Objective = objectives[randomIndex],
                 ApplicationText =
-                    $"{introductionPhrases[random.Next(introductionPhrases.Count)]} {problems[randomIndex]}, {solutions[random.Next(solutions.Count)]}",
+                    $"{introductionPhrases[random.Next(introductionPhrases.Count)]} {problemDescription}, {solutions[random.Next(solutions.Count)]}",
                 CompletionText = completions[randomIndex],
                 QuestGiverName = questGiverName,
                 QuestType = QuestType.SideQuest,
                 QuestState = QuestState.None,
+                MainSkill = mainSkill
             };
-            
+
             DistributeSkillPoints(q);
             return q;
         }
@@ -34,8 +37,8 @@ namespace Quests
         public static Quest GetNextMainQuest()
         {
             var location = Location.Locations.First(x => x.State == LocationState.Neutral);
-            
-            var quest =  new Quest
+
+            var quest = new Quest
             {
                 QuestType = QuestType.MainQuest,
                 Location = location,
@@ -45,47 +48,44 @@ namespace Quests
                 Objective = location.QuestObjective,
                 CompletionText = location.GoodCompletionText,
             };
-            
+
             DistributeSkillPoints(quest);
             return quest;
         }
-        
+
         private static void DistributeSkillPoints(Quest quest)
         {
-            // Calculate the total skill points based on the character level.
-            var totalSkillPoints = quest.Difficulty * 2;  // Example: 5 points per level
+            // Calculate the total skill points based on the quest difficulty.
+            var totalSkillPoints = quest.Difficulty * 10; // Example: 10 points per difficulty level
 
-            // Assign primary characteristic with a weight of 0.4 and others with 0.3 each.
-            const float primaryWeight = 0.4f;
-            var secondaryWeight = 0.3f;
+            // Assign primary characteristic with a weight of 0.5 and others with 0.25 each.
+            const float primaryWeight = 0.5f;
+            const float secondaryWeight = 0.25f;
 
-            // Select primary characteristic randomly.
-            var primaryCharacteristic = Random.Range(0, 3);
-
-            // Distribute points based on chosen primary characteristic.
+            // Distribute points based on MainSkill property.
             int primaryPoints = Mathf.RoundToInt(totalSkillPoints * primaryWeight);
             int secondaryPoints = Mathf.RoundToInt(totalSkillPoints * secondaryWeight);
 
-            if (primaryCharacteristic == 0)
+            switch (quest.MainSkill)
             {
-                quest.RequiredStrength = primaryPoints;
-                quest.RequiredIntelligence = secondaryPoints;
-                quest.RequiredCharisma = totalSkillPoints - (primaryPoints + secondaryPoints);
-            }
-            else if (primaryCharacteristic == 1)
-            {
-                quest.RequiredIntelligence = primaryPoints;
-                quest.RequiredStrength = secondaryPoints;
-                quest.RequiredCharisma = totalSkillPoints - (primaryPoints + secondaryPoints);
-            }
-            else
-            {
-                quest.RequiredCharisma = primaryPoints;
-                quest.RequiredStrength = secondaryPoints;
-                quest.RequiredIntelligence = totalSkillPoints - (primaryPoints + secondaryPoints);
+                case MainSkill.Strength:
+                    quest.RequiredStrength = primaryPoints;
+                    quest.RequiredIntelligence = secondaryPoints;
+                    quest.RequiredCharisma = secondaryPoints;
+                    break;
+                case MainSkill.Intelligence:
+                    quest.RequiredIntelligence = primaryPoints;
+                    quest.RequiredStrength = secondaryPoints;
+                    quest.RequiredCharisma = secondaryPoints;
+                    break;
+                case MainSkill.Charisma:
+                    quest.RequiredCharisma = primaryPoints;
+                    quest.RequiredStrength = secondaryPoints;
+                    quest.RequiredIntelligence = secondaryPoints;
+                    break;
             }
         }
-        
+
         // Абсурдные шаблоны квестов
         private static List<string> introductionPhrases = new()
         {
@@ -108,21 +108,24 @@ namespace Quests
             "Ты ведь герой, не так ли? Тогда у нас тут для тебя задание."
         };
 
-        private static List<string> problems = new()
+        private static Dictionary<string, MainSkill> problems = new()
         {
-            "У аптекаря крысы в подвале завелись",
-            "На сына аптекаря напали медведи, и теперь он жаждет мести",
-            "На площади выросла огромная репа, которая пугает детей",
-            "Старый петух деревенского старосты кукарекает по ночам",
-            "Говорящая ворона залетела в таверну и всех дразнит",
-            "Жена мельника ушла в лес и не вернулась, ее не могут найти уже неделю",
-            "На лугу ночью слышен странный смех, и никто не знает, чей он",
-            "У пастуха овцы стали агрессивными и кидаются на людей",
-            "В лесу появилась хижина, которой там раньше не было",
-            "В пруду вдруг стало слишком много лягушек — они всех распугивают",
-            "У молочницы кувшин с молоком вдруг побежал сам по себе",
-            "Колодец стал странно булькать ночью, и люди боятся подходить к нему",
-            "Культисты украли у пахаря его любимую мотыгу, которая передавалась из поколения в поколение",
+            { "У аптекаря крысы в подвале завелись", MainSkill.Strength },
+            { "На сына аптекаря напали медведи, и теперь он жаждет мести", MainSkill.Strength },
+            { "На площади выросла огромная репа, которая пугает детей", MainSkill.Strength },
+            { "Старый петух деревенского старосты кукарекает по ночам", MainSkill.Charisma },
+            { "Говорящая ворона залетела в таверну и всех дразнит", MainSkill.Charisma },
+            { "Жена мельника ушла в лес и не вернулась, ее не могут найти уже неделю", MainSkill.Intelligence },
+            { "На лугу ночью слышен странный смех, и никто не знает, чей он", MainSkill.Intelligence },
+            { "У пастуха овцы стали агрессивными и кидаются на людей", MainSkill.Strength },
+            { "В лесу появилась хижина, которой там раньше не было", MainSkill.Intelligence },
+            { "В пруду вдруг стало слишком много лягушек — они всех распугивают", MainSkill.Charisma },
+            { "У молочницы кувшин с молоком вдруг побежал сам по себе", MainSkill.Intelligence },
+            { "Колодец стал странно булькать ночью, и люди боятся подходить к нему", MainSkill.Intelligence },
+            {
+                "Культисты украли у пахаря его любимую мотыгу, которая передавалась из поколения в поколение",
+                MainSkill.Strength
+            },
         };
 
         private static List<string> solutions = new()

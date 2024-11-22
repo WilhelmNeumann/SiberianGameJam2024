@@ -15,22 +15,7 @@ namespace Quests
         public int RequiredStrength;
         public int RequiredIntelligence;
         public int RequiredCharisma;
-        
-        public MainSkill GetMainSkill()
-        {
-            if (RequiredStrength > RequiredIntelligence && RequiredStrength > RequiredCharisma)
-            {
-                return MainSkill.Strength;
-            }
-            else if (RequiredIntelligence > RequiredStrength && RequiredIntelligence > RequiredCharisma)
-            {
-                return MainSkill.Intelligence;
-            }
-            else
-            {
-                return MainSkill.Charisma;
-            }
-        }
+        public MainSkill MainSkill {get; set; }
     }
 
     public enum QuestState

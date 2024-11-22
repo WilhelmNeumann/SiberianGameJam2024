@@ -397,7 +397,8 @@ namespace Utils
                         NewQuestPopup.Instance.gameObject.SetActive(true);
                         DialogWindow.Instance.NpcTalk("Отлично!", npcData.NpcName);
                     },
-                    GetDetailsText = () => new QuestDescription(GenerateQuestDescription(npcData.Quest), npcData.Quest.GetMainSkill())
+                    GetDetailsText = () =>
+                        new QuestDescription(GenerateQuestDescription(npcData.Quest), npcData.Quest.MainSkill)
                 },
                 new()
                 {
@@ -436,7 +437,7 @@ namespace Utils
         public static QuestDescription GenerateQuestDescriptionWithSuccessRate(NpcData npcData, Quest quest)
         {
             var details = GenerateQuestDescription(quest);
-            var chance = CalculateSuccessChance(npcData, quest);
+            var chance = (int)CalculateSuccessChance(npcData, quest);
             var color = chance switch
             {
                 <= 30 => "red",
@@ -446,10 +447,10 @@ namespace Utils
             };
 
             details += $"\nШанс успеха: <color={color}>{chance}%</color>";
-            return new QuestDescription(details, quest.GetMainSkill());
+            return new QuestDescription(details, quest.MainSkill);
         }
 
-        public static double CalculateSuccessChance(NpcData character, Quest quest)
+        private static double CalculateSuccessChance(NpcData character, Quest quest)
         {
             try
             {
@@ -458,14 +459,21 @@ namespace Utils
                 double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
                 double charismaRatio = (double)character.Charisma / quest.RequiredCharisma;
 
-                // Use a logarithmic scale to reduce the impact of high attribute values
-                double baseProbability = (Math.Log10(strengthRatio + 1) + Math.Log10(intelligenceRatio + 1) +
-                                          Math.Log10(charismaRatio + 1)) / 3;
+                // Use a linear scale to calculate the base probability
+                double baseProbability = (strengthRatio + intelligenceRatio + charismaRatio) / 3;
 
                 // Apply potion effect if any
-                if (character.ActivePotion != PotionType.None)
+                switch (character.ActivePotion)
                 {
-                    baseProbability = Math.Clamp(baseProbability + 0.2d, 0, 1);
+                    case PotionType.Strength:
+                        baseProbability += 0.2;
+                        break;
+                    case PotionType.Intelligence:
+                        baseProbability += 0.2;
+                        break;
+                    case PotionType.Charisma:
+                        baseProbability += 0.2;
+                        break;
                 }
 
                 // Clamp the probability between 0 and 1

@@ -49,7 +49,6 @@ namespace System
 
         private string GetHeroDiedLetterText(Quest quest, NpcData npc)
         {
-            GameManager.IncreaseGold(quest.Gold);
             //NPCName умер выполняя квест quest.objective
             return $"От старосты деревни:\n\n" +
                    $"С прискорбием сообщаем, что {npc.NpcName} умер пытаясь {quest.Objective}\n" +
@@ -58,6 +57,7 @@ namespace System
 
         private string GetRewardLetterText(Quest quest, NpcData npc)
         {
+            GameManager.IncreaseGold(quest.Gold);
             return $"От старосты деревни:\n\n" +
                    $"Благодарим что отправили к нам героя.\n" +
                    $"{npc.NpcName} помог {quest.Objective.ToLower()}.\n" +
