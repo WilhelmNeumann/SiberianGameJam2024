@@ -40,10 +40,10 @@ namespace Npc
             }
         }
 
-        // Выдаем нпс из списка, когда список заканчивается, генерим рандомного
+        // Generate NPCs from list, when list ends, generate random ones
         public static NpcData GetNextVisitor()
         {
-            // Считаем кол-вл НПС. Если больше чем _taxCollectorInterval, то спавним коллектора
+            // Count NPCs. If more than _taxCollectorInterval, spawn collector
             _npcCount += 1;
             if (_npcCount >= _taxCollectorInterval)
             {
@@ -80,7 +80,7 @@ namespace Npc
             {
                 GetQuestCompletionGreetings(),
                 npc.Quest.CompletionText,
-                "И еще, ты должен купить мой лут"
+                "And also, you should buy my loot"
             };
             NpcsQueue.Add(npc);
         }
@@ -140,22 +140,22 @@ namespace Npc
                 NpcType = NpcType.Cultist,
                 Level = 0,
                 IsIntro = true,
-                NpcName = "Демон Рафаэль",
+                NpcName = "Demon Raphael",
                 GreetingsText = new List<string>
                 {
-                    $"{deadHeroData.NpcName} пришел к нам в {deadHeroData.Quest.Location.Name} и несен в жертву.",
+                    $"{deadHeroData.NpcName} came to us in {deadHeroData.Quest.Location.Name} and was sacrificed.",
                     deadHeroData.Quest.Location.BadCompletionText,
-                    $"Отправляй к нам больше душ и Король Демонов Тебя вознаградит. Вот твое золото. [{deadHeroData.Quest.Location.RewardToReceive}]"
+                    $"Send us more souls and the Demon King will reward you. Here's your gold. [{deadHeroData.Quest.Location.RewardToReceive}]"
                 },
                 ByeText = new List<string>
                 {
-                    $"Следующую жертву приведи в {Location.GetById(nextLocation).Name}"
+                    $"Bring the next sacrifice to {Location.GetById(nextLocation).Name}"
                 },
                 Quest = deadHeroData.Quest,
                 PreVisitAction = () =>
                 {
-                    var text = $"Прогресс сюжета: {Location.GetStoryCompletePercent()}%\n" +
-                               $"Откройте карту для подробностей";
+                    var text = $"Story progress: {Location.GetStoryCompletePercent()}%\n" +
+                               $"Open map for details";
                             
                     MapUpdatePopup.Instance.SetText(text);
                     MapUpdatePopup.Instance.gameObject.SetActive(true);
@@ -241,13 +241,13 @@ namespace Npc
         private static NpcData GenerateRandomTaxCollectorNpc()
         {
             const NpcType npcType = NpcType.TaxCollector;
-            const string npcName = "Налоговый инспектор";
+            const string npcName = "Tax Inspector";
             return new NpcData
             {
                 NpcType = npcType,
                 NpcName = npcName,
-                GreetingsText = new List<string> { "Доброго дня трактирщик, надеюсь, дела идут хорошо?" },
-                ByeText = new List<string> { "Но сильно не расслабляйся,\nя вернусь через неделю." }
+                GreetingsText = new List<string> { "Good day innkeeper, I hope business is going well?" },
+                ByeText = new List<string> { "But don't relax too much,\nI'll be back in a week." }
             };
         }
 
@@ -262,7 +262,7 @@ namespace Npc
                 NpcName = npcName,
                 Quest = quest,
                 GreetingsText = GenerateVillagerGreetingsText(),
-                ByeText = new List<string> { "Ну да ладно, пойду а то дел по горло." }
+                ByeText = new List<string> { "Well anyway, I'll go, I'm up to my neck in work." }
             };
         }
 
@@ -272,10 +272,10 @@ namespace Npc
 
             return types[Random.Range(0, types.Count)];
 
-            // Рассчитаем вероятность для каждого типа
-            var total = villagerCount + heroCount + 1; // +1 чтобы избежать деления на ноль в начале
+            // Calculate probability for each type
+            var total = villagerCount + heroCount + 1; // +1 to avoid division by zero at start
             var villagerProbability =
-                (heroCount + 1) / total; // Чем больше героев, тем выше вероятность деревенского жителя
+                (heroCount + 1) / total; // The more heroes, the higher probability of villager
 
             var roll = new System.Random().NextDouble();
 
@@ -305,9 +305,9 @@ namespace Npc
             return npcType switch
             {
                 NpcType.Hero => GetRandomHeroName(),
-                NpcType.TaxCollector => "Сборщик налогов",
-                NpcType.Villager => "Деревенский житель",
-                NpcType.Cultist => "Культист Короля Демонов",
+                NpcType.TaxCollector => "Tax Collector",
+                NpcType.Villager => "Village Dweller",
+                NpcType.Cultist => "Demon King Cultist",
                 _ => throw new ArgumentOutOfRangeException(nameof(npcType), npcType, null)
             };
         }
@@ -315,95 +315,95 @@ namespace Npc
         private static NpcData GetVillagerFirstInteraction() => new()
         {
             NpcType = NpcType.Villager,
-            NpcName = "Староста деревни",
+            NpcName = "Village Elder",
             IsIntro = true,
             GreetingsText = new List<string>
             {
-                "Привет Трактирщик! Как ты знаешь, на наших землях пробуждается культ Короля демонов",
-                "Так еще и других проблем у нас в округе хватает, повсюду бардак",
-                "К тебе тут иногда захаживают Герои, можешь направлять их к нам на помощь?"
+                "Hello Innkeeper! As you know, the Demon King cult is awakening on our lands",
+                "Plus we have enough other problems around, chaos everywhere",
+                "Heroes sometimes visit you, can you direct them to help us?"
             },
-            ByeText = new List<string> { "Спасибо тебе, бывай!" }
+            ByeText = new List<string> { "Thank you, farewell!" }
         };
 
         private static NpcData GetCultistFirstInteraction() => new()
         {
             NpcType = NpcType.Cultist,
-            NpcName = "Демон Рафаэль",
+            NpcName = "Demon Raphael",
             IsIntro = true,
             GreetingsText = new List<string>
             {
-                "Эй трактирщик!\n Наш культ возрождает Короля Демонов",
-                "Для его воскрешения нам нужно собрать 7 душ героев. \nОтправляй их к нам в засаду и темный владыка тебя вознаградит",
-                "Будешь получать кошель монет за каждого",
+                "Hey innkeeper!\n Our cult is reviving the Demon King",
+                "To resurrect him we need to collect 7 hero souls. \nSend them to our ambush and the dark lord will reward you",
+                "You'll get a bag of coins for each one",
             },
-            ByeText = new List<string> { "Мой темный владыка ждет. А я жду от тебя героев." }
+            ByeText = new List<string> { "My dark lord waits. And I wait for heroes from you." }
         };
 
         private static NpcData GetTaxCollectorFirstInteraction() => new()
         {
             NpcType = NpcType.TaxCollector,
-            NpcName = "Налоговый инспектор",
+            NpcName = "Tax Inspector",
             IsIntro = true,
             GreetingsText = new List<string>
             {
-                "Приветствую!\nЭх, после вчерашней попойки до сих пор болит голова, так еще и новости плохие",
-                "Культ Короля Демонов вновь набирает силу.\nОни захватывают наши земли и аванпосты по всему королевству.",
-                $"Поэтому Ярл поднимает налоги на нужды армии.\nЯ буду приходить раз в неделю, так что готовь золотишко. [{GameManager.Instance.TaxToPay}]",
+                "Greetings!\nUgh, my head still hurts from yesterday's drinking, and now there's bad news too",
+                "The Demon King cult is gaining strength again.\nThey're capturing our lands and outposts throughout the kingdom.",
+                $"Therefore the Jarl is raising taxes for the army's needs.\nI'll come once a week, so prepare your gold. [{GameManager.Instance.TaxToPay}]",
             },
-            ByeText = new List<string> { "Я скоро вернусь, бывай!" }
+            ByeText = new List<string> { "I'll be back soon, farewell!" }
         };
 
         private static readonly string[] Greetings1 =
         {
-            "Приветствую тебя, добрый трактирщик!",
-            "Доброго тебе дня, страж питейного заведения!",
-            "Здравствуй, хранитель очага и усталых душ!",
-            "Мир тебе и твоему дому, великий хозяин таверны!",
-            "Тебе привет, могучий повелитель кружек!",
-            "Трактирщик, рад видеть твое приветливое лицо!",
-            "Доброго времени суток, мастер угощений!",
-            "Да хранит тебя судьба, доблестный хозяин этого места!",
-            "Мир и покой тебе, о мудрый трактирщик!",
-            "Да здравствует хозяин этого славного заведения!",
+            "I greet you, good innkeeper!",
+            "Good day to you, guardian of the drinking establishment!",
+            "Greetings, keeper of hearth and weary souls!",
+            "Peace to you and your house, great tavern master!",
+            "Greetings to you, mighty lord of mugs!",
+            "Innkeeper, glad to see your welcoming face!",
+            "Good time of day, master of treats!",
+            "May fortune protect you, valiant owner of this place!",
+            "Peace and tranquility to you, oh wise innkeeper!",
+            "Long live the master of this glorious establishment!",
         };
 
         private static readonly string[] Greetings2 =
         {
-            "Я — Избранный, пришедший исполнить свое предназначение.",
-            "Я — герой, чьё имя уже стало легендой… хотя бы в одной деревне.",
-            "Я тот, кто по пророчеству призван спасти мир… или хотя бы неплохо поесть.",
-            "Меня зовут Избранный, и у меня есть судьба, с которой я как раз в пути.",
-            "Я — Избранный! Времени мало, но для кружки-другой всегда найдется.",
-            "Я тот, кому предначертано вершить великие дела... и проверять меню.",
-            "Я — Избранный, ходящий по тропам судьбы... и заглядывающий в таверны.",
-            "Я тот, кого ждали тысячи лет, чтобы вкусить твой славный эль.",
-            "Я — Избранный, прибыл сюда, ибо ничто не остановит меня от доброй трапезы!",
-            "Я тот, кому звезды предсказали великую миссию... и сочный ужин в таверне.",
+            "I am the Chosen One, come to fulfill my destiny.",
+            "I am a hero whose name has already become legend... at least in one village.",
+            "I am he who by prophecy is called to save the world... or at least eat well.",
+            "My name is the Chosen One, and I have a destiny I'm on my way to fulfill.",
+            "I am the Chosen One! Time is short, but there's always time for a mug or two.",
+            "I am he who is destined to do great deeds... and check the menu.",
+            "I am the Chosen One, walking the paths of fate... and peeking into taverns.",
+            "I am he whom thousands have awaited to taste your glorious ale.",
+            "I am the Chosen One, arrived here, for nothing will stop me from a good meal!",
+            "I am he to whom the stars predicted a great mission... and a hearty dinner at the tavern.",
         };
 
 
         private static readonly List<string> HeroNames = new()
         {
-            "Гервант из Рыбии",
-            "Старк Хранитель Света",
-            "Ланс Сверкающий Меч",
-            "Кратарс Гнев Олимпийцев",
-            "Артис Избранный",
-            "Соларий Искатель Света",
-            "Уелл Клинок Фронтира",
-            "Бьёрн Войн Стихий",
-            "Орлан Страж Небес",
-            "Такао Дух Сумрака",
-            "Масон Тёмный Волк",
-            "Пэйт Ловец Теней",
-            "Сильвестр Железная Рука",
-            "Лерой Дженкинс",
-            "Фримен Легендарный",
-            "Дэйн Изгнанный Провидец",
-            "Грей Громовой Всадник",
-            "Ивар Волчий Воин",
-            "Магистр-Щит Ульфрик"
+            "Gervant of Rivelia",
+            "Stark the Light Keeper",
+            "Lance Gleaming Sword",
+            "Kratars Wrath of Olympians",
+            "Artis the Chosen",
+            "Solarius Light Seeker",
+            "Well Frontier Blade",
+            "Björn Storm Warrior",
+            "Orlan Sky Guardian",
+            "Takao Spirit of Dusk",
+            "Mason Dark Wolf",
+            "Pate Shadow Catcher",
+            "Sylvester Iron Hand",
+            "Leeroy Jenkins",
+            "Freeman the Legendary",
+            "Dane the Exiled Seer",
+            "Grey Thunder Rider",
+            "Ivar Wolf Warrior",
+            "Master-Shield Ulfric"
         };
 
         private static List<string> _heroNamesToPick = new();
@@ -430,30 +430,30 @@ namespace Npc
 
         private static readonly string[] GoodByePart1 =
         {
-            "Ну что ж, трактирщик, пора мне идти.",
-            "Время не ждёт, и я отправляюсь в путь.",
-            "На этом прощай, добрый хозяин таверны!",
-            "Благодарю за приют, но мне пора.",
-            "До свидания, страж добрых напитков и блюд!",
-            "Дорога зовёт, а значит, мне пора идти.",
-            "Оставляю тебя с миром, добрый трактирщик!",
-            "Мне пора на встречу с судьбой, но я не забуду эту таверну.",
-            "Мой путь зовет меня дальше, и я прощаюсь.",
-            "На этом я прощаюсь, трактирщик!",
+            "Well then, innkeeper, it's time for me to go.",
+            "Time doesn't wait, and I'm setting off on my journey.",
+            "Farewell, good tavern master!",
+            "Thank you for the shelter, but I must go.",
+            "Goodbye, guardian of good drinks and food!",
+            "The road calls, which means it's time for me to go.",
+            "I leave you in peace, good innkeeper!",
+            "I must meet my destiny, but I won't forget this tavern.",
+            "My path calls me further, and I bid farewell.",
+            "With this I bid farewell, innkeeper!",
         };
 
         private static readonly string[] GoodByePart2 =
         {
-            "Пусть твоя таверна процветает, пока я спасаю мир.",
-            "Запомни моё имя, ибо оно войдёт в легенды… возможно, местные.",
-            "Когда мир спасён, я вернусь за ещё одним кувшином эля.",
-            "Жди меня обратно, когда очередной монстр будет побеждён… или если захочу перекусить.",
-            "Да пребудет с тобой мир, пока я исполняю своё великое предназначение.",
-            "И если тебе снова понадобится герой, знай, что я где-то поблизости.",
-            "Вернусь с новыми подвигами… или как минимум с парой интересных историй.",
-            "И пусть твой эль остаётся столь же крепким, как моя решимость спасать мир.",
-            "И пусть твоя таверна останется моим убежищем от невзгод и суровых пророчеств.",
-            "Когда деревни будут спасены, я непременно вернусь сюда на пир."
+            "May your tavern prosper while I save the world.",
+            "Remember my name, for it will enter legends... possibly local ones.",
+            "When the world is saved, I'll return for another jug of ale.",
+            "Wait for me back when the next monster is defeated... or if I want a snack.",
+            "May peace be with you while I fulfill my great destiny.",
+            "And if you need a hero again, know that I'm somewhere nearby.",
+            "I'll return with new feats... or at least with a couple of interesting stories.",
+            "And may your ale remain as strong as my resolve to save the world.",
+            "And may your tavern remain my refuge from hardships and harsh prophecies.",
+            "When villages are saved, I will surely return here for a feast."
         };
 
         private static List<string> GenerateVillagerGreetingsText()
@@ -467,53 +467,53 @@ namespace Npc
 
         private static readonly string[] GreetingsVillagerPart1 =
         {
-            "Доброго дня, хозяин таверны!",
-            "Эй, трактирщик! Рад тебя видеть.",
-            "Приветствую, славный трактирщик!",
-            "Здравствуй, добрый хозяин!",
-            "Мир тебе, трактирщик!",
-            "Славный хозяин, рад видеть тебя!",
-            "Эй, трактирщик! Ты, как всегда, в полном порядке.",
-            "Здрав будь, трактирщик!",
-            "Добрый день, почтенный хозяин!",
-            "Трактирщик, приветствую тебя!",
+            "Good day, tavern master!",
+            "Hey, innkeeper! Glad to see you.",
+            "Greetings, glorious innkeeper!",
+            "Hello, good master!",
+            "Peace to you, innkeeper!",
+            "Glorious master, glad to see you!",
+            "Hey, innkeeper! You're looking as good as ever.",
+            "Greetings, innkeeper!",
+            "Good day, honored master!",
+            "Innkeeper, I greet you!",
         };
 
         private static readonly string[] GreetingsVillagerPart2 =
         {
-            "У тебя здесь всегда так уютно.",
-            "Нигде нет такого тепла, как у тебя.",
-            "Вижу, всё у тебя по-прежнему на месте.",
-            "Твоя таверна — как дом родной.",
-            "Ничего не меняется — всё такой же уют и покой.",
-            "Всегда приятно к тебе заглянуть.",
-            "Тут так пахнет, что забываешь обо всех бедах.",
-            "Как всегда многолюдно и весело у тебя.",
-            "Знать, не зря я сюда зашёл.",
-            "Здесь всегда словно праздник начинается.",
+            "You always have such a cozy place here.",
+            "There's no warmth like yours anywhere.",
+            "I see everything's still in its place with you.",
+            "Your tavern is like a home away from home.",
+            "Nothing changes - still the same comfort and peace.",
+            "It's always pleasant to drop by your place.",
+            "It smells so good here that you forget all troubles.",
+            "As always, crowded and merry at your place.",
+            "I knew I came to the right place.",
+            "It always feels like a celebration is starting here.",
         };
 
         public static string GetQuestCompletionGreetings()
         {
             var x = new string[]
             {
-                "Я вернулся с задания, потрепанный но живой!",
-                "Очередной подвиг завершен!",
-                "Справился быстрее, чем ожидал.",
-                "Опасность ликвидирована. Обзавелся новым лутом!",
-                "Все прошло гладко, как всегда.",
-                "Вот и вернулся живым и невредимым.",
-                "Я вернулся! Ну и что, что я весь в грязи? Таковы реалии героизма.",
-                "Легко, как и предполагалось!",
-                "На один квест меньше в мире.",
-                "Вернулся целым и невредимым, а вот ботинки — не повезло.",
-                "Еще один квест в копилку! Где тут моя медаль?",
-                "Еще один шаг к 80 уровню!",
-                "Квест выполнен, миссия завершена.",
-                "Это было проще, чем ожидал!",
-                "Квест пройден! Теперь точно заслужил перекус.",
-                "Квест выполнен, можно я теперь просто прилягу?",
-                "Не спрашивайте, как, но я справился. Ну, почти без жертв!",
+                "I returned from the mission, battered but alive!",
+                "Another feat completed!",
+                "Finished faster than expected.",
+                "Danger eliminated. Got some new loot!",
+                "Everything went smoothly, as always.",
+                "Here I am back, alive and well.",
+                "I'm back! So what if I'm covered in mud? Such are the realities of heroism.",
+                "Easy, as expected!",
+                "One less quest in the world.",
+                "Returned whole and unharmed, but my boots weren't so lucky.",
+                "Another quest for the collection! Where's my medal?",
+                "Another step toward level 80!",
+                "Quest completed, mission accomplished.",
+                "It was easier than I expected!",
+                "Quest completed! Now I've definitely earned a snack.",
+                "Quest finished, can I just lie down now?",
+                "Don't ask how, but I managed it. Well, almost without casualties!",
             };
 
             return x[Random.Range(0, x.Length - 1)];

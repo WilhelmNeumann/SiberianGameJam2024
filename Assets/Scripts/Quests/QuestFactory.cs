@@ -7,7 +7,7 @@ namespace Quests
 {
     public abstract class QuestFactory
     {
-        /// Генерация рандомных квестов
+        /// Generate random quests
         public static Quest GenerateQuest(string questGiverName, NpcType npcType)
         {
             var random = new System.Random();
@@ -86,100 +86,100 @@ namespace Quests
             }
         }
 
-        // Абсурдные шаблоны квестов
+        // Absurd quest templates
         private static List<string> introductionPhrases = new()
         {
-            "Ты не слышал, что происходит в округе?",
-            "Тут народ шепчется, что опять начались проблемы.",
-            "Послушай, нужна помощь.",
-            "В деревне кое-что произошло, и мне нужна помощь.",
-            "Ты уж извини, но я нуждаюсь в поддержке.",
-            "Слыхал, какие беды у нас на носу?",
-            "Эх, в деревне снова неспокойно стало.",
-            "Ты не поверишь, что у нас творится!",
-            "У нас тут случилась беда.",
-            "Кажется, без твоей помощи нам не обойтись.",
-            "Нужен кто-то с крепкими нервами и добрым сердцем — у нас беда.",
-            "Видишь, как все грустно? Вот и пришел сюда жаловаться.",
-            "Помощь нужна деревне, иначе совсем пропадем.",
-            "Кажется, беды опять к нам пожаловали.",
-            "Эх, если бы кто-то помог нам со всем этим...",
-            "Беда на беде у нас, и конца-края им не видно.",
-            "Ты ведь герой, не так ли? Тогда у нас тут для тебя задание."
+            "Haven't you heard what's happening around here?",
+            "People here are whispering that problems have started again.",
+            "Listen, I need help.",
+            "Something happened in the village, and I need help.",
+            "Sorry, but I need support.",
+            "Have you heard what troubles are ahead of us?",
+            "Ugh, the village has become restless again.",
+            "You won't believe what's happening with us!",
+            "We have trouble here.",
+            "It seems we can't do without your help.",
+            "We need someone with strong nerves and a kind heart - we're in trouble.",
+            "See how sad everything is? So I came here to complain.",
+            "The village needs help, otherwise we'll be completely lost.",
+            "It seems troubles have visited us again.",
+            "Ugh, if only someone helped us with all this...",
+            "We have trouble upon trouble, and no end in sight.",
+            "You're a hero, aren't you? Then we have a task for you here."
         };
 
         private static Dictionary<string, MainSkill> problems = new()
         {
-            { "У аптекаря крысы в подвале завелись", MainSkill.Strength },
-            { "На сына аптекаря напали медведи, и теперь он жаждет мести", MainSkill.Strength },
-            { "На площади выросла огромная репа, которая пугает детей", MainSkill.Strength },
-            { "Старый петух деревенского старосты кукарекает по ночам", MainSkill.Charisma },
-            { "Говорящая ворона залетела в таверну и всех дразнит", MainSkill.Charisma },
-            { "Жена мельника ушла в лес и не вернулась, ее не могут найти уже неделю", MainSkill.Intelligence },
-            { "На лугу ночью слышен странный смех, и никто не знает, чей он", MainSkill.Intelligence },
-            { "У пастуха овцы стали агрессивными и кидаются на людей", MainSkill.Strength },
-            { "В лесу появилась хижина, которой там раньше не было", MainSkill.Intelligence },
-            { "В пруду вдруг стало слишком много лягушек — они всех распугивают", MainSkill.Charisma },
-            { "У молочницы кувшин с молоком вдруг побежал сам по себе", MainSkill.Intelligence },
-            { "Колодец стал странно булькать ночью, и люди боятся подходить к нему", MainSkill.Intelligence },
+            { "The apothecary has rats in his basement", MainSkill.Strength },
+            { "The apothecary's son was attacked by bears, and now he thirsts for revenge", MainSkill.Strength },
+            { "A huge turnip grew on the square that scares children", MainSkill.Strength },
+            { "The village elder's old rooster crows at night", MainSkill.Charisma },
+            { "A talking crow flew into the tavern and teases everyone", MainSkill.Charisma },
+            { "The miller's wife went into the forest and hasn't returned, she's been missing for a week", MainSkill.Intelligence },
+            { "Strange laughter is heard in the meadow at night, and no one knows whose it is", MainSkill.Intelligence },
+            { "The shepherd's sheep have become aggressive and attack people", MainSkill.Strength },
+            { "A hut appeared in the forest that wasn't there before", MainSkill.Intelligence },
+            { "There are suddenly too many frogs in the pond - they're scaring everyone away", MainSkill.Charisma },
+            { "The milkmaid's milk jug suddenly ran away by itself", MainSkill.Intelligence },
+            { "The well started gurgling strangely at night, and people are afraid to approach it", MainSkill.Intelligence },
             {
-                "Культисты украли у пахаря его любимую мотыгу, которая передавалась из поколения в поколение",
+                "Cultists stole the farmer's beloved hoe that was passed down through generations",
                 MainSkill.Strength
             },
         };
 
         private static List<string> solutions = new()
         {
-            "нужно с этим разобраться, пока не стало слишком поздно.",
-            "кто-то должен с этим покончить.",
-            "надо это прекратить, пока не вышло из-под контроля.",
-            "нужно помочь, и все будут благодарны.",
-            "это надо прекратить, пока кто-нибудь не пострадал.",
-            "С этим пора разобраться, пока оно не обросло еще большими проблемами.",
-            "Нужно положить этому конец, прежде чем все сорвутся с катушек.",
-            "нужно чтоб кто-то этим занялся, иначе покоя не будет.",
-            "Нельзя оставлять это просто так, кто-то должен вмешаться.",
-            "Пока не стало хуже, нужно решить этот вопрос.",
-            "Надо этим заняться, пока ещё есть шанс на спокойную жизнь.",
-            "Это лучше остановить, пока не стало привычкой.",
-            "Если не разобраться сейчас, потом будет ещё сложнее.",
-            "Скорее бы положить этому конец, и всем станет легче.",
-            "Кажется, нужно вмешаться, пока бед не натворили.",
-            "Это надо решить, пока не разнесли слух по всему селу."
+            "we need to deal with this before it's too late.",
+            "someone must put an end to this.",
+            "we need to stop this before it gets out of control.",
+            "we need help, and everyone will be grateful.",
+            "this needs to be stopped before someone gets hurt.",
+            "We need to sort this out before it grows into even bigger problems.",
+            "We need to put an end to this before everyone goes crazy.",
+            "someone needs to take care of this, otherwise there will be no peace.",
+            "We can't just leave this be, someone must intervene.",
+            "Before it gets worse, we need to solve this issue.",
+            "We need to deal with this while there's still a chance for a peaceful life.",
+            "It's better to stop this before it becomes a habit.",
+            "If we don't sort it out now, it'll be even harder later.",
+            "We'd better put an end to this, and everyone will feel better.",
+            "It seems we need to intervene before they cause trouble.",
+            "This needs to be resolved before rumors spread throughout the village."
         };
 
         private static List<string> objectives = new()
         {
-            "Убить 50 крыс в подвале аптекаря.",
-            "Принести 100 медвежьих шкуры.",
-            "Выкопать и выбросить огромную репу с площади.",
-            "Успокоить петуха старосты, чтобы тот больше не кукарекал.",
-            "Изгнать говорящую ворону из таверны.",
-            "Выяснить что случилось с женой мельника",
-            "Выяснить источник странного смеха на лугу",
-            "Разобраться с агрессивными овцами",
-            "Выяснить откуда взялась хижина в лесу",
-            "Разобраться со стаей лягушек",
-            "Выяснить почему убежало молоко",
-            "Разобраться с булькающим колодцем",
-            "Вернуть семейную мотыгу пахарю"
+            "Kill 50 rats in the apothecary's basement.",
+            "Bring 100 bear pelts.",
+            "Dig up and dispose of the huge turnip from the square.",
+            "Calm the elder's rooster so it stops crowing.",
+            "Banish the talking crow from the tavern.",
+            "Find out what happened to the miller's wife",
+            "Find the source of the strange laughter in the meadow",
+            "Deal with the aggressive sheep",
+            "Find out where the hut in the forest came from",
+            "Deal with the frog swarm",
+            "Find out why the milk ran away",
+            "Deal with the gurgling well",
+            "Return the family hoe to the farmer"
         };
 
         private static List<string> completions = new()
         {
-            "Я убил крыс в подвале аптекаря, живучие оказались заразы. Я пришел за наградой.",
-            "Я убил всех чертовых медведей в округе, надеюсь, оно того стоило. Давай награду!",
-            "Репа выкопана и больше никому не помешает. Должна быть награда.",
-            "Петух старосты больше не тревожит деревню. Он больше никого не потревожит.",
-            "Говорящая ворона ушла, и в таверне снова тишина.",
-            "Жену мельника волки загрызли, но я с ними разобрался. ",
-            "На лугу завелся призрак старого пьяницы, который смеляся с шутки, которая его убила. Я с ним разобрался.",
-            "Овец заколдовали культисты, но я их всех перебил. Овец, а не культистов.",
-            "Я выяснил откуда взялась хижина. Это все чародей и его эксперименты с телепортацией.\nЯ телепортировал его куда подальше.",
-            "Я поговорил с лягушачьим королем — обещал увести своих подданных подальше от деревни",
-            "Оказалось, это проделки домового — договорился с ним, теперь молоко останется на месте.",
-            "Я решил проблему радикально и разрушил колодец. Он больше никогда не посмеет булькать.",
-            "Я пробрался в лагерь культистов, и перебил их всех ради этой мотыги. Мне полагается награда."
+            "I killed the rats in the apothecary's basement, tough little buggers they were. I came for my reward.",
+            "I killed all the damn bears in the area, hopefully it was worth it. Give me my reward!",
+            "The turnip is dug up and won't bother anyone anymore. There should be a reward.",
+            "The elder's rooster no longer disturbs the village. He won't bother anyone anymore.",
+            "The talking crow is gone, and there's silence in the tavern again.",
+            "The miller's wife was torn apart by wolves, but I dealt with them.",
+            "There was a ghost of an old drunk in the meadow who laughed at a joke that killed him. I dealt with him.",
+            "The sheep were bewitched by cultists, but I killed them all. The sheep, not the cultists.",
+            "I found out where the hut came from. It's all a wizard and his teleportation experiments.\nI teleported him far away.",
+            "I talked to the frog king - he promised to lead his subjects away from the village",
+            "Turns out it was a house spirit's doing - made a deal with him, now the milk will stay put.",
+            "I solved the problem radically and destroyed the well. It will never dare to gurgle again.",
+            "I infiltrated the cultist camp and killed them all for this hoe. I deserve a reward."
         };
     }
 }

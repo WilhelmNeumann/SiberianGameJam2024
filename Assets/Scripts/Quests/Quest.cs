@@ -2,13 +2,13 @@ namespace Quests
 {
     public class Quest
     {
-        public string ApplicationText; // У меня проблема, разбойники украли мое говно и ушли в адскую пещеру
-        public string Objective; // Принести говно из адской пещеры
-        public string CompletionText; // Я принес говно из адской пещеры, как и договаривались
+        public string ApplicationText; // I have a problem, bandits stole my stuff and went to the hellish cave
+        public string Objective; // Bring stuff from the hellish cave
+        public string CompletionText; // I brought stuff from the hellish cave, as agreed
         public int Xp;
         public int Gold;
         public int Difficulty;
-        public string QuestGiverName; // Продавец говна
+        public string QuestGiverName; // Stuff seller
         public Location Location;
         public QuestType QuestType;
         public QuestState QuestState = QuestState.None;

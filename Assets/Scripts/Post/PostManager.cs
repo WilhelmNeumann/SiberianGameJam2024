@@ -49,62 +49,62 @@ namespace System
 
         private string GetHeroDiedLetterText(Quest quest, NpcData npc)
         {
-            //NPCName умер выполняя квест quest.objective
-            return $"От старосты деревни:\n\n" +
-                   $"С прискорбием сообщаем, что {npc.NpcName} умер пытаясь {quest.Objective}\n" +
-                   $"Причина смерти: {DeathReasons[UnityEngine.Random.Range(0, DeathReasons.Count)]}";
+            //NPCName died completing quest quest.objective
+            return $"From the village elder:\n\n" +
+                   $"We regret to inform you that {npc.NpcName} died trying to {quest.Objective}\n" +
+                   $"Cause of death: {DeathReasons[UnityEngine.Random.Range(0, DeathReasons.Count)]}";
         }
 
         private string GetRewardLetterText(Quest quest, NpcData npc)
         {
             GameManager.IncreaseGold(quest.Gold);
-            return $"От старосты деревни:\n\n" +
-                   $"Благодарим что отправили к нам героя.\n" +
-                   $"{npc.NpcName} помог {quest.Objective.ToLower()}.\n" +
-                   $"Передайте ему награду: {quest.Gold} золота";
+            return $"From the village elder:\n\n" +
+                   $"Thank you for sending us a hero.\n" +
+                   $"{npc.NpcName} helped {quest.Objective.ToLower()}.\n" +
+                   $"Please give him the reward: {quest.Gold} gold";
         }
 
         private static readonly List<string> DeathReasons = new()
         {
-            "Споткнулся о собственный меч и упал в пропасть.",
-            "Решил попробовать странный на вид гриб и отравился.",
-            "Напал на медведя, думая, что это просто крупная собака.",
-            "Набрал слишком много лута и надорвался",
-            "Попал в ловушку и не смог выбраться.",
-            "Случайно поджег красную бочку, и взорвался",
-            "Переоценил свои силы в битве с гигантским пауком.",
-            "Заснул у костра и сгорел.",
-            "Упал в реку, переплывая ее в доспехах.",
-            "Попытался договориться с драконом, но тот был не в настроении.",
-            "Случайно выпил яд, вместо зелья невидимости.",
-            "Неудачно активировал древний магический артефакт.",
-            "Попал под обвал в старой шахте.",
-            "Решил спасти котенка, застрявшего на краю обрыва, и сорвался вниз.",
-            "Слишком близко подошел к лаве во время вулканического извержения.",
-            "Подорвался на забытой кем-то ловушке в старом замке.",
-            "Решил перекусить, не заметив, что еда была проклята.",
-            "Не смог убежать от стаи диких волков.",
-            "Съел проклятую еду и стал нежитью.",
-            "Наступил на грабли... десять раз подряд.",
-            "Пытался открыть сундук, который оказался мимиком.",
-            "Запутался в собственном плаще и задохнулся.",
-            "Случайно продал свою душу дьяволу.",
-            "Застрял в текстурах и умер от голода.",
-            "Пытался съесть зелье целиком, не открыв крышку.",
-            "Напоролся на свою же стрелу, стреляя по ветру.",
-            "Наступил на муравейник и был забит до смерти армией муравьёв.",
-            "Забыл, что у него кончились зелья здоровья... и жизнь.",
-            "Споткнулся на ровной поверхности и сломал себе все кости.",
-            "Попытался пообщаться с NPC, который оказался скрытым боссом.",
-            "Бесконечно пытался подобрать выпавший предмет, пока не умер от истощения.",
-            "Наступил на банановую кожуру и упал со скалы.",
-            "Слишком долго любовался своим отражением в воде и утонул.",
-            "Решил, что может прыгнуть с высоты без последствий. Ошибся.",
-            "Перегрелся от своей новой огненной брони в жаркий день.",
-            "Был убит гоблинами 80 уровня",
-            "Решил, что сражаться с крысой — это слишком скучно. Ошибся.",
-            "Подавился рыбной костью",
-            "Долго пытался обнять кактус, потому что тот был «на самом деле мягким»."
+            "Tripped over his own sword and fell into a chasm.",
+            "Decided to try a strange-looking mushroom and got poisoned.",
+            "Attacked a bear, thinking it was just a large dog.",
+            "Collected too much loot and strained his back",
+            "Got caught in a trap and couldn't escape.",
+            "Accidentally lit a red barrel on fire and exploded",
+            "Overestimated his strength in battle with a giant spider.",
+            "Fell asleep by the campfire and burned up.",
+            "Fell into a river while crossing it in armor.",
+            "Tried to negotiate with a dragon, but it wasn't in the mood.",
+            "Accidentally drank poison instead of an invisibility potion.",
+            "Unsuccessfully activated an ancient magical artifact.",
+            "Got caught in a cave-in in an old mine.",
+            "Decided to save a kitten stuck on a cliff edge and fell down.",
+            "Got too close to lava during a volcanic eruption.",
+            "Stepped on a forgotten trap in an old castle.",
+            "Decided to have a snack, not noticing the food was cursed.",
+            "Couldn't outrun a pack of wild wolves.",
+            "Ate cursed food and became undead.",
+            "Stepped on a rake... ten times in a row.",
+            "Tried to open a chest that turned out to be a mimic.",
+            "Got tangled in his own cloak and suffocated.",
+            "Accidentally sold his soul to the devil.",
+            "Got stuck in textures and died of starvation.",
+            "Tried to drink a potion whole without opening the cap.",
+            "Impaled himself on his own arrow while shooting into the wind.",
+            "Stepped on an anthill and was beaten to death by an army of ants.",
+            "Forgot that he ran out of health potions... and life.",
+            "Tripped on a flat surface and broke all his bones.",
+            "Tried to talk to an NPC who turned out to be a hidden boss.",
+            "Endlessly tried to pick up a dropped item until he died of exhaustion.",
+            "Stepped on a banana peel and fell off a cliff.",
+            "Stared at his reflection in the water too long and drowned.",
+            "Thought he could jump from a height without consequences. He was wrong.",
+            "Overheated from his new fire armor on a hot day.",
+            "Was killed by level 80 goblins",
+            "Decided that fighting a rat was too boring. He was wrong.",
+            "Choked on a fish bone",
+            "Spent a long time trying to hug a cactus because it was 'actually soft'."
         };
     }
 }
