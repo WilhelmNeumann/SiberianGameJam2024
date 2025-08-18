@@ -10,9 +10,9 @@ namespace Map
 
         private void OnEnable()
         {
-            _text.text = $"Сюжет пройден на {Location.GetStoryCompletePercent()}%\n" +
-                         $"Захвачено культистами: {Location.GetFailedCount()}/10\n" +
-                         $"Защищено от культистов: {Location.GetGoodCount()}/10";
+            _text.text = $"Story completed: {Location.GetStoryCompletePercent()}%\n" +
+                         $"Captured by cultists: {Location.GetFailedCount()}/10\n" +
+                         $"Protected from cultists: {Location.GetGoodCount()}/10";
         }
     }
 }

@@ -96,7 +96,7 @@ namespace Utils
         }
 
 
-        // Получить сценарий для диалога, со всеми репликами
+        // Get dialog scenario with all lines
         private static List<DialogLine> GetDialogScenario(NpcData npcData)
         {
             var scenario = new List<DialogLine>();
@@ -124,23 +124,23 @@ namespace Utils
         private static void AddGreetingsResponse(NpcData npcData, List<DialogLine> greetings)
         {
             DialogOption option;
-            // Пришел культист после того как герой сдох
+            // Cultist arrives after hero died
             if (npcData.NpcType == NpcType.Cultist && npcData.Quest != null)
             {
                 option = new()
                 {
-                    Text = "Ничего не обещаю",
+                    Text = "I make no promises",
                     Action = () => { IncreaseGold(npcData.Quest.Location.RewardToReceive); }
                 };
             }
-            // Пришел герой который выполнил побочку
+            // Hero arrives who completed a side quest
             else if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.SideQuest })
             {
                 var reward = npcData.Quest.Gold;
                 option = new DialogOption
                 {
-                    // Если герой выполнил побочку квест, нам платит заказчик, а мы берем процент
-                    Text = $"Вот твоя награда.\n [Заплатить {reward / 10} золота]",
+                    // If hero completed side quest, client pays us and we take a cut
+                    Text = $"Here's your reward.\n [Pay {reward / 10} gold]",
                     Action = () => { ReduceGold(reward / 10); }
                 };
 
@@ -152,15 +152,15 @@ namespace Utils
                 var npcCopy = new NpcData { NpcName = npcData.NpcName };
                 npcData.PostVisitAction = () => { PostManager.Instance.AddQuestCompleted(questCopy, npcCopy); };
             }
-            // Прише герой который выполнил основной квест
+            // Hero arrives who completed main quest
             else if (npcData.Quest is { QuestState: QuestState.Success, QuestType: QuestType.MainQuest })
             {
                 var reward = npcData.Quest.Gold;
                 option = new DialogOption
                 {
-                    // Если герой выполнил основной квест, мы платим из своего кармана
+                    // If hero completed main quest, we pay from our own pocket
                     Text =
-                        $"Благодарю, {npcData.Quest.Location.Name} может спать спокойно.\n [Заплатить {npcData.Quest.Gold} золота]",
+                        $"Thank you, {npcData.Quest.Location.Name} can sleep peacefully.\n [Pay {npcData.Quest.Gold} gold]",
                     Action = () =>
                     {
                         ReduceGold(reward);
@@ -170,10 +170,10 @@ namespace Utils
             }
             else
             {
-                // Пришли все остальные, приветствуем, а если это начальные персы, то нет
+                // Everyone else gets a greeting, except intro characters
                 option = npcData.IsIntro
-                    ? new DialogOption { Text = "Хорошо, я посмотрю что можно сделать" }
-                    : new DialogOption { Text = "Добро пожаловать в \"Треснувшую Бочку\", чем могу помочь?" };
+                    ? new DialogOption { Text = "Alright, I'll see what I can do" }
+                    : new DialogOption { Text = "Welcome to \"The Cracked Barrel\", how can I help you?" };
             }
 
             greetings.Last().ResponseOptions = new List<DialogOption> { option };
@@ -181,8 +181,8 @@ namespace Utils
 
         private static void LevelUpHero(NpcData npcData)
         {
-            // Прокачиваем героя, за уровень дается 2 скиллпоинта. Один всегда вкладывается в самую высокую харрактеристику
-            // Второй вкладывается рандомно
+            // Level up hero, each level gives 2 skill points. One always goes to highest stat
+            // Second one is distributed randomly
             npcData.Level += 1;
 
             if (npcData.Strength >= npcData.Intelligence && npcData.Strength >= npcData.Charisma)
@@ -210,12 +210,12 @@ namespace Utils
         private static DialogLine GetDialogWithHero(NpcData npcData)
         {
             DialogLine line;
-            // Если герой пришел после выполнения задания
+            // If hero came after completing a quest
             if (npcData.Quest != null)
             {
-                // Задание выполнено, есть еще?
-                line = ToNpcTalkDialogLine("Благодарю.\nЕсть для меня еще работа?");
-                // Если мейн квест, меняем стейт
+                // Quest completed, got any more work?
+                line = ToNpcTalkDialogLine("Thank you.\nDo you have any more work for me?");
+                // If main quest, change state
                 if (npcData.Quest.QuestType == QuestType.MainQuest)
                 {
                     Location.GetById(npcData.Quest.Location.ID).State = LocationState.Good;
@@ -226,7 +226,7 @@ namespace Utils
             }
             else
             {
-                line = ToNpcTalkDialogLine("Есть для меня работа?");
+                line = ToNpcTalkDialogLine("Got any work for me?");
             }
 
             var dialogOptionsForQuests = GenerateDialogOptionsForSideQuests(npcData);
@@ -236,7 +236,7 @@ namespace Utils
                 Text = mainQuest.Objective,
                 Action = () =>
                 {
-                    DialogWindow.Instance.NpcTalk("Зло будет уничтожено!", npcData.NpcName);
+                    DialogWindow.Instance.NpcTalk("Evil will be destroyed!", npcData.NpcName);
                     npcData.Quest = mainQuest;
                     var success = IsQuestSuccessfullyCompleted(npcData, mainQuest);
                     if (success)
@@ -251,14 +251,14 @@ namespace Utils
                             Location = quest.Location
                         };
 
-                        // Экшен выполнится перед следующим посещением
+                        // Action executes before next visit
                         npcData.PreVisitAction = () =>
                         {
                             questCopy.Location.State = LocationState.Good;
                             Location.GetById(npcData.Quest.Location.ID).State = LocationState.Good;
 
-                            var text = $"Прогресс сюжета: {Location.GetStoryCompletePercent()}%\n" +
-                                       $"Откройте карту для подробностей";
+                            var text = $"Story progress: {Location.GetStoryCompletePercent()}%\n" +
+                                       $"Open map for details";
 
                             MapUpdatePopup.Instance.SetText(text);
                             MapUpdatePopup.Instance.gameObject.SetActive(true);
@@ -266,7 +266,7 @@ namespace Utils
                     }
                     else
                     {
-                        // Мейн квест провален, спавним демона и меняем стейт локации
+                        // Main quest failed, spawn demon and change location state
                         npcData.Quest.QuestState = QuestState.Failed;
                         npcData.Quest.Location.State = LocationState.Bad;
                         NpcFactory.AddDemonToTheQueue(npcData);
@@ -281,9 +281,9 @@ namespace Utils
             {
                 new()
                 {
-                    Text = "У меня нет для тебя работы на сегодня",
+                    Text = "I don't have any work for you today",
                     Action = () =>
-                        DialogWindow.Instance.NpcTalk("Пойду искать приключения самостоятельно!", npcData.NpcName)
+                        DialogWindow.Instance.NpcTalk("I'll go find adventures on my own!", npcData.NpcName)
                 }
             };
 
@@ -301,7 +301,7 @@ namespace Utils
                 Text = q.Objective,
                 Action = () =>
                 {
-                    DialogWindow.Instance.NpcTalk("Я вернусь как выполню задание!", npcData.NpcName);
+                    DialogWindow.Instance.NpcTalk("I'll be back when I complete the mission!", npcData.NpcName);
                     npcData.Quest = q;
                     NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
@@ -309,7 +309,7 @@ namespace Utils
                     if (roll > chance)
                     {
                         npcData.Quest.QuestState = QuestState.Success;
-                        // В случае успеха, добавляем его обратно в очередь
+                        // In case of success, add him back to queue
                         NpcFactory.AddNpcToQueue(npcData);
                         if (q.QuestType == QuestType.SideQuest)
                         {
@@ -337,7 +337,7 @@ namespace Utils
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
         {
             if (npcData.IsIntro) return null;
-            var line = ToNpcTalkDialogLine($"Я пришел собрать налоги! Плати {Instance.TaxToPay} золота");
+            var line = ToNpcTalkDialogLine($"I've come to collect taxes! Pay {Instance.TaxToPay} gold");
             line.ResponseOptions = GetTaxCollectorDialogOptions(npcData, Instance.TaxToPay);
             return line;
         }
@@ -350,8 +350,8 @@ namespace Utils
             {
                 option = new DialogOption
                 {
-                    Text = "У меня нет таких денег",
-                    Action = () => { DialogWindow.Instance.NpcTalk("Тогда твоя таверна закрыта", npcData.NpcName); }
+                    Text = "I don't have that kind of money",
+                    Action = () => { DialogWindow.Instance.NpcTalk("Then your tavern is closed", npcData.NpcName); }
                 };
 
                 npcData.PostVisitAction = () => Instance.GameOver();
@@ -360,11 +360,11 @@ namespace Utils
             {
                 option = new DialogOption
                 {
-                    Text = $"Хорошо, вот твои деньги. [Заплатить {Instance.TaxToPay} золота]",
+                    Text = $"Alright, here's your money. [Pay {Instance.TaxToPay} gold]",
                     Action = () =>
                     {
                         ReduceGold(Instance.TaxToPay);
-                        DialogWindow.Instance.NpcTalk("Ярл благодарит тебя!", npcData.NpcName);
+                        DialogWindow.Instance.NpcTalk("The Jarl thanks you!", npcData.NpcName);
                     }
                 };
             }
@@ -389,21 +389,21 @@ namespace Utils
             {
                 new()
                 {
-                    Text = "Думаю, я знаю того кто сможет тебе помочь за небольшую плату",
+                    Text = "I think I know someone who can help you for a small fee",
                     Action = () =>
                     {
                         QuestJournal.Instance.AddSideQuest(npcData.Quest);
                         NewQuestPopup.Instance.Init(npcData.Quest.Objective);
                         NewQuestPopup.Instance.gameObject.SetActive(true);
-                        DialogWindow.Instance.NpcTalk("Отлично!", npcData.NpcName);
+                        DialogWindow.Instance.NpcTalk("Excellent!", npcData.NpcName);
                     },
                     GetDetailsText = () =>
                         new QuestDescription(GenerateQuestDescription(npcData.Quest), npcData.Quest.MainSkill)
                 },
                 new()
                 {
-                    Text = "Увы дружище, ничем не могу помочь. \nНаграда слишком мала.",
-                    Action = () => { DialogWindow.Instance.NpcTalk("Эхх, а я так надеялся...", npcData.NpcName); }
+                    Text = "Sorry buddy, I can't help you. \nThe reward is too small.",
+                    Action = () => { DialogWindow.Instance.NpcTalk("Ahh, and I had such high hopes...", npcData.NpcName); }
                 }
             };
 
@@ -419,18 +419,18 @@ namespace Utils
 
         public static string GenerateQuestDescription(Quest quest)
         {
-            var details = "Задание\n\n";
+            var details = "Quest\n\n";
             if (quest.QuestType == QuestType.MainQuest)
-                details += "Тип: <color=green>Сюжетный квест</color>\n" +
-                           $"Регион: {quest.Location.Name}\n";
+                details += "Type: <color=green>Story Quest</color>\n" +
+                           $"Region: {quest.Location.Name}\n";
             else
-                details += "Тип: <color=green>Побочный квест</color>\n";
+                details += "Type: <color=green>Side Quest</color>\n";
 
             return details +
-                   $"Цель: {quest.Objective}\n" +
-                   $"Опыт: +{quest.Xp} Xp\n" +
-                   $"Награда: {quest.Gold} золота\n" +
-                   $"Сложность: {quest.Difficulty}/10\n";
+                   $"Objective: {quest.Objective}\n" +
+                   $"Experience: +{quest.Xp} Xp\n" +
+                   $"Reward: {quest.Gold} gold\n" +
+                   $"Difficulty: {quest.Difficulty}/10\n";
         }
 
 
@@ -446,7 +446,7 @@ namespace Utils
                 _ => "black"
             };
 
-            details += $"\nШанс успеха: <color={color}>{chance}%</color>";
+            details += $"\nSuccess Chance: <color={color}>{chance}%</color>";
             return new QuestDescription(details, quest.MainSkill);
         }
 
@@ -490,9 +490,9 @@ namespace Utils
         {
             var heroLevel = npcData.Level;
             var questDifficulty = quest.Difficulty;
-            // Рассчитываем вероятность успеха
+            // Calculate success probability
             var successProbability = 0.5 + 0.1 * (heroLevel - questDifficulty);
-            // Ограничиваем вероятность успеха в пределах от 0 до 1
+            // Limit success probability between 0 and 1
 
             if (npcData.ActivePotion != PotionType.None)
             {
@@ -529,14 +529,14 @@ namespace Utils
                 .SetEase(Ease.InOutSine)
                 .SetAutoKill(true);
 
-        // Получить новое зелье
+        // Get new potion
         private static void AddPotion(PotionType type, int amount)
         {
             Potions[type] += amount;
             SetPotionValue(type, Potions[type]);
         }
 
-        // Дать зелье челику
+        // Give potion to someone
         public static void GivePotionTo(PotionType type, NpcData npcData)
         {
             if (Potions[type] == 0) return;

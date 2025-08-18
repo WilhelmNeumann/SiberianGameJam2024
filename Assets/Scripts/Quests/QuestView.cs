@@ -18,10 +18,10 @@ namespace Quests {
         
         private static string GenerateQuestDescription(Quest quest)
         {
-            return $"Цель: {quest.Objective}\n" +
-                   $"Опыт: +{quest.Xp} Xp\n" +
-                   $"Награда: {quest.Gold} золота\n" +
-                   $"Сложность: {quest.Difficulty}/10\n";
+            return $"Objective: {quest.Objective}\n" +
+                   $"Experience: +{quest.Xp} Xp\n" +
+                   $"Reward: {quest.Gold} gold\n" +
+                   $"Difficulty: {quest.Difficulty}/10\n";
         }
     }
 }
