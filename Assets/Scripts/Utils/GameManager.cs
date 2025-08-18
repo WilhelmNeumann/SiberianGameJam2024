@@ -582,7 +582,7 @@ namespace Utils
 
         private static void AddRandomPotion()
         {
-            var r = UnityEngine.Random.Range(0, 2);
+            var r = UnityEngine.Random.Range(0, 3);
             switch (r)
             {
                 case 0:

@@ -17,7 +17,15 @@ namespace Quests
 
         public void SetState(LocationState state) => State = state;
 
-        public static Location GetById(int id) => Locations.First(x => x.ID == id);
+        public static Location GetById(int id)
+        {
+            var location = Locations.FirstOrDefault(x => x.ID == id);
+            if (location == null)
+            {
+                throw new System.ArgumentException($"Location with ID {id} not found");
+            }
+            return location;
+        }
 
         public static int GetFailedCount() => Locations.Where(x => x.State == LocationState.Bad).ToList().Count;
         public static int GetNeutralCount() => Locations.Where(x => x.State == LocationState.Neutral).ToList().Count;
