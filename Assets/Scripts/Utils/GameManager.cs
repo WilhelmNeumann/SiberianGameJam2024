@@ -288,13 +288,25 @@ namespace Utils
             };
 
             dialogOptionsForQuests.AddRange(dialogOptionNoQuest);
-            dialogOptionsForQuests.Add(dialogOptionForMainQuest);
+            
+            // Only offer main quest if hero doesn't have an active quest
+            if (npcData.Quest == null || npcData.Quest.QuestState != QuestState.None)
+            {
+                dialogOptionsForQuests.Add(dialogOptionForMainQuest);
+            }
+            
             line.ResponseOptions = dialogOptionsForQuests;
             return line;
         }
 
         private static List<DialogOption> GenerateDialogOptionsForSideQuests(NpcData npcData)
         {
+            // Don't offer quests to heroes who already have an active quest
+            if (npcData.Quest != null && npcData.Quest.QuestState == QuestState.None)
+            {
+                return new List<DialogOption>();
+            }
+            
             var quests = QuestJournal.Instance.SideQuests;
             return quests.Select(q => new DialogOption
             {
@@ -303,6 +315,13 @@ namespace Utils
                 {
                     DialogWindow.Instance.NpcTalk("I'll be back when I complete the mission!", npcData.NpcName);
                     npcData.Quest = q;
+                    
+                    // Remove quest from journal immediately when assigned to prevent double assignment
+                    if (q.QuestType == QuestType.SideQuest)
+                    {
+                        QuestJournal.Instance.SideQuests.Remove(q);
+                    }
+                    
                     NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
                     var roll = new Random().Next(0, 100);
@@ -311,10 +330,6 @@ namespace Utils
                         npcData.Quest.QuestState = QuestState.Success;
                         // In case of success, add him back to queue
                         NpcFactory.AddNpcToQueue(npcData);
-                        if (q.QuestType == QuestType.SideQuest)
-                        {
-                            QuestJournal.Instance.SideQuests.Remove(q);
-                        }
                     }
                     else
                     {
