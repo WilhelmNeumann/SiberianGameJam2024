@@ -472,6 +472,12 @@ namespace Utils
         {
             try
             {
+                // Prevent division by zero
+                if (quest.RequiredStrength <= 0 || quest.RequiredIntelligence <= 0 || quest.RequiredCharisma <= 0)
+                {
+                    return 50d; // Default 50% chance if quest requirements are invalid
+                }
+                
                 // Calculate the ratio of each characteristic to the required value
                 double strengthRatio = (double)character.Strength / quest.RequiredStrength;
                 double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
