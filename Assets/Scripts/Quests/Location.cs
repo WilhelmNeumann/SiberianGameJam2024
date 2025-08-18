@@ -29,110 +29,110 @@ namespace Quests
             new Location
             {
                 ID = 1,
-                Name = "Болото",
+                Name = "The Swamp",
                 Difficulty = 1,
-                QuestObjective = "Зачистить болото от культистов",
-                GoodCompletionText = "Я зачистил болото от культистов и собрал гору лута.",
-                BadCompletionText = "Твой герой мертв, и болото теперь под нашим контролем.",
+                QuestObjective = "Clear the swamp of cultists",
+                GoodCompletionText = "I cleared the swamp of cultists and collected a mountain of loot.",
+                BadCompletionText = "Your hero is dead, and the swamp is now under our control.",
                 RewardToGive = 200,
                 RewardToReceive = 150,
             },
             new Location
             {
                 ID = 2,
-                Name = "Мельница",
+                Name = "The Mill",
                 Difficulty = 1,
-                QuestObjective = "Освободить мельницу от культистов",
-                GoodCompletionText = "Я освободил мельницу от культистов, правда теперь там бардак",
-                BadCompletionText = "Мельница стала могилой твоего героя. Теперь мы там заправляем.",
+                QuestObjective = "Free the mill from cultists",
+                GoodCompletionText = "I freed the mill from cultists, though now it's a mess",
+                BadCompletionText = "The mill became your hero's grave. Now we're in charge there.",
                 RewardToGive = 200,
                 RewardToReceive = 200
             },
             new Location
             {
                 ID = 3,
-                Name = "Копи гномов",
+                Name = "Dwarven Mines",
                 Difficulty = 2,
-                QuestObjective = "Защитить гномью гору от атаки культистов",
-                GoodCompletionText = "Гномы могут спать спокойно, регион освобожден",
-                BadCompletionText = "Гномья гора теперь наша благодаря тебе. Твой герой не продержался и 5 минут.",
+                QuestObjective = "Defend the dwarven mountain from cultist attack",
+                GoodCompletionText = "The dwarves can sleep peacefully, the region is liberated",
+                BadCompletionText = "The dwarven mountain is now ours thanks to you. Your hero didn't last 5 minutes.",
                 RewardToGive = 300,
                 RewardToReceive = 250
             },
             new Location
             {
                 ID = 4,
-                Name = "Лес",
+                Name = "The Forest",
                 Difficulty = 3,
-                QuestObjective = "Зачистить лес от культистов",
-                GoodCompletionText = "В лесу теперь спокойно, ни одной живой души.",
-                BadCompletionText = "Мы устроили кровавый пир с твоим героем в главной роли. И лес теперь наш.",
+                QuestObjective = "Clear the forest of cultists",
+                GoodCompletionText = "The forest is now peaceful, not a living soul in sight.",
+                BadCompletionText = "We threw a bloody feast with your hero as the main course. And the forest is now ours.",
                 RewardToGive = 100,
                 RewardToReceive = 300
             },
             new Location
             {
                 ID = 5,
-                Name = "Башни Магов",
+                Name = "Mage Towers",
                 Difficulty = 3,
-                QuestObjective = "Защитить башню мага от нападения культистов",
-                GoodCompletionText = "Волшебник в безопасности. Он поможет нам в финальной битве?",
-                BadCompletionText = "Мы сбросили твоего героя с башни. Жалко ты этого не видел.",
+                QuestObjective = "Defend the mage's tower from cultist attack",
+                GoodCompletionText = "The wizard is safe. Will he help us in the final battle?",
+                BadCompletionText = "We threw your hero off the tower. Too bad you didn't see it.",
                 RewardToGive = 400,
                 RewardToReceive = 350,
             },
             new Location
             {
                 ID = 6,
-                Name = "Городок",
+                Name = "The Town",
                 Difficulty = 4,
-                QuestObjective = "Помочь ярлу в битве за город",
-                GoodCompletionText = "Мы отбили нападение на город, где моя награда?",
-                BadCompletionText = "Город захвачен. Герой мертв! Король Демонов скоро восстанет!",
+                QuestObjective = "Help the jarl in the battle for the town",
+                GoodCompletionText = "We repelled the attack on the town, where's my reward?",
+                BadCompletionText = "The town is captured. The hero is dead! The Demon King will soon rise!",
                 RewardToGive = 150,
                 RewardToReceive = 400
             },
             new Location
             {
                 ID = 7,
-                Name = "Рыбацкая деревня",
+                Name = "Fishing Village",
                 Difficulty = 5,
-                QuestObjective = "Выяснить что стало с рыбаками",
-                GoodCompletionText = "Рыбаков забрали в рабство, но я их освободил",
-                BadCompletionText = "Мы забрали твоего героя в рабство. Теперь он служит нам.",
+                QuestObjective = "Find out what happened to the fishermen",
+                GoodCompletionText = "The fishermen were taken into slavery, but I freed them",
+                BadCompletionText = "We took your hero into slavery. Now he serves us.",
                 RewardToGive = 250,
                 RewardToReceive = 450
             },
             new Location
             {
                 ID = 8,
-                Name = "Пашня",
+                Name = "The Farmland",
                 Difficulty = 6,
-                QuestObjective = "Защитить доставку зерна в город",
-                GoodCompletionText = "Было жарко, но я помог отбить караван от культистов",
-                BadCompletionText = "Твой герой был убит и воскрешен в качестве нежити.",
+                QuestObjective = "Protect the grain delivery to town",
+                GoodCompletionText = "It was hot, but I helped fend off the caravan from cultists",
+                BadCompletionText = "Your hero was killed and resurrected as undead.",
                 RewardToGive = 100,
                 RewardToReceive = 500
             },
             new Location
             {
                 ID = 9,
-                Name = "Озеро",
+                Name = "The Lake",
                 Difficulty = 7,
-                QuestObjective = "Отыскать древний меч убийцы демонов",
-                GoodCompletionText = "Я отыскал древний клинок! Им я сражу Короля Демонов!",
-                BadCompletionText = "Твой герой отыскал древний клинок, и был обезглавлен",
+                QuestObjective = "Find the ancient demon-slaying sword",
+                GoodCompletionText = "I found the ancient blade! With it I shall slay the Demon King!",
+                BadCompletionText = "Your hero found the ancient blade, and was beheaded",
                 RewardToGive = 200,
                 RewardToReceive = 550
             },
             new Location
             {
                 ID = 10,
-                Name = "Чёртова Гора",
+                Name = "Devil's Mountain",
                 Difficulty = 8,
-                QuestObjective = "Победить Короля Демонов",
-                GoodCompletionText = "Король Демонов уничтожен! Мир спасен! Время пировать!",
-                BadCompletionText = "Твой герой послужил пищей для короля демонов! Он восстал и идет сюда!",
+                QuestObjective = "Defeat the Demon King",
+                GoodCompletionText = "The Demon King is destroyed! The world is saved! Time to feast!",
+                BadCompletionText = "Your hero served as food for the Demon King! He has risen and is coming here!",
                 RewardToGive = 500,
                 RewardToReceive = 800
             }
