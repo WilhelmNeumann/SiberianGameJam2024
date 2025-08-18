@@ -230,53 +230,10 @@ namespace Utils
             }
 
             var dialogOptionsForQuests = GenerateDialogOptionsForSideQuests(npcData);
+            
+            // Try to get next main quest, but handle case where all are completed
             var mainQuest = QuestFactory.GetNextMainQuest();
-            var dialogOptionForMainQuest = new DialogOption
-            {
-                Text = mainQuest.Objective,
-                Action = () =>
-                {
-                    DialogWindow.Instance.NpcTalk("Evil will be destroyed!", npcData.NpcName);
-                    npcData.Quest = mainQuest;
-                    var success = IsQuestSuccessfullyCompleted(npcData, mainQuest);
-                    if (success)
-                    {
-                        var quest = npcData.Quest;
-                        quest.QuestState = QuestState.Success;
-                        NpcFactory.AddNpcToQueue(npcData);
-
-                        var questCopy = new Quest
-                        {
-                            QuestState = quest.QuestState,
-                            Location = quest.Location
-                        };
-
-                        // Action executes before next visit
-                        npcData.PreVisitAction = () =>
-                        {
-                            questCopy.Location.State = LocationState.Good;
-                            Location.GetById(npcData.Quest.Location.ID).State = LocationState.Good;
-
-                            var text = $"Story progress: {Location.GetStoryCompletePercent()}%\n" +
-                                       $"Open map for details";
-
-                            MapUpdatePopup.Instance.SetText(text);
-                            MapUpdatePopup.Instance.gameObject.SetActive(true);
-                        };
-                    }
-                    else
-                    {
-                        // Main quest failed, spawn demon and change location state
-                        npcData.Quest.QuestState = QuestState.Failed;
-                        npcData.Quest.Location.State = LocationState.Bad;
-                        NpcFactory.AddDemonToTheQueue(npcData);
-                    }
-
-                    NpcFactory.AddHeroToLogs(npcData);
-                },
-                GetDetailsText = () => GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
-            };
-
+            
             var dialogOptionNoQuest = new List<DialogOption>()
             {
                 new()
@@ -288,13 +245,71 @@ namespace Utils
             };
 
             dialogOptionsForQuests.AddRange(dialogOptionNoQuest);
-            dialogOptionsForQuests.Add(dialogOptionForMainQuest);
+            
+            // Only offer main quest if hero doesn't have an active quest AND main quest is available
+            if ((npcData.Quest == null || npcData.Quest.QuestState != QuestState.None) && mainQuest != null)
+            {
+                var dialogOptionForMainQuest = new DialogOption
+                {
+                    Text = mainQuest.Objective,
+                    Action = () =>
+                    {
+                        DialogWindow.Instance.NpcTalk("Evil will be destroyed!", npcData.NpcName);
+                        npcData.Quest = mainQuest;
+                        var success = IsQuestSuccessfullyCompleted(npcData, mainQuest);
+                        if (success)
+                        {
+                            var quest = npcData.Quest;
+                            quest.QuestState = QuestState.Success;
+                            NpcFactory.AddNpcToQueue(npcData);
+
+                            var questCopy = new Quest
+                            {
+                                QuestState = quest.QuestState,
+                                Location = quest.Location
+                            };
+
+                            // Action executes before next visit
+                            npcData.PreVisitAction = () =>
+                            {
+                                questCopy.Location.State = LocationState.Good;
+                                Location.GetById(questCopy.Location.ID).State = LocationState.Good;
+
+                                var text = $"Story progress: {Location.GetStoryCompletePercent()}%\n" +
+                                           $"Open map for details";
+
+                                MapUpdatePopup.Instance.SetText(text);
+                                MapUpdatePopup.Instance.gameObject.SetActive(true);
+                            };
+                        }
+                        else
+                        {
+                            // Main quest failed, spawn demon and change location state
+                            npcData.Quest.QuestState = QuestState.Failed;
+                            npcData.Quest.Location.State = LocationState.Bad;
+                            NpcFactory.AddDemonToTheQueue(npcData);
+                        }
+
+                        NpcFactory.AddHeroToLogs(npcData);
+                    },
+                    GetDetailsText = () => GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
+                };
+                
+                dialogOptionsForQuests.Add(dialogOptionForMainQuest);
+            }
+            
             line.ResponseOptions = dialogOptionsForQuests;
             return line;
         }
 
         private static List<DialogOption> GenerateDialogOptionsForSideQuests(NpcData npcData)
         {
+            // Don't offer quests to heroes who already have an active quest
+            if (npcData.Quest != null && npcData.Quest.QuestState == QuestState.None)
+            {
+                return new List<DialogOption>();
+            }
+            
             var quests = QuestJournal.Instance.SideQuests;
             return quests.Select(q => new DialogOption
             {
@@ -303,18 +318,21 @@ namespace Utils
                 {
                     DialogWindow.Instance.NpcTalk("I'll be back when I complete the mission!", npcData.NpcName);
                     npcData.Quest = q;
+                    
+                    // Remove quest from journal immediately when assigned to prevent double assignment
+                    if (q.QuestType == QuestType.SideQuest)
+                    {
+                        QuestJournal.Instance.SideQuests.Remove(q);
+                    }
+                    
                     NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
-                    var roll = new Random().Next(0, 100);
-                    if (roll > chance)
+                    var roll = UnityEngine.Random.Range(0, 100);
+                    if (roll < chance)
                     {
                         npcData.Quest.QuestState = QuestState.Success;
                         // In case of success, add him back to queue
                         NpcFactory.AddNpcToQueue(npcData);
-                        if (q.QuestType == QuestType.SideQuest)
-                        {
-                            QuestJournal.Instance.SideQuests.Remove(q);
-                        }
                     }
                     else
                     {
@@ -330,8 +348,8 @@ namespace Utils
         {
             var chance = CalculateSuccessChance(npcData, quest);
             npcData.ActivePotion = PotionType.None;
-            var roll = new Random().Next(0, 100);
-            return roll > chance;
+            var roll = UnityEngine.Random.Range(0, 100);
+            return roll < chance;
         }
 
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
@@ -454,6 +472,12 @@ namespace Utils
         {
             try
             {
+                // Prevent division by zero
+                if (quest.RequiredStrength <= 0 || quest.RequiredIntelligence <= 0 || quest.RequiredCharisma <= 0)
+                {
+                    return 50d; // Default 50% chance if quest requirements are invalid
+                }
+                
                 // Calculate the ratio of each characteristic to the required value
                 double strengthRatio = (double)character.Strength / quest.RequiredStrength;
                 double intelligenceRatio = (double)character.Intelligence / quest.RequiredIntelligence;
@@ -564,7 +588,7 @@ namespace Utils
 
         private static void AddRandomPotion()
         {
-            var r = UnityEngine.Random.Range(0, 2);
+            var r = UnityEngine.Random.Range(0, 3);
             switch (r)
             {
                 case 0:

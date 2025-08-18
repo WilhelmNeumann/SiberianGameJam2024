@@ -10,9 +10,8 @@ namespace Quests
         /// Generate random quests
         public static Quest GenerateQuest(string questGiverName, NpcType npcType)
         {
-            var random = new System.Random();
             // objective and solution has same index
-            var randomIndex = random.Next(0, objectives.Count);
+            var randomIndex = Random.Range(0, objectives.Count);
             var problemDescription = problems.ElementAt(randomIndex).Key;
             var mainSkill = problems[problemDescription];
             var q = new Quest
@@ -22,7 +21,7 @@ namespace Quests
                 Difficulty = Random.Range(1, 5),
                 Objective = objectives[randomIndex],
                 ApplicationText =
-                    $"{introductionPhrases[random.Next(introductionPhrases.Count)]} {problemDescription}, {solutions[random.Next(solutions.Count)]}",
+                    $"{introductionPhrases[Random.Range(0, introductionPhrases.Count)]} {problemDescription}, {solutions[Random.Range(0, solutions.Count)]}",
                 CompletionText = completions[randomIndex],
                 QuestGiverName = questGiverName,
                 QuestType = QuestType.SideQuest,
@@ -36,7 +35,11 @@ namespace Quests
 
         public static Quest GetNextMainQuest()
         {
-            var location = Location.Locations.First(x => x.State == LocationState.Neutral);
+            var location = Location.Locations.FirstOrDefault(x => x.State == LocationState.Neutral);
+            
+            // Return null if no more main quests are available
+            if (location == null)
+                return null;
 
             var quest = new Quest
             {

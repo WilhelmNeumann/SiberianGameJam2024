@@ -129,7 +129,9 @@ namespace Npc
         public static void AddDemonToTheQueue(NpcData deadHeroData)
         {
             var nextLocation = deadHeroData.Quest.Location.ID + 1;
-            if (nextLocation > Location.Locations.Count)
+            var nextLocationObj = Location.Locations.FirstOrDefault(x => x.ID == nextLocation);
+            
+            if (nextLocationObj == null)
             {
                 GameManager.Instance.BadEnd();
                 return;
@@ -149,7 +151,7 @@ namespace Npc
                 },
                 ByeText = new List<string>
                 {
-                    $"Bring the next sacrifice to {Location.GetById(nextLocation).Name}"
+                    $"Bring the next sacrifice to {nextLocationObj.Name}"
                 },
                 Quest = deadHeroData.Quest,
                 PreVisitAction = () =>
