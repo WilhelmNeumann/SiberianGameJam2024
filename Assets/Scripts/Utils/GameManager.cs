@@ -230,53 +230,10 @@ namespace Utils
             }
 
             var dialogOptionsForQuests = GenerateDialogOptionsForSideQuests(npcData);
+            
+            // Try to get next main quest, but handle case where all are completed
             var mainQuest = QuestFactory.GetNextMainQuest();
-            var dialogOptionForMainQuest = new DialogOption
-            {
-                Text = mainQuest.Objective,
-                Action = () =>
-                {
-                    DialogWindow.Instance.NpcTalk("Evil will be destroyed!", npcData.NpcName);
-                    npcData.Quest = mainQuest;
-                    var success = IsQuestSuccessfullyCompleted(npcData, mainQuest);
-                    if (success)
-                    {
-                        var quest = npcData.Quest;
-                        quest.QuestState = QuestState.Success;
-                        NpcFactory.AddNpcToQueue(npcData);
-
-                        var questCopy = new Quest
-                        {
-                            QuestState = quest.QuestState,
-                            Location = quest.Location
-                        };
-
-                        // Action executes before next visit
-                        npcData.PreVisitAction = () =>
-                        {
-                            questCopy.Location.State = LocationState.Good;
-                            Location.GetById(npcData.Quest.Location.ID).State = LocationState.Good;
-
-                            var text = $"Story progress: {Location.GetStoryCompletePercent()}%\n" +
-                                       $"Open map for details";
-
-                            MapUpdatePopup.Instance.SetText(text);
-                            MapUpdatePopup.Instance.gameObject.SetActive(true);
-                        };
-                    }
-                    else
-                    {
-                        // Main quest failed, spawn demon and change location state
-                        npcData.Quest.QuestState = QuestState.Failed;
-                        npcData.Quest.Location.State = LocationState.Bad;
-                        NpcFactory.AddDemonToTheQueue(npcData);
-                    }
-
-                    NpcFactory.AddHeroToLogs(npcData);
-                },
-                GetDetailsText = () => GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
-            };
-
+            
             var dialogOptionNoQuest = new List<DialogOption>()
             {
                 new()
@@ -289,9 +246,55 @@ namespace Utils
 
             dialogOptionsForQuests.AddRange(dialogOptionNoQuest);
             
-            // Only offer main quest if hero doesn't have an active quest
-            if (npcData.Quest == null || npcData.Quest.QuestState != QuestState.None)
+            // Only offer main quest if hero doesn't have an active quest AND main quest is available
+            if ((npcData.Quest == null || npcData.Quest.QuestState != QuestState.None) && mainQuest != null)
             {
+                var dialogOptionForMainQuest = new DialogOption
+                {
+                    Text = mainQuest.Objective,
+                    Action = () =>
+                    {
+                        DialogWindow.Instance.NpcTalk("Evil will be destroyed!", npcData.NpcName);
+                        npcData.Quest = mainQuest;
+                        var success = IsQuestSuccessfullyCompleted(npcData, mainQuest);
+                        if (success)
+                        {
+                            var quest = npcData.Quest;
+                            quest.QuestState = QuestState.Success;
+                            NpcFactory.AddNpcToQueue(npcData);
+
+                            var questCopy = new Quest
+                            {
+                                QuestState = quest.QuestState,
+                                Location = quest.Location
+                            };
+
+                            // Action executes before next visit
+                            npcData.PreVisitAction = () =>
+                            {
+                                questCopy.Location.State = LocationState.Good;
+                                Location.GetById(questCopy.Location.ID).State = LocationState.Good;
+
+                                var text = $"Story progress: {Location.GetStoryCompletePercent()}%\n" +
+                                           $"Open map for details";
+
+                                MapUpdatePopup.Instance.SetText(text);
+                                MapUpdatePopup.Instance.gameObject.SetActive(true);
+                            };
+                        }
+                        else
+                        {
+                            // Main quest failed, spawn demon and change location state
+                            npcData.Quest.QuestState = QuestState.Failed;
+                            npcData.Quest.Location.State = LocationState.Bad;
+                            NpcFactory.AddDemonToTheQueue(npcData);
+                        }
+
+                        NpcFactory.AddHeroToLogs(npcData);
+                    },
+                    GetDetailsText = () => GenerateQuestDescriptionWithSuccessRate(npcData, mainQuest)
+                };
+                
                 dialogOptionsForQuests.Add(dialogOptionForMainQuest);
             }
             
@@ -324,8 +327,8 @@ namespace Utils
                     
                     NpcFactory.AddHeroToLogs(npcData);
                     var chance = CalculateSuccessChance(npcData, q);
-                    var roll = new Random().Next(0, 100);
-                    if (roll > chance)
+                    var roll = UnityEngine.Random.Range(0, 100);
+                    if (roll < chance)
                     {
                         npcData.Quest.QuestState = QuestState.Success;
                         // In case of success, add him back to queue
@@ -345,8 +348,8 @@ namespace Utils
         {
             var chance = CalculateSuccessChance(npcData, quest);
             npcData.ActivePotion = PotionType.None;
-            var roll = new Random().Next(0, 100);
-            return roll > chance;
+            var roll = UnityEngine.Random.Range(0, 100);
+            return roll < chance;
         }
 
         private static DialogLine GetDialogWithTaxCollector(NpcData npcData)
