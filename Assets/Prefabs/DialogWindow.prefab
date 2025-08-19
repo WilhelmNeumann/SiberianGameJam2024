@@ -215,9 +215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98682f11cd2041c09dbc3ea6606ee690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerText: {fileID: 0}
-  NpcText: {fileID: 107945633371415053}
-  NpcNameText: {fileID: 8513771982010298771}
+  NpcText: {fileID: 0}
+  NpcNameText: {fileID: 0}
   PlayerTextArea: {fileID: 4231071541268213334}
   NpcTextArea: {fileID: 7528829583009261769}
   _serializedPrefab: {fileID: 8163095994949685679, guid: f752cce215ba3fe4da7d32cfcff9a76f, type: 3}
@@ -1035,7 +1034,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C"
+  m_text: Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
